@@ -1,0 +1,30 @@
+<ion-content [fullscreen]="true">
+  <div id="mapId" style="width: 100%; height: 100%"></div>
+  <div class="w-question">
+    <div class="bg-question">
+      <div>
+        <p class="question">
+          Inter haec Orfitus praefecti potestate regebat urbem
+          aeternam ultra modum delatae dignitatis sese
+          efferens insolenter, vir quidem prudens et forensium ?
+        </p>
+        <div *ngIf="reponse" class="txt-center">
+          <div *ngIf="!validate" class="txt-center">
+          <button (click)="repondre()" class="question btn-green">Confirmer la réponse</button>
+        </div>
+          <div *ngIf="validate" class="txt-center">
+            <p class="txt-black">
+              Vous êtes a {{distance}} km de distance
+            </p>
+            <p class="txt-black">
+              vous avez gagner {{point}} point
+            </p>
+            <ion-progress-bar value={{pourcentage}}></ion-progress-bar>
+          </div>
+          <button (click)="suivant()" class="btn-red mt question">Suivant</button>
+        </div>
+        <img class="img-li" src="../../assets/images/Li2.svg">
+      </div>
+    </div>
+  </div>
+</ion-content>

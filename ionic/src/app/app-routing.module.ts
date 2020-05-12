@@ -10,11 +10,19 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
-  },  {
+  },
+  {
     path: 'scores',
     loadChildren: () => import('./scores/scores.module').then( m => m.ScoresPageModule)
   },
-
+  {
+    path: 'map',
+    loadChildren: () => import('./map/map.module').then( m => m.MapPageModule)
+  },
+  {
+    path: 'resultat-question',
+    loadChildren: () => import('./resultat-question/resultat-question.module').then( m => m.ResultatQuestionPageModule)
+  },
 ];
 
 @NgModule({
