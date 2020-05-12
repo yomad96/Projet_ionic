@@ -15,6 +15,10 @@ const routes: Routes = [
     path: 'map',
     loadChildren: () => import('./map/map.module').then( m => m.MapPageModule)
   },
+  {
+    path: 'resultat-question',
+    loadChildren: () => import('./resultat-question/resultat-question.module').then( m => m.ResultatQuestionPageModule)
+  },
 ];
 
 @NgModule({
