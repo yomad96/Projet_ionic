@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ApiRecords } from "../Interfaces/api-records";
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,11 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
+  jsonRecord : ApiRecords[] = [];
   constructor() {}
 
+  ngOnInit()
+  {
+    console.log("Chargement du json");
+  }
 }
