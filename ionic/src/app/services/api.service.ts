@@ -27,8 +27,7 @@ export class ApiService {
     private refine: string = "";
 
 
-    constructor(private http: HttpClient) {
-    }
+    constructor(private http: HttpClient) {}
 
     getApi(): Observable<any> {
         return this.http.get(this.baseUrl+this.dataSet+this.lang+this.rows+this.refine);
