@@ -1,9 +1,3 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Map</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
   <div id="mapId" style="width: 100%; height: 100%"></div>
   <div class="w-question">
@@ -14,6 +8,10 @@
           aeternam ultra modum delatae dignitatis sese
           efferens insolenter, vir quidem prudens et forensium ?
         </p>
+        <div *ngIf="reponse" class="txt-center">
+          <button (click)="repondre()" class="btn">Confirmer la réponse</button>
+        </div>
+        <img class="img-li" src="../../assets/images/Li2.svg">
       </div>
     </div>
   </div>
