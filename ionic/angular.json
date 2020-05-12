@@ -39,7 +39,9 @@
                 "input": "src/global.scss"
               }
             ],
-            "scripts": []
+            "scripts": [
+              "src/app/scores/script.js"
+            ]
           },
           "configurations": {
             "production": {
