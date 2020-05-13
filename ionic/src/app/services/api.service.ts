@@ -26,6 +26,9 @@ export class ApiService {
     // Refinements à prendre en compte (exemple : (categ)states=(search)France, bien mettre les deux)
     private refine: string = "";
 
+    // Start
+    private start: string = "";
+
 
     constructor(private http: HttpClient) {}
 
@@ -48,5 +51,10 @@ export class ApiService {
     setRefine(categ: string, search: string)
     {
       this.refine = "&refine."+categ+"="+search;
+    }
+
+    setStart(start : number)
+    {
+        this.start = "&start="+start;
     }
 }

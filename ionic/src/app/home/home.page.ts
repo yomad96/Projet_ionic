@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 // import { ApiInterfaceRecords } from "../Interfaces/apiInterfaceRecords";
 // import { ApiService } from "../services/api.service";
+import { QuestionService } from "../services/question.service";
 
 @Component({
   selector: 'app-home',
@@ -10,16 +11,11 @@ import { Component, OnInit } from '@angular/core';
 export class HomePage implements OnInit{
 
   // jsonRecord : ApiInterfaceRecords[] = [];
-  constructor(/**private api : ApiService*/) {}
+  constructor(/**private api : ApiService*/private question: QuestionService) {}
 
   ngOnInit()
   {
-    // console.log("Chargement du json");
-    // this.api.setRefine("states","France");
-    // this.api.getApi().subscribe(data => {
-    //   this.jsonRecord = data['records'];
-    //   console.log(this.jsonRecord);
-    //   console.log(this.jsonRecord[0].fields);
-    // });
+    console.log("Chargement du json");
+    console.log(this.question.getRandomQuestion());
   }
 }
