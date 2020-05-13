@@ -47,7 +47,9 @@
                 "input": "node_modules/leaflet/dist/leaflet.css"
               }
             ],
-            "scripts": []
+            "scripts": [
+              "src/app/scores/script.js"
+            ]
           },
           "configurations": {
             "production": {

@@ -20,3 +20,38 @@
   font-family: "Marker Felt";
   color: black;
 }
+.txt-black{
+  color: black;
+}
+img.img-li {
+  float: right;
+  max-width: 150px;
+}
+.btn-green {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.mt{
+  margin-top: 1rem;
+}
+
+.btn-red {
+  background-color: #FA8072;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+.txt-center{
+  text-align: center;
+}
