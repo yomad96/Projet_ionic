@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TimerService } from '../services/timer.service';
 import { LocalstorageService } from '../services/localstorage.service';
 
 declare function require(name: string);
@@ -12,9 +11,7 @@ declare function require(name: string);
 export class ScoresPage implements OnInit {
   public scores: string[];
 
-  constructor(private timerService: TimerService,
-              private localstorageService: LocalstorageService) {
-    timerService.countdown(5);
+  constructor(private localstorageService: LocalstorageService) {
     //localstorageService.setscore(12000);
     //this.scores = localstorageService.getscores();
   }

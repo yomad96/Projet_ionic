@@ -22,7 +22,15 @@ const routes: Routes = [
   {
     path: 'resultat-question',
     loadChildren: () => import('./resultat-question/resultat-question.module').then( m => m.ResultatQuestionPageModule)
+  },  {
+    path: 'questions',
+    loadChildren: () => import('./questions/questions.module').then( m => m.QuestionsPageModule)
   },
+  {
+    path: 'quizz',
+    loadChildren: () => import('./quizz/quizz.module').then( m => m.QuizzPageModule)
+  },
+
 ];
 
 @NgModule({

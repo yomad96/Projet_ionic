@@ -9,7 +9,6 @@
 </ion-header>
 
 <ion-content>
-  <p id="timer" class="clock"></p>
     <div *ngFor="let item of scores">
       <div *ngIf="item !== null">
        Date : {{item.split('|#|')[0]}} | Score : {{item.split('|#|')[1]}}
