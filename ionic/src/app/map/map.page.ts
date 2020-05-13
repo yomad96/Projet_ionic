@@ -45,6 +45,7 @@ export class MapPage implements OnInit {
 
       }
       // Add a marker to show where you clicked.
+      // @ts-ignore
       this.markPoint = L.marker([e.latlng.lat, e.latlng.lng]).addTo(this.map);
       this.reponse = true;
       // @ts-ignore
