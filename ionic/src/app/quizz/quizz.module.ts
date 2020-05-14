@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { QuizzPageRoutingModule } from './quizz-routing.module';
 
 import { QuizzPage } from './quizz.page';
+import {MapPageModule} from "../map/map.module";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    QuizzPageRoutingModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        QuizzPageRoutingModule,
+        MapPageModule
+    ],
   declarations: [QuizzPage]
 })
 export class QuizzPageModule {}

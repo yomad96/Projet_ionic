@@ -30,17 +30,16 @@ export class ResultatQuestionPage implements OnInit {
 
 
 
-  httpGetAsync() {
-    this.api.getImage().subscribe( data => {
-      console.log('je suis nul' + data);
-
-
-
+  httpGetAsync(id : number) {
+    this.api.getImage(id).subscribe( data => {
+      const el = document.createElement( 'html' );
+      el.innerHTML = data;
+      const imgs = el.getElementsByClassName('icaption-img');
+      this.image = imgs[0].getAttribute('data-src');
     });
   }
 
   ngOnInit() {
-    this.httpGetAsync();
     this.api.setSpecifique(this.data);
     this.api.getApi().subscribe(data => {
       this.jsonRecord = data.records;
@@ -50,9 +49,8 @@ export class ResultatQuestionPage implements OnInit {
       this.url = this.jsonRecord[0].fields.http_url;
       this.location = this.jsonRecord[0].fields.site;
       this.pays = this.jsonRecord[0].fields.states;
-      this.image = this.jsonRecord[0].fields.image_url.filename;
-
       this.receive = true;
+      this.httpGetAsync(this.jsonRecord[0].fields.id_number);
 
     });
   }
