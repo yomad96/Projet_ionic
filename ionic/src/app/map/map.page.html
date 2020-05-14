@@ -4,11 +4,18 @@
     <div class="bg-question">
       <div>
         <p id="timer" class="clock"></p>
-        <p class="txt-black">
-          Inter haec Orfitus praefecti potestate regebat urbem
-          aeternam ultra modum delatae dignitatis sese
-          efferens insolenter, vir quidem prudens et forensium ?
-        </p>
+        <div *ngIf="questionType == 1">
+          <p class="txt-black">
+            Inter haec Orfitus praefecti potestate regebat urbem
+            aeternam ultra modum delatae dignitatis sese
+            efferens insolenter, vir quidem prudens et forensium ?
+          </p>
+        </div>
+
+        <div *ngIf="questionType == 2">
+          <img src="https://whc.unesco.org{{reponseImg}}">
+        </div>
+
         <div *ngIf="reponse" class="txt-center">
           <div *ngIf="!validate" class="txt-center">
             <button (click)="repondre()" class="question btn-green">Confirmer la réponse</button>
