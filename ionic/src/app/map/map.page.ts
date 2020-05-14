@@ -4,6 +4,7 @@ import {GameService} from '../services/game.service';
 import {NavigationExtras, Router} from '@angular/router';
 import {ApiService} from '../services/api.service';
 import {ApiInterfaceRecords} from '../Interfaces/apiInterfaceRecords';
+import {TimerService} from '../services/timer.service';
 
 @Component({
   selector: 'app-map',
@@ -22,6 +23,7 @@ export class MapPage implements OnInit {
 
   reponseLat: number;
   reponseLng: number;
+  reponseImg: string;
 
   questionLat: number;
   questionLng: number;
@@ -30,16 +32,35 @@ export class MapPage implements OnInit {
   point: number;
   pourcentage: number;
   jsonRecord: ApiInterfaceRecords;
+  questionType: number;
+
 
   ionViewDidEnter() { this.leafletMap(); }
 
-  constructor(private gameService: GameService, private router: Router, private api: ApiService) { }
+  constructor(private gameService: GameService, private router: Router, private api: ApiService, private timerService: TimerService) { }
 
   ngOnInit() {
+    this.questionType = Math.floor(Math.random()*2)+1;
+    this.timerService.countdown(5);
+    this.api.setSpecifique();
+    this.api.getApi().subscribe(data => {
+      this.jsonRecord = data.records;
+      console.log(this.jsonRecord[0].fields);
+      this.reponseLat = this.jsonRecord[0].fields.id_number
+      this.reponseLat = this.jsonRecord[0].fields.id_number
+      this.httpGetAsync(this.jsonRecord[0].fields.id_number);
+    });
 
   }
 
-
+  httpGetAsync(id : number) {
+    this.api.getImage(id).subscribe( data => {
+      const el = document.createElement( 'html' );
+      el.innerHTML = data;
+      const imgs = el.getElementsByClassName('icaption-img');
+      this.reponseImg = imgs[0].getAttribute('data-src');
+    });
+  }
 
   leafletMap() {
     this.map = new L.Map('mapId').setView([0, 0], 3);
@@ -48,7 +69,6 @@ export class MapPage implements OnInit {
     }).addTo(this.map);
 
     this.map.on('click', e => {
-
       if (this.markPoint !== undefined) {
         this.map.removeLayer(this.markPoint);
         this.reponse = false;
