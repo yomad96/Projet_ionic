@@ -28,11 +28,14 @@ export class ApiService {
 
     private recordid = '';
 
+    // Start
+    private start: string = "";
+
 
     constructor(private http: HttpClient) {}
 
     getApi(): Observable<any> {
-        return this.http.get(this.baseUrl + this.dataSet + this.recordid + this.lang + this.rows + this.refine);
+        return this.http.get(this.baseUrl + this.dataSet + this.recordid + this.lang + this.rows + this.start+this.refine);
     }
 
     setLang(lang: string) {
@@ -57,5 +60,15 @@ export class ApiService {
 
     getImage(): Observable<any> {
         return this.http.get('https://whc.unesco.org/en/list/1478/gallery/&maxrows=20', { responseType: 'text' });
+    }
+
+    setStart(start : number)
+    {
+        this.start = "&start="+start;
+    }
+
+    getUrlApi()
+    {
+        return this.baseUrl+this.dataSet+this.lang+this.rows+this.start+this.refine;
     }
 }
