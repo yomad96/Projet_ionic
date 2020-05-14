@@ -43,7 +43,7 @@ export class QuestionService {
             this.api.getApi().subscribe(data => {
                 this.recordsInterface = data['records'];
                 this.recordsInterface.forEach(element =>{
-                    this.search.push([element.fields['states'],element['recordid']]);
+                    this.search.push([element.fields['states'], element['recordid']]);
                 });
                 console.log(this.search);
                 this.sentence = ["(BipBoop) Dans quel pays se trouve cette image (BipBoop)", " (BipBoop) Ou se trouve " + this.search[0][0] + " (BipBoop)", "(BipBoop) Laquelle de ces 4 images est " + this.search[0][0] + " (BipBoop)"];
