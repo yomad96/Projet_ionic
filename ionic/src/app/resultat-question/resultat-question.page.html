@@ -8,10 +8,14 @@
         <ion-progress-bar type="indeterminate"></ion-progress-bar>
       </div>
       <div *ngIf="receive" slot="fixed">
-        <i>
-          "BEEPP BOOP"
-        </i>
-        <img src="https://whc.unesco.org/uploads/sites/{{image}}">
+        <div class="txt-center">
+          <i >
+            "BEEPP BOOP"
+          </i>
+        </div>
+        <div class="txt-center">
+          <img src="https://whc.unesco.org{{image}}">
+        </div>
         <p>
           {{pays}} : {{location}}
         </p>

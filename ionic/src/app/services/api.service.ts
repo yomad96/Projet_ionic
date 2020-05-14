@@ -58,8 +58,8 @@ export class ApiService {
         this.recordid = '&refine.recordid=' + id;
     }
 
-    getImage(): Observable<any> {
-        return this.http.get('https://whc.unesco.org/en/list/1478/gallery/&maxrows=20', { responseType: 'text' });
+    getImage(id : number): Observable<any> {
+        return this.http.get('https://whc.unesco.org/en/list/' + id + '/gallery/&maxrows=20', { responseType: 'text' });
     }
 
     setStart(start : number)
