@@ -4,6 +4,7 @@ import {GameService} from '../services/game.service';
 import {NavigationExtras, Router} from '@angular/router';
 import {ApiService} from '../services/api.service';
 import {ApiInterfaceRecords} from '../Interfaces/apiInterfaceRecords';
+import {TimerService} from "../services/timer.service";
 
 @Component({
   selector: 'app-map',
@@ -30,13 +31,16 @@ export class MapPage implements OnInit {
   point: number;
   pourcentage: number;
   jsonRecord: ApiInterfaceRecords;
+  questionType: number;
+
 
   ionViewDidEnter() { this.leafletMap(); }
 
-  constructor(private gameService: GameService, private router: Router, private api: ApiService) { }
+  constructor(private gameService: GameService, private router: Router, private api: ApiService, private timerService: TimerService) { }
 
   ngOnInit() {
-
+    this.questionType = Math.floor(Math.random()*2)+1;
+    this.timerService.countdown(5);
   }
 
 
@@ -48,7 +52,6 @@ export class MapPage implements OnInit {
     }).addTo(this.map);
 
     this.map.on('click', e => {
-
       if (this.markPoint !== undefined) {
         this.map.removeLayer(this.markPoint);
         this.reponse = false;
