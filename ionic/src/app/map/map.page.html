@@ -10,8 +10,8 @@
         </p>
         <div *ngIf="reponse" class="txt-center">
           <div *ngIf="!validate" class="txt-center">
-          <button (click)="repondre()" class="question btn-green">Confirmer la réponse</button>
-        </div>
+            <button (click)="repondre()" class="question btn-green">Confirmer la réponse</button>
+          </div>
           <div *ngIf="validate" class="txt-center">
             <p class="txt-black">
               Vous êtes a {{distance}} km de distance
@@ -20,8 +20,8 @@
               vous avez gagner {{point}} point
             </p>
             <ion-progress-bar value={{pourcentage}}></ion-progress-bar>
+            <button (click)="suivant()" class="btn-red mt question">Suivant</button>
           </div>
-          <button (click)="suivant()" class="btn-red mt question">Suivant</button>
         </div>
         <img class="img-li" src="../../assets/images/Li2.svg">
       </div>

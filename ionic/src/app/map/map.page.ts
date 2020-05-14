@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import {GameService} from '../services/game.service';
-import { Router } from '@angular/router';
+import {NavigationExtras, Router} from '@angular/router';
+import {ApiService} from '../services/api.service';
+import {ApiInterfaceRecords} from '../Interfaces/apiInterfaceRecords';
 
 @Component({
   selector: 'app-map',
@@ -13,26 +15,34 @@ export class MapPage implements OnInit {
   map: L.Map;
   // @ts-ignore
   markPoint: L.marker;
+  // @ts-ignore
   polyline: L.polyline;
   reponse: boolean;
-  validate : boolean = false;
+  validate = false;
+
   reponseLat: number;
   reponseLng: number;
+
+  questionLat: number;
+  questionLng: number;
+
   distance: number;
   point: number;
-  pourcentage: any;
+  pourcentage: number;
+  jsonRecord: ApiInterfaceRecords;
 
   ionViewDidEnter() { this.leafletMap(); }
 
-  constructor(private gameService: GameService, private router: Router) { }
+  constructor(private gameService: GameService, private router: Router, private api: ApiService) { }
 
   ngOnInit() {
+
   }
 
 
 
   leafletMap() {
-    this.map = new L.Map('mapId').setView([0, 0], 2);
+    this.map = new L.Map('mapId').setView([0, 0], 3);
     L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
       attribution: 'edupala.com'
     }).addTo(this.map);
@@ -55,8 +65,7 @@ export class MapPage implements OnInit {
 
     });
 
-    const southWest = L.latLng(-89.98155760646617, -180),
-        northEast = L.latLng(89.99346179538875, 180);
+    const southWest = L.latLng(-89.98155760646617, -180), northEast = L.latLng(89.99346179538875, 180);
     const bounds = L.latLngBounds(southWest, northEast);
 
     this.map.setMaxBounds(bounds);
@@ -105,7 +114,13 @@ export class MapPage implements OnInit {
   }
 
   suivant() {
-    this.router.navigate(['/resultat-question']);
+    const navigationExtras: NavigationExtras = {
+      state: {
+        id: '5f325ebe3795d4984a051ac541f7dc131986891e'
+      }
+    };
+    this.router.navigate(['/resultat-question'], navigationExtras);
   }
+
 
 }
