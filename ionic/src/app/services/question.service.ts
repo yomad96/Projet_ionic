@@ -18,37 +18,35 @@ export class QuestionService {
     ];
     private rows = 5;
     private startNumber: number = 0;
-    private search: string = 'test';
+    private search: string = '';
     private randomRegion: string = '';
     private nHits: number;
-    private boolean: boolean = false;
+    public question : string = '';
     private sentence = ["(BipBoop) Dans quel pays se trouve cette image (BipBoop)", " (BipBoop) Ou se trouve " + this.search + " (BipBoop)", "(BipBoop) Laquelle de ces 4 images est " + this.search + " (BipBoop)"];
     private recordsInterface: ApiInterfaceRecords[] = [];
-    private fieldInterface: ApiInterfaceFields[] = [];
 
-    constructor(private api: ApiService) {
-    }
+    constructor(private api: ApiService) {}
 
-    getRandomQuestion() {
+     getRandomQuestion(){
        // @ts-ignore
         let randomNumberSentence = this.getRandomNumber(0, this.sentence.length);
         if (randomNumberSentence === 0) {
             return this.sentence[0];
         }
         this.getTotalHits().subscribe(data => {
-            console.log(this.api.getUrlApi());
             let nHits: string;
             nHits = data['nhits'];
             console.log(nHits);
             this.nHits = parseInt(nHits);
             this.getStartNumber();
             this.api.setStart(this.startNumber);
+            console.log(this.api.getUrlApi());
             this.api.getApi().subscribe(data => {
-                // this.recordsInterface = data['records'];
-                // console.log(this.recordsInterface);
-                // this.fieldInterface = this.recordsInterface[0].fields;
-                // console.log(this.fieldInterface.states);
-                return this.sentence[randomNumberSentence];
+                this.recordsInterface = data['records'];
+                console.log(this.startNumber);
+                this.search =  this.recordsInterface[0].fields['states'];
+                this.sentence = ["(BipBoop) Dans quel pays se trouve cette image (BipBoop)", " (BipBoop) Ou se trouve " + this.search + " (BipBoop)", "(BipBoop) Laquelle de ces 4 images est " + this.search + " (BipBoop)"];
+                this.question = this.sentence[randomNumberSentence];
             });
         });
     }
