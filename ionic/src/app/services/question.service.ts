@@ -36,14 +36,11 @@ export class QuestionService {
         this.getTotalHits().subscribe(data => {
             let nHits: string;
             nHits = data['nhits'];
-            console.log(nHits);
             this.nHits = parseInt(nHits);
             this.getStartNumber();
             this.api.setStart(this.startNumber);
-            console.log(this.api.getUrlApi());
             this.api.getApi().subscribe(data => {
                 this.recordsInterface = data['records'];
-                console.log(this.startNumber);
                 this.search =  this.recordsInterface[0].fields['states'];
                 this.sentence = ["(BipBoop) Dans quel pays se trouve cette image (BipBoop)", " (BipBoop) Ou se trouve " + this.search + " (BipBoop)", "(BipBoop) Laquelle de ces 4 images est " + this.search + " (BipBoop)"];
                 this.question = this.sentence[randomNumberSentence];
