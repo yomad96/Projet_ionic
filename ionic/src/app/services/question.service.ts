@@ -23,7 +23,7 @@ export class QuestionService {
     private randomRegion: string = '';
     private nHits: number;
     public question : string = '';
-    private sentence = ["(BipBoop) Dans quel pays se trouve cette image (BipBoop)", " (BipBoop) Ou se trouve " + this.search + " (BipBoop)", "(BipBoop) Laquelle de ces 4 images est " + this.search + " (BipBoop)"];
+    private sentence = ["(BipBoop) Dans quel pays se trouve cette image (BipBoop)", "(BipBoop) Ou se trouve " + this.search + " (BipBoop)", "(BipBoop) Laquelle de ces 4 images est " + this.search + " (BipBoop)"];
     private recordsInterface: ApiInterfaceRecords[] = [];
 
     constructor(private api: ApiService) {}
