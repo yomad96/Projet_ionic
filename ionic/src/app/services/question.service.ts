@@ -3,6 +3,7 @@ import {ApiService} from "./api.service";
 import {ApiInterfaceRecords} from "../Interfaces/apiInterfaceRecords";
 import {ApiInterfaceFields} from "../Interfaces/api-interface-fields";
 import {Observable} from "rxjs";
+import {element} from "protractor";
 
 @Injectable({
     providedIn: 'root'
@@ -18,7 +19,7 @@ export class QuestionService {
     ];
     private rows = 5;
     private startNumber: number = 0;
-    private search: string = '';
+    private search : [] = [];
     private randomRegion: string = '';
     private nHits: number;
     public question : string = '';
@@ -30,9 +31,9 @@ export class QuestionService {
      getRandomQuestion(){
        // @ts-ignore
         let randomNumberSentence = this.getRandomNumber(0, this.sentence.length);
-        if (randomNumberSentence === 0) {
-            return this.sentence[0];
-        }
+        // if (randomNumberSentence === 0) {
+        //     return this.sentence[0];
+        // }
         this.getTotalHits().subscribe(data => {
             let nHits: string;
             nHits = data['nhits'];
@@ -41,8 +42,11 @@ export class QuestionService {
             this.api.setStart(this.startNumber);
             this.api.getApi().subscribe(data => {
                 this.recordsInterface = data['records'];
-                this.search =  this.recordsInterface[0].fields['states'];
-                this.sentence = ["(BipBoop) Dans quel pays se trouve cette image (BipBoop)", " (BipBoop) Ou se trouve " + this.search + " (BipBoop)", "(BipBoop) Laquelle de ces 4 images est " + this.search + " (BipBoop)"];
+                this.recordsInterface.forEach(element =>{
+                    this.search.push([element.fields['states'],element['recordid']]);
+                });
+                console.log(this.search);
+                this.sentence = ["(BipBoop) Dans quel pays se trouve cette image (BipBoop)", " (BipBoop) Ou se trouve " + this.search[0][0] + " (BipBoop)", "(BipBoop) Laquelle de ces 4 images est " + this.search[0][0] + " (BipBoop)"];
                 this.question = this.sentence[randomNumberSentence];
             });
         });
