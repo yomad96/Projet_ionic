@@ -1,5 +1,17 @@
 <ion-content>
   <ion-grid>
+    <ion-row class="lifes">
+      <div *ngFor="let idx of [3,2,1]">
+        <ion-col *ngIf="idx <= gameService.lifes">
+          <img src="../../assets/images/heart.png" class="heart">
+        </ion-col>
+        <ion-col *ngIf="idx > gameService.lifes">
+          <img src="../../assets/images/black-heart.png" class="heart">
+        </ion-col>
+      </div>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
     <ion-row>
         <img class="img-li" src="../../assets/images/Li2.svg">
         <p id="timer" class="clock"></p>
