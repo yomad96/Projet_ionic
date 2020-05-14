@@ -46,8 +46,8 @@ export class MapPage implements OnInit {
     this.api.getApi().subscribe(data => {
       this.jsonRecord = data.records;
       console.log(this.jsonRecord[0].fields);
-      this.reponseLat = this.jsonRecord[0].fields.id_number
-      this.reponseLat = this.jsonRecord[0].fields.id_number
+      this.questionLat = this.jsonRecord[0].fields.id_number
+      this.questionLng = this.jsonRecord[0].fields.id_number
       this.httpGetAsync(this.jsonRecord[0].fields.id_number);
     });
 
