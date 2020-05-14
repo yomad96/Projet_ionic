@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 // import { ApiInterfaceRecords } from "../Interfaces/apiInterfaceRecords";
 // import { ApiService } from "../services/api.service";
 import { QuestionService } from "../services/question.service";
+import {ApiService} from "../services/api.service";
 
 @Component({
   selector: 'app-home',
@@ -11,11 +12,12 @@ import { QuestionService } from "../services/question.service";
 export class HomePage implements OnInit{
 
   // jsonRecord : ApiInterfaceRecords[] = [];
-  constructor(/**private api : ApiService*/private question: QuestionService) {}
+  constructor(private api : ApiService,private question: QuestionService) {}
 
   ngOnInit()
   {
     console.log("Chargement du json");
-    console.log(this.question.getRandomQuestion());
+    // @ts-ignore
+    console.log("this.question.getRandomQuestion()",this.question.getRandomQuestion());
   }
 }

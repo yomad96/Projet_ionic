@@ -33,7 +33,7 @@ export class ApiService {
     constructor(private http: HttpClient) {}
 
     getApi(): Observable<any> {
-        return this.http.get(this.baseUrl+this.dataSet+this.lang+this.rows+this.refine);
+        return this.http.get(this.baseUrl+this.dataSet+this.lang+this.rows+this.start+this.refine);
     }
 
     setLang(lang: string) {
@@ -56,5 +56,10 @@ export class ApiService {
     setStart(start : number)
     {
         this.start = "&start="+start;
+    }
+
+    getUrlApi()
+    {
+        return this.baseUrl+this.dataSet+this.lang+this.rows+this.start+this.refine;
     }
 }
