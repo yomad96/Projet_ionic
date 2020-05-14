@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TimerService } from '../services/timer.service';
+import { GameService } from '../services/game.service';
 
 export interface question {
   answer1: string;
@@ -14,10 +15,9 @@ export interface question {
   styleUrls: ['./questions.page.scss'],
 })
 export class QuestionsPage implements OnInit {
-  isText: boolean;
-  questionType: number;
-  answerType: number;
-  question: string;
+  questionType: number;//Si c'est une question qui demande une réponse sous forme de texte ou d'image
+  answerType: number;//Cash/carre/duo
+  question: string;//text de la question
   answer: question = {
     answer1: "Rep1",
     answer2: "Rep2",
@@ -25,7 +25,7 @@ export class QuestionsPage implements OnInit {
     answer4: "Rep4",
   };
 
-  constructor(private timerService: TimerService,) { 
+  constructor(private timerService: TimerService, private gameService: GameService) { 
     this.question = "Comment allez vous ?";
     this.questionType = Math.floor(Math.random()*2)+1;
     this.answerType = 0;
@@ -38,7 +38,6 @@ export class QuestionsPage implements OnInit {
   onChooseTypeAnswer(type: number) {
     this.answerType = type;
     this.questionType = 1;
-    console.log("question", this.questionType)
   switch(type) {
     case 0:
     case 1:
