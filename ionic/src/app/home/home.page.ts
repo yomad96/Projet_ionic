@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ApiService} from "../services/api.service";
 // import { ApiInterfaceRecords } from "../Interfaces/apiInterfaceRecords";
 // import { ApiService } from "../services/api.service";
 
@@ -10,7 +11,7 @@ import { Component, OnInit } from '@angular/core';
 export class HomePage implements OnInit{
 
   // jsonRecord : ApiInterfaceRecords[] = [];
-  constructor(/**private api : ApiService*/) {}
+  constructor(/*private api : ApiService*/) {}
 
   ngOnInit()
   {
