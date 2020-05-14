@@ -1,0 +1,78 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+        <img class="img-li" src="../../assets/images/Li2.svg">
+        <p id="timer" class="clock"></p>
+    </ion-row>
+    <ion-row>
+      <p class="question">
+        {{question}}
+      </p>
+    </ion-row>
+    <ion-row *ngIf="answerType == 0 && questionType == 1">
+      <ion-col>
+        <ion-button shape="round" class="typeAnswer" (click)="onChooseTypeAnswer(1)">Cash</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button shape="round" class="typeAnswer" (click)="onChooseTypeAnswer(2)">Carré</ion-button>        
+      </ion-col>
+      <ion-col>
+        <ion-button shape="round" class="typeAnswer" (click)="onChooseTypeAnswer(3)">Duo</ion-button>        
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="questionType == 2">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <img src="https://www.toureiffel.paris/themes/custom/tour_eiffel/img/picto_myGoogleBusiness_1.jpg">
+          </ion-col>
+          <ion-col>
+            <img src="https://www.toureiffel.paris/themes/custom/tour_eiffel/img/picto_myGoogleBusiness_1.jpg">
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <img src="https://www.toureiffel.paris/themes/custom/tour_eiffel/img/picto_myGoogleBusiness_1.jpg">
+          </ion-col>
+          <ion-col>
+            <img src="https://www.toureiffel.paris/themes/custom/tour_eiffel/img/picto_myGoogleBusiness_1.jpg">
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      </ion-row>
+        <ion-row *ngIf="answerType == 1 && questionType == 1">
+          <ion-textarea placeholder="Enter more information here..."></ion-textarea>
+        </ion-row>
+        <ion-row *ngIf="answerType == 2 && questionType == 1">
+          <ion-col>
+            <ion-button shape="round" class="typeAnswer" (click)="anwser()"> {{ answer.answer1 }} </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button shape="round" class="typeAnswer" (click)="anwser()"> {{ answer.answer2 }} </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="answerType == 2 && questionType == 1">
+          <ion-col>
+            <ion-button shape="round" class="typeAnswer" (click)="anwser()"> {{ answer.answer3 }} </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button shape="round" class="typeAnswer" (click)="anwser()"> {{ answer.answer4 }} </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="answerType == 3 && questionType == 1">
+          <ion-col>
+            <ion-button shape="round" class="typeAnswer" (click)="anwser()"> {{ answer.answer1 }} </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button shape="round" class="typeAnswer" (click)="anwser()"> {{ answer.answer2 }} </ion-button>
+          </ion-col>
+        </ion-row>
+    </ion-grid>
+  
+  <div *ngIf="isText">
+
+  </div>
+  <div *ngIf="!isText">
+  
+  </div>
+</ion-content>

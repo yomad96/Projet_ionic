@@ -7,6 +7,25 @@ export class TimerService {
 
   constructor() { }
 
+  setTime(time: number) {
+    time = time%60;
+    let countDownDate = new Date();
+    if (countDownDate.getMinutes()+time > 60){
+      countDownDate.setMinutes(countDownDate.getMinutes()+time);
+    }
+    else {
+      countDownDate.setMinutes(countDownDate.getMinutes()-60+time);
+      countDownDate.setHours(countDownDate.getHours()+1);
+    }
+
+    let now = new Date().getTime();
+    let distance = countDownDate.getTime() - now;
+    
+    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
+  }
+
   countdown(time: number) {
     time = time%60;
     let countDownDate = new Date();
@@ -21,7 +40,7 @@ export class TimerService {
     let x = setInterval(function () {
 
       let now = new Date().getTime();
-      let distance = countDownDate.getTime() - now;
+      let distance = countDownDate.getTime() - now + 10;
       
       let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       let seconds = Math.floor((distance % (1000 * 60)) / 1000);

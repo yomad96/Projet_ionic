@@ -5,11 +5,16 @@ import { Injectable } from '@angular/core';
 })
 export class GameService {
 
-  private point: number = 0;
+  private point = 0;
 
   constructor() { }
 
   addPoint(point: number) {
-    this.point = this.point = point;
+    this.point = this.point + point;
   }
+
+  getPoint() {
+    return this.point;
+  }
+
 }
