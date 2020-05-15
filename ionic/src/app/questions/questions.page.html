@@ -58,11 +58,9 @@
               <button class="btn-validate" type="submit">Valider</button>
           </form>
         </ion-row>
-        <ion-row>
+        <ion-row class="row-sentence-answer">
           <ion-text>{{this.message}}</ion-text>
-        </ion-row>
-        <ion-row>
-          <ion-button color="success" *ngIf="canShowGoToAnswer" (click)="pathToResultPage()">Voir la réponse</ion-button>
+          <ion-button color="success" *ngIf="canShowGoToAnswer || this.timerService.getTimerIsFinish()" (click)="pathToResultPage()">Voir la réponse</ion-button>
         </ion-row>
         <ion-row *ngIf="answerType == 2 && questionType == 1">
           <ion-col>

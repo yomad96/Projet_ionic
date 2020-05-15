@@ -63,7 +63,7 @@ export class QuestionsPage implements OnInit {
   this.timerService.countdown(0.1);
   }
 
-  getAnwser() {
+  anwser() {
       return "test123";
   }
 
@@ -71,7 +71,7 @@ export class QuestionsPage implements OnInit {
   {
     if(this.cashForm.valid)
     {
-      let answer = this.getAnwser();
+      let answer = this.anwser();
       let answerOfPlayer = this.cashForm.value.answer;
       if(!this.canShowGoToAnswer)
       {
@@ -147,6 +147,7 @@ export class QuestionsPage implements OnInit {
     console.log(diffArray);
     return diffArray;
   }
+
   pathToResultPage()
   {
     const navigationExtras: NavigationExtras = {
