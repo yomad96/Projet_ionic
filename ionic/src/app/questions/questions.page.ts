@@ -64,7 +64,7 @@ export class QuestionsPage implements OnInit {
   }
 
   getAnwser() {
-      return "test";
+      return "test123";
   }
 
   validate()
@@ -86,7 +86,6 @@ export class QuestionsPage implements OnInit {
     let arrayAnswerOfPlayer = answerOfPlayer.split('');
     // @ts-ignore
     let difference = this.array_diff(arrayAnswer, arrayAnswerOfPlayer);
-    console.log(difference);
     if(difference === 0)
     {
       this.isGoodAnswer = true;
@@ -116,13 +115,32 @@ export class QuestionsPage implements OnInit {
   array_diff(array1 : [], array2 : [])
   {
     let diffArray = 0;
-    for(let i = 0; i <= array1.length;i++)
+    let letter :[''] = [''];
+    if(array1.length >= array2.length)
     {
-      if(array1[i] !== array2[i])
+      console.log("array1 >= array2 ");
+      for(let i = 0; i <= array1.length;i++)
       {
-        diffArray = diffArray+1;
+        if(array1[i] !== array2[i])
+        {
+          diffArray = diffArray+1;
+          letter.push(array1[i]);
+        }
+      }
+    }else{
+      console.log("array2 >= array1");
+      for(let i = 0; i <= array2.length;i++)
+      {
+        if(array2[i] !== array1[i])
+        {
+          diffArray = diffArray+1;
+          letter.push(array2[i]);
+        }
       }
     }
+
+    console.log(letter);
+    console.log(diffArray);
     return diffArray;
   }
   pathToResultPage()
