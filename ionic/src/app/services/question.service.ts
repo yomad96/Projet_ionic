@@ -40,7 +40,7 @@ export class QuestionService {
     private nHits: number;
     public question : string = '';
     private recordsInterface: ApiInterfaceRecords[] = [];
-    public open: EventEmitter<any> = new EventEmitter();
+    public questionEventEmitter: EventEmitter<any> = new EventEmitter();
     
     
     constructor(private api: ApiService) {
@@ -97,7 +97,7 @@ export class QuestionService {
                 }
                 this.unicAnswer(data);
             }
-        this.open.emit();
+        this.questionEventEmitter.emit();
         });
     }
 

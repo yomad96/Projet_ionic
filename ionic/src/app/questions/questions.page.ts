@@ -47,7 +47,7 @@ export class QuestionsPage implements OnInit {
     this.cashForm = new FormGroup({
       answer: new FormControl('', [Validators.required])
     });
-    this.questionservice.open.subscribe(data => {
+    this.questionservice.questionEventEmitter.subscribe(data => {
       console.log("dataquestion", this.questionservice.getQuestion());
     })
   }
