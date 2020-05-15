@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {GameService} from "../services/game.service";
-import {NavigationExtras, Router} from "@angular/router";
+import {GameService} from '../services/game.service';
+import {NavigationExtras, Router} from '@angular/router';
 
 @Component({
   selector: 'app-result',
