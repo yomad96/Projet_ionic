@@ -16,8 +16,6 @@ export class HomePage implements OnInit{
 
   ngOnInit()
   {
-    // console.log("Chargement du json");
-    this.question.getRandomQuestion();
   }
   quizz() {
     this.gameService.randomQuestion();
