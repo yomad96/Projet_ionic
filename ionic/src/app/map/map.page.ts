@@ -5,6 +5,7 @@ import {NavigationExtras, Router} from '@angular/router';
 import {ApiService} from '../services/api.service';
 import {ApiInterfaceRecords} from '../Interfaces/apiInterfaceRecords';
 import {TimerService} from '../services/timer.service';
+import {QuestionService} from "../services/question.service";
 
 @Component({
   selector: 'app-map',
@@ -23,7 +24,6 @@ export class MapPage implements OnInit {
 
   reponseLat: number;
   reponseLng: number;
-  reponseImg: string;
   goodbad = false;
 
   question: string;
@@ -40,13 +40,15 @@ export class MapPage implements OnInit {
   questionType: number;
 
 
-  constructor(private gameService: GameService, private router: Router, private api: ApiService, private timerService: TimerService) { }
+  // tslint:disable-next-line:max-line-length
+  constructor(private gameService: GameService, private router: Router, private api: ApiService, private timerService: TimerService, private questionService: QuestionService) { }
 
   ngOnInit() {
 
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter() {
+
     this.leafletMap();
     this.timerService.stopCountdown();
     this.questionType = Math.floor(Math.random()*2)+1;
@@ -64,18 +66,27 @@ export class MapPage implements OnInit {
 
 
     // this.httpGetAsync("id_number");
-    // this.questionLat = this.jsonRecord[0].fields.id_number;
-    // this.questionLng = this.jsonRecord[0].fields.id_number;
-    // this.questionrecordid = this.jsonRecord[0].fields.id_number;
-    // this.question = this.jsonRecord[0].fields.id_number;
-    // this.questionLat = null;
-    // this.questionLng = null;
+
+
     // this.questionImg = null;
-    // this.question = null;
+    this.question = null;
+    this.questionService.questionEventEmitter.subscribe(() => {
+      this.question = this.questionService.getQuestion().rightanswer.site;
+      this.questionLat = parseFloat(this.questionService.getQuestion().rightanswer.coords[1]);
+      this.questionLng = parseFloat(this.questionService.getQuestion().rightanswer.coords[0]);
+      this.questionrecordid = this.questionService.getQuestion().rightanswer.id;
+      const x = this.questionrecordid;
 
+      this.api.setSpecifique(x.toString());
+      console.log(this.api.getUrlApi())
+      this.api.getspecfiqueApi().subscribe(data => {
+        this.jsonRecord = data.records;
+        this.httpGetAsync(this.jsonRecord[0].fields.id_number);
+      });
 
+    });
   }
-  httpGetAsync(id : number) {
+  httpGetAsync(id: number) {
     this.api.getImage(id).subscribe( data => {
       const el = document.createElement( 'html' );
       el.innerHTML = data;
@@ -156,6 +167,7 @@ export class MapPage implements OnInit {
     }
     this.pourcentage = (this.point * 100 / 5000) / 100;
     this.validate = true;
+    console.log(this.goodbad = true);
 
   }
 

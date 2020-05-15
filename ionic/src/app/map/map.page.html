@@ -6,17 +6,18 @@
         <p id="timer" class="clock"></p>
         <div *ngIf="questionType == 1">
           <p class="txt-black">
+            Où ce trouve :
             {{question}}
           </p>
         </div>
         <div *ngIf="questionType == 2">
           <ion-row>
             <ion-col size="8">
-              <img class="img-fluid" src="https://whc.unesco.org{{reponseImg}}">
+              <img class="img-fluid" src="https://whc.unesco.org{{questionImg}}">
             </ion-col>
             <ion-col size="4">
               <p class="txt-black">
-                {{question}}
+                Où ce trouve cette image ?
               </p>
             </ion-col>
           </ion-row>

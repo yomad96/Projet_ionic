@@ -11,13 +11,13 @@
             </div>
         </ion-row>
         <div class="d-flex align-item">
-            <div *ngIf="goodbad" class="mt">
+            <div *ngIf="!goodbad" class="mt">
                 <img class="mt" src="../../assets/images/pascontent2.svg" width="350">
                 <p>
                     Biip boop, Tu feras mieux la prochaine fois.
                 </p>
             </div>
-            <div *ngIf="!goodbad" class="mt">
+            <div *ngIf="goodbad" class="mt">
                 <img class="mt" src="../../assets/images/content2.svg" width="350">
                 <p>
                     Biip boop, BG mec t'es le boss
