@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TimerService } from '../services/timer.service';
 import { GameService } from '../services/game.service';
+import { QuestionService, currentQuestion } from '../services/question.service';
 
 export interface question {
   answer1: string;
