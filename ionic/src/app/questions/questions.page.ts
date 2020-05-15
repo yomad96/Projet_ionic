@@ -40,13 +40,16 @@ export class QuestionsPage implements OnInit {
     answer4: "Rep4",
   };
 
-  constructor(private timerService: TimerService, private gameService: GameService, private router: Router) {
+  constructor(private timerService: TimerService, private gameService: GameService, private router: Router, private questionservice: QuestionService) {
     this.question = "Comment allez vous ?";
     this.questionType = Math.floor(Math.random()*2)+1;
     this.answerType = 0;
     this.cashForm = new FormGroup({
       answer: new FormControl('', [Validators.required])
     });
+    this.questionservice.open.subscribe(data => {
+      console.log("dataquestion", this.questionservice.getQuestion());
+    })
   }
 
   ngOnInit() {

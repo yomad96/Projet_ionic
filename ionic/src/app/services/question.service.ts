@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
+import {Injectable, EventEmitter, Output} from '@angular/core';
 import {ApiService} from "./api.service";
 import {ApiInterfaceRecords} from "../Interfaces/apiInterfaceRecords";
 import {ApiInterfaceFields} from "../Interfaces/api-interface-fields";
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {element} from "protractor";
 
 export interface placeData {
@@ -34,13 +34,16 @@ export class QuestionService {
     private rows = 30;
     private startNumber: number = 0;
     private search : placeData[] = [];
-    private answers : placeData[] = [];
+    public answers : placeData[] = [];
     private unicPlace : string[] = [];
     private randomRegion: string = '';
     private nHits: number;
     public question : string = '';
     private recordsInterface: ApiInterfaceRecords[] = [];
-
+    public dataQuestionObservable = new Subject<currentQuestion>();
+    public open: EventEmitter<any> = new EventEmitter();
+    
+    
     constructor(private api: ApiService) {
         this.getRandomQuestion();
     }
@@ -102,6 +105,7 @@ export class QuestionService {
                 }
                 this.unicAnswer(data);
             }
+        this.open.emit();
         });
     }
 
@@ -110,7 +114,7 @@ export class QuestionService {
             if (this.answers.length == 4) {
             let answer = this.answers[this.getRandomNumber(0, 3)];
             currentQuestion = {
-                question: ["(BipBoop) Dans quel pays se trouve cette image (BipBoop)", " (BipBoop) Ou se trouve " + answer.country + " (BipBoop)", "(BipBoop) Laquelle de ces 4 images est " + answer.country + " (BipBoop)"][this.getRandomNumber(0, 3)],
+                question: ["(BipBoop) Dans quel pays se trouve cette image (BipBoop)", " (BipBoop) Ou se trouve " + answer.country + " (BipBoop)", "(BipBoop) Laquelle de ces 4 images est " + answer.country + " (BipBoop)"][this.getRandomNumber(0, 2)],
                 rightanswer: answer,
                 answers: this.answers,
             }
