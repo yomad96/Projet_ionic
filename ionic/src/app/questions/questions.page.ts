@@ -39,7 +39,7 @@ export class QuestionsPage implements OnInit {
     answer4: "Rep4",
   };
 
-  constructor(private timerService: TimerService, private gameService: GameService, private router: Router) {
+  constructor(private timerService: TimerService, private gameService: GameService, private router: Router,) {
     this.question = "Comment allez vous ?";
     this.questionType = Math.floor(Math.random()*2)+1;
     this.answerType = 0;
@@ -88,6 +88,7 @@ export class QuestionsPage implements OnInit {
     let difference = this.array_diff(arrayAnswer, arrayAnswerOfPlayer);
     if(difference === 0)
     {
+      this.timerService.stopCountdown();
       this.isGoodAnswer = true;
       this.canShowGoToAnswer = true;
       this.message = this.goodAnswer;
@@ -102,11 +103,14 @@ export class QuestionsPage implements OnInit {
         this.message = this.almostGoodAnswer;
         return this.message;
       }
+      this.timerService.stopCountdown();
+      this.gameService.setLifes(this.gameService.getLifes()-1);
       this.canShowGoToAnswer = true;
       this.message = this.badAnswer;
       return this.message;
     }
-
+    this.timerService.stopCountdown();
+    this.gameService.setLifes(this.gameService.getLifes()-1);
     this.canShowGoToAnswer = true;
     this.message = this.tooManyAttempts;
     return this.message;
