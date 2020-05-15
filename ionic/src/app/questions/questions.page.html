@@ -52,8 +52,15 @@
         </ion-row>
       </ion-grid>
       </ion-row>
-        <ion-row *ngIf="answerType == 1 && questionType == 1">
-          <ion-textarea placeholder="Enter more information here..."></ion-textarea>
+        <ion-row *ngIf="answerType == 1 && questionType == 1" class="row-form-cash">
+          <form [formGroup]="cashForm" (ngSubmit)="validate()" class="form-cash">
+              <ion-input class="input-answer" formControlName="answer" type="text" placeholder="Entrez une réponse..."></ion-input>
+              <button class="btn-validate" type="submit">Valider</button>
+          </form>
+        </ion-row>
+        <ion-row class="row-sentence-answer">
+          <ion-text>{{this.message}}</ion-text>
+          <ion-button color="success" *ngIf="canShowGoToAnswer || this.timerService.getTimerIsFinish()" (click)="pathToResultPage()">Voir la réponse</ion-button>
         </ion-row>
         <ion-row *ngIf="answerType == 2 && questionType == 1">
           <ion-col>

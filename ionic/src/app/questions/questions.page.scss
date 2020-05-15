@@ -53,3 +53,37 @@ img.img-li {
   margin-left: auto;
   margin-right: auto;
 }
+.row-form-cash{
+  display: flex;
+  justify-content: center;
+  .form-cash{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex: 1;
+    .input-answer{
+      border-bottom-left-radius: 25px;
+      border-top-left-radius: 25px;
+      width: 100%;
+      background-color: white;
+      font-family: "Marker Felt";
+    }
+
+    .btn-validate{
+      margin: unset;
+      height: 39px;
+      background-color: rgb(56,128,255);
+      color : white;
+      font-family: "Marker Felt";
+      border-top-right-radius: 25px;
+      border-bottom-right-radius: 25px;
+      width: 80px;
+    }
+  }
+}
+.row-sentence-answer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+

@@ -7,7 +7,7 @@ import {GameService} from "./game.service";
 export class TimerService {
 
   count: any;
-
+  private boolTimer: boolean = false;
 
   constructor(private gameService: GameService) { }
 
@@ -54,12 +54,17 @@ export class TimerService {
         document.getElementById("timer").innerHTML = "EXPIRED";
         console.log("expired");
         this.gameService.setLifes(this.gameService.getLifes() - 1);
-
+        this.boolTimer = true;
       }
     }, 1000);
   }
 
   stopCountdown(){
     clearInterval(this.count);
+  }
+
+  getTimerIsFinish()
+  {
+    return this.boolTimer;
   }
 }
