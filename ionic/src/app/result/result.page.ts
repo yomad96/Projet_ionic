@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {GameService} from "../services/game.service";
+import {NavigationExtras, Router} from "@angular/router";
 
 @Component({
   selector: 'app-result',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResultPage implements OnInit {
 
-  constructor() { }
+  constructor(private gameService : GameService, private router : Router) { }
 
   ngOnInit() {
+  }
+
+  restart() {
+    this.router.navigate(['/home']);
   }
 
 }

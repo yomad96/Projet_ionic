@@ -1,11 +1,34 @@
 <ion-content [fullscreen]="true">
     <div class="main-title">
-      <div *ngIf="goodbad">
-        <img class="mt" src="../../assets/images/content.svg" width="350">
-      </div>
-      <div *ngIf="!goodbad">
-        <img class="mt" src="../../assets/images/pascontent.svg" width="350">
-      </div>
-        <a  class="btn-red" (click)="openModal()"> En savoir plus</a>
+        <ion-row class="lifes">
+            <div *ngFor="let idx of [3,2,1]">
+                <ion-col *ngIf="idx <= gameService.getLifes()">
+                    <img src="../../assets/images/heart.png" class="heart">
+                </ion-col>
+                <ion-col *ngIf="idx > gameService.getLifes()">
+                    <img src="../../assets/images/black-heart.png" class="heart">
+                </ion-col>
+            </div>
+        </ion-row>
+        <div class="d-flex align-item">
+            <div *ngIf="goodbad" class="mt">
+                <img class="mt" src="../../assets/images/pascontent2.svg" width="350">
+                <p>
+                    Biip boop, Tu feras mieux la prochaine fois.
+                </p>
+            </div>
+            <div *ngIf="!goodbad" class="mt">
+                <img class="mt" src="../../assets/images/content2.svg" width="350">
+                <p>
+                    Biip boop, BG mec t'es le boss
+                </p>
+            </div>
+            <div class="txt-center">
+                <a  class="btn-red" (click)="openModal()">En savoir plus</a>
+            </div>
+            <div class="txt-center mt">
+                <a  class="btn" (click)="suivant()">Suivant</a>
+            </div>
+        </div>
     </div>
 </ion-content>

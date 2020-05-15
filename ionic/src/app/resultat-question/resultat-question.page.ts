@@ -39,10 +39,13 @@ export class ResultatQuestionPage implements OnInit {
   }
 
   ngOnInit() {
-
   }
-
-  suivant(){
+  ionViewDidEnter(){
+    if (this.gameService.getLifes() <= 0) {
+      this.router.navigate(['/result']);
+    }
+  }
+  suivant() {
     this.gameService.randomQuestion();
   }
 }

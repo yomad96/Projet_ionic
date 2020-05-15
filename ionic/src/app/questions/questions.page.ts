@@ -3,6 +3,7 @@ import { TimerService } from '../services/timer.service';
 import { GameService } from '../services/game.service';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {NavigationExtras, Router} from "@angular/router";
+import { QuestionService, currentQuestion } from '../services/question.service';
 
 export interface question {
   answer1: string;

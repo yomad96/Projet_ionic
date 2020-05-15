@@ -5,12 +5,19 @@ import {ApiInterfaceFields} from "../Interfaces/api-interface-fields";
 import {Observable} from "rxjs";
 import {element} from "protractor";
 
-interface placeData {
+export interface placeData {
     id: string;
     country: string;
     site: string;
     coords: string;
 }
+
+export interface currentQuestion {
+    question: string;
+    rightanswer: placeData;
+    answers: placeData[];
+}
+
 
 @Injectable({
     providedIn: 'root'
@@ -24,22 +31,21 @@ export class QuestionService {
         'Africa',
         'Arab+States'
     ];
-    private rows = 4;
+    private rows = 30;
     private startNumber: number = 0;
     private search : placeData[] = [];
-    private answer : placeData[] = [];
+    private answers : placeData[] = [];
     private unicPlace : string[] = [];
     private randomRegion: string = '';
     private nHits: number;
     public question : string = '';
-    private sentence = ["(BipBoop) Dans quel pays se trouve cette image (BipBoop)", "(BipBoop) Ou se trouve " + this.search + " (BipBoop)", "(BipBoop) Laquelle de ces 4 images est " + this.search + " (BipBoop)"];
     private recordsInterface: ApiInterfaceRecords[] = [];
 
-    constructor(private api: ApiService) {}
+    constructor(private api: ApiService) {
+        this.getRandomQuestion();
+    }
 
      getRandomQuestion(){
-       // @ts-ignore
-        let randomNumberSentence = this.getRandomNumber(0, this.sentence.length);
         // if (randomNumberSentence === 0) {
         //     return this.sentence[0];
         // }
@@ -49,46 +55,74 @@ export class QuestionService {
             this.nHits = parseInt(nHits);
             this.getStartNumber();
             this.api.setStart(this.startNumber);
-            this.api.getApi().subscribe(data => {
-                this.recordsInterface = data['records'];
-                this.recordsInterface.forEach(element =>{
-                    this.unicAnswer(element);
-                });
-
-                this.sentence = ["(BipBoop) Dans quel pays se trouve cette image (BipBoop)", " (BipBoop) Ou se trouve " + this.search[0][0] + " (BipBoop)", "(BipBoop) Laquelle de ces 4 images est " + this.search[0][0] + " (BipBoop)"];
-                this.question = this.sentence[randomNumberSentence];
-            });
+            this.getplaces();
         });
     }
 
     private isADiffirentCountry(countryname: string): boolean {
         if (!this.unicPlace.includes(countryname)) {
             this.unicPlace.push(countryname);
-            return false;
-        } else {
             return true;
-        }
-    }
-    private unicAnswer(element: ApiInterfaceRecords) {
-        console.log(element);
-        let data: placeData = {
-            id: element.fields['id_number'],
-            country: element.fields['states'],
-            site: element.fields['site'],
-            coords: element.geometry['coordinates']
-        }
-        this.search.push(data);
-    let countryname = [];
-    this.search.forEach(element => {
-        countryname.push(element.country);
-    });
-    for (let i: number = 0; i < 4; i++) {                    
-        if (this.isADiffirentCountry(this.search[i].country)) {
-            
         } else {
-            this.answer.push(this.search[i]);
+            return false;
         }
     }
+
+    private getplaces() {
+        this.api.getApi().subscribe(data => {
+            this.recordsInterface = data['records'];
+            this.recordsInterface.forEach(element => {
+                let data: placeData = {
+                    id: element.fields['id_number'],
+                    country: element.fields['states'],
+                    site: element.fields['site'],
+                    coords: element.geometry['coordinates']
+                }
+                if (data.country != undefined) {
+                    this.search.push(data);
+                }
+                let countryname = [];
+
+            try {
+                this.search.forEach(element => {
+                    if (data.country != undefined) {
+                        countryname.push(element.country);
+                    }
+                });
+            }
+            catch(exception){}
+            });
+
+            for (let i = 0; i < this.recordsInterface.length && this.answers.length < 4; i++) {
+                let data: placeData = {
+                    id: this.recordsInterface[i].recordid,
+                    country: this.recordsInterface[i].fields['states'],
+                    site: this.recordsInterface[i].fields['site'],
+                    coords: this.recordsInterface[i].geometry['coordinates']
+                }
+                this.unicAnswer(data);
+            }
+        });
+    }
+
+    public getQuestion() {
+        let currentQuestion: currentQuestion;   
+            if (this.answers.length == 4) {
+            let answer = this.answers[this.getRandomNumber(0, 3)];
+            currentQuestion = {
+                question: ["(BipBoop) Dans quel pays se trouve cette image (BipBoop)", " (BipBoop) Ou se trouve " + answer.country + " (BipBoop)", "(BipBoop) Laquelle de ces 4 images est " + answer.country + " (BipBoop)"][this.getRandomNumber(0, 3)],
+                rightanswer: answer,
+                answers: this.answers,
+            }
+        }
+        return currentQuestion;
+    }
+
+    //verifie si le pays n'est pas déjà sélectionner
+    private unicAnswer(element: placeData) {
+        if (this.isADiffirentCountry(element.country) && element.country != undefined) {
+            this.answers.push(element);
+        }
     }
 
     private getRandomRegion() {
