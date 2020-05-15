@@ -6,10 +6,10 @@ import {Observable, Subject} from "rxjs";
 import {element} from "protractor";
 
 export interface placeData {
-    id: string;
+    id?: string;
     country: string;
-    site: string;
-    coords: string;
+    site?: string;
+    coords?: string;
 }
 
 export interface currentQuestion {
@@ -27,7 +27,7 @@ export class QuestionService {
     private Region = [
         'Europe+and+North+America',
         'Asia+and+the+Pacific',
-        'Latin+America+and+the+Caribean',
+        'Latin+America+and+the+Caribbean',
         'Africa',
         'Arab+States'
     ];
@@ -40,7 +40,6 @@ export class QuestionService {
     private nHits: number;
     public question : string = '';
     private recordsInterface: ApiInterfaceRecords[] = [];
-    public dataQuestionObservable = new Subject<currentQuestion>();
     public open: EventEmitter<any> = new EventEmitter();
     
     
@@ -49,9 +48,6 @@ export class QuestionService {
     }
 
      getRandomQuestion(){
-        // if (randomNumberSentence === 0) {
-        //     return this.sentence[0];
-        // }
         this.getTotalHits().subscribe(data => {
             let nHits: string;
             nHits = data['nhits'];
@@ -76,10 +72,7 @@ export class QuestionService {
             this.recordsInterface = data['records'];
             this.recordsInterface.forEach(element => {
                 let data: placeData = {
-                    id: element.fields['id_number'],
-                    country: element.fields['states'],
-                    site: element.fields['site'],
-                    coords: element.geometry['coordinates']
+                    country: element.fields['states']
                 }
                 if (data.country != undefined) {
                     this.search.push(data);
@@ -95,7 +88,6 @@ export class QuestionService {
             }
             catch(exception){}
             });
-
             for (let i = 0; i < this.recordsInterface.length && this.answers.length < 4; i++) {
                 let data: placeData = {
                     id: this.recordsInterface[i].recordid,
@@ -114,7 +106,7 @@ export class QuestionService {
             if (this.answers.length == 4) {
             let answer = this.answers[this.getRandomNumber(0, 3)];
             currentQuestion = {
-                question: ["(BipBoop) Dans quel pays se trouve cette image (BipBoop)", " (BipBoop) Ou se trouve " + answer.country + " (BipBoop)", "(BipBoop) Laquelle de ces 4 images est " + answer.country + " (BipBoop)"][this.getRandomNumber(0, 2)],
+                question: ["(BipBoop) Dans quel pays se trouve cette image (BipBoop)", " (BipBoop) Ou se trouve " + answer.site + " (BipBoop)", "(BipBoop) Laquelle de ces 4 images est " + answer.site + " (BipBoop)"][this.getRandomNumber(0, 2)],
                 rightanswer: answer,
                 answers: this.answers,
             }
@@ -149,7 +141,7 @@ export class QuestionService {
     }
 
     getStartNumber() {
-        let totalHits = this.nHits;
+        let totalHits = this.nHits-30;
         this.startNumber = this.getRandomNumber(0, totalHits);
     }
 }
