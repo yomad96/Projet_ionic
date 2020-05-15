@@ -70,10 +70,10 @@ export class MapPage implements OnInit {
 
     // this.questionImg = null;
     this.question = null;
-    this.questionService.open.subscribe(() => {
+    this.questionService.questionEventEmitter.subscribe(() => {
       this.question = this.questionService.getQuestion().rightanswer.site;
-      this.questionLat = parseFloat(this.questionService.getQuestion().rightanswer.coords[0]);
-      this.questionLng = parseFloat(this.questionService.getQuestion().rightanswer.coords[1]);
+      this.questionLat = parseFloat(this.questionService.getQuestion().rightanswer.coords[1]);
+      this.questionLng = parseFloat(this.questionService.getQuestion().rightanswer.coords[0]);
       this.questionrecordid = this.questionService.getQuestion().rightanswer.id;
       const x = this.questionrecordid;
 
@@ -167,6 +167,7 @@ export class MapPage implements OnInit {
     }
     this.pourcentage = (this.point * 100 / 5000) / 100;
     this.validate = true;
+    console.log(this.goodbad = true);
 
   }
 
