@@ -17,7 +17,7 @@ export class ResultatQuestionPage implements OnInit {
   jsonRecord: ApiInterfaceRecords;
   receive = false;
   data: any;
-  image: string
+  image: string;
 
 
   constructor(private route: ActivatedRoute, private router: Router, private api: ApiService) {
