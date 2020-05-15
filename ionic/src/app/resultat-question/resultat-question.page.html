@@ -1,32 +1,11 @@
 <ion-content [fullscreen]="true">
-  <div id="container" class="container">
     <div class="main-title">
-      <img class="mt" src="../../assets/images/prof.svg" width="350">
-    </div>
-    <div class="section">
-      <div *ngIf="!receive">
-        <ion-progress-bar type="indeterminate"></ion-progress-bar>
+      <div *ngIf="goodbad">
+        <img class="mt" src="../../assets/images/content.svg" width="350">
       </div>
-      <div *ngIf="receive" slot="fixed">
-        <div class="txt-center">
-          <i >
-            "BEEPP BOOP"
-          </i>
-        </div>
-        <div class="txt-center">
-          <img src="https://whc.unesco.org{{image}}">
-        </div>
-        <p>
-          {{pays}} : {{location}}
-        </p>
-        A little description : <br>
-        <p>
-          {{description}}
-        </p>
-        <div class="txt-center">
-          <a href="{{url}}" class="btn">En voir plus</a>
-        </div>
+      <div *ngIf="!goodbad">
+        <img class="mt" src="../../assets/images/pascontent.svg" width="350">
       </div>
+        <a  class="btn-red" (click)="openModal()"> En savoir plus</a>
     </div>
-  </div>
 </ion-content>
