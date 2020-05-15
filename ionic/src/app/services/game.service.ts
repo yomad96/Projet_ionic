@@ -11,13 +11,13 @@ export class GameService {
   constructor(private router: Router) {
   }
 
-randomQuestion() {
+  randomQuestion() {
     if (Math.floor(Math.random()*3)+1 === 1) {
-      this.router.navigate(['/questions']);
-  } else {
-      this.router.navigate(['/map']);
+        this.router.navigate(['/questions']);
+    } else {
+        this.router.navigate(['/map']);
+    }
   }
-}
 
   addPoint(point: number) {
     this.point = this.point + point;

@@ -1,7 +1,23 @@
 .txt-center{
   text-align: center;
+  color: white;
 }
 
 .pad{
   padding: 3em;
+}
+.txt-justify{
+  text-align: justify;
+}
+ion-button{
+  --ion-background-color: #67c2ce;
+}
+
+ion-content{
+  --ion-background-color: #67c2ce;
+  color: black;
+}
+
+.mt{
+  margin-top: 20px;
 }
