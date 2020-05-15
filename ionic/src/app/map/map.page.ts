@@ -24,9 +24,14 @@ export class MapPage implements OnInit {
   reponseLat: number;
   reponseLng: number;
   reponseImg: string;
+  goodbad = false;
 
+  question: string;
   questionLat: number;
   questionLng: number;
+  questionrecordid: string;
+  questionImg: string;
+
 
   distance: number;
   point: number;
@@ -35,31 +40,47 @@ export class MapPage implements OnInit {
   questionType: number;
 
 
-  ionViewDidEnter() { this.leafletMap(); }
-
   constructor(private gameService: GameService, private router: Router, private api: ApiService, private timerService: TimerService) { }
 
   ngOnInit() {
-    this.questionType = Math.floor(Math.random()*2)+1;
-    this.timerService.countdown(5);
-    // @ts-ignore
-    this.api.setSpecifique();
-    this.api.getApi().subscribe(data => {
-      this.jsonRecord = data.records;
-      console.log(this.jsonRecord[0].fields);
-      this.questionLat = this.jsonRecord[0].fields.id_number
-      this.questionLng = this.jsonRecord[0].fields.id_number
-      this.httpGetAsync(this.jsonRecord[0].fields.id_number);
-    });
 
   }
 
+  ionViewDidEnter(){
+    this.leafletMap();
+    this.timerService.stopCountdown();
+    this.questionType = Math.floor(Math.random()*2)+1;
+    this.timerService.countdown(5);
+
+    this.reponse = false;
+    this.validate = false;
+    this.reponseLat = null;
+    this.reponseLng = null;
+    this.goodbad = false;
+
+    this.distance = null;
+    this.point = null;
+    this.pourcentage = null;
+
+
+    // this.httpGetAsync("id_number");
+    // this.questionLat = this.jsonRecord[0].fields.id_number;
+    // this.questionLng = this.jsonRecord[0].fields.id_number;
+    // this.questionrecordid = this.jsonRecord[0].fields.id_number;
+    // this.question = this.jsonRecord[0].fields.id_number;
+    // this.questionLat = null;
+    // this.questionLng = null;
+    // this.questionImg = null;
+    // this.question = null;
+
+
+  }
   httpGetAsync(id : number) {
     this.api.getImage(id).subscribe( data => {
       const el = document.createElement( 'html' );
       el.innerHTML = data;
       const imgs = el.getElementsByClassName('icaption-img');
-      this.reponseImg = imgs[0].getAttribute('data-src');
+      this.questionImg = imgs[0].getAttribute('data-src');
     });
   }
 
@@ -103,7 +124,7 @@ export class MapPage implements OnInit {
 
     this.map.tap.disable();
     const poly = [
-      [45.51, -122.68],
+      [this.questionLat, this.questionLng],
       [this.reponseLat, this.reponseLng]
     ];
 
@@ -113,10 +134,10 @@ export class MapPage implements OnInit {
     this.map.fitBounds(this.polyline.getBounds());
 
     const R = 6371e3; // metres
-    const lat1 = 45.51 * Math.PI / 180; // φ, λ in radians
-    const lat2 = this.reponseLat * Math.PI / 180;
-    const difflat = (lat2 - lat1) * Math.PI / 180;
-    const difflng = (this.reponseLng - (-122.68)) * Math.PI / 180;
+    const lat1 = (this.reponseLat) * Math.PI / 180; // φ, λ in radians
+    const lat2 = (this.questionLat) * Math.PI / 180;
+    const difflat = ((lat2) - (lat1)) * Math.PI / 180;
+    const difflng = ((this.questionLng) - (this.reponseLng)) * Math.PI / 180;
 
 
     const a = Math.sin(difflat / 2) * Math.sin(difflat / 2) +
@@ -128,8 +149,12 @@ export class MapPage implements OnInit {
 
     this.point = Math.round(5000 - ( this.distance / 40000) * 5000);
     this.gameService.addPoint(this.point);
+    if (this.point <= 1000) {
+      this.gameService.setLifes(this.gameService.getLifes() - 1);
+    } else {
+      this.goodbad = true;
+    }
     this.pourcentage = (this.point * 100 / 5000) / 100;
-
     this.validate = true;
 
   }
@@ -137,7 +162,8 @@ export class MapPage implements OnInit {
   suivant() {
     const navigationExtras: NavigationExtras = {
       state: {
-        id: '5f325ebe3795d4984a051ac541f7dc131986891e'
+        id: this.questionrecordid,
+        resp : this.goodbad
       }
     };
     this.router.navigate(['/resultat-question'], navigationExtras);

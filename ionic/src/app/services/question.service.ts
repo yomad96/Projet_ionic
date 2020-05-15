@@ -5,6 +5,13 @@ import {ApiInterfaceFields} from "../Interfaces/api-interface-fields";
 import {Observable} from "rxjs";
 import {element} from "protractor";
 
+interface placeData {
+    id: string;
+    country: string;
+    site: string;
+    coords: string;
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -17,9 +24,11 @@ export class QuestionService {
         'Africa',
         'Arab+States'
     ];
-    private rows = 5;
+    private rows = 4;
     private startNumber: number = 0;
-    private search : [] = [];
+    private search : placeData[] = [];
+    private answer : placeData[] = [];
+    private unicPlace : string[] = [];
     private randomRegion: string = '';
     private nHits: number;
     public question : string = '';
@@ -43,16 +52,43 @@ export class QuestionService {
             this.api.getApi().subscribe(data => {
                 this.recordsInterface = data['records'];
                 this.recordsInterface.forEach(element =>{
-                    // @ts-ignore
-                    this.search.push([element.fields['states'], element['recordid']]);
+                    this.unicAnswer(element);
                 });
-                console.log(this.search);
 
-                // @ts-ignore
                 this.sentence = ["(BipBoop) Dans quel pays se trouve cette image (BipBoop)", " (BipBoop) Ou se trouve " + this.search[0][0] + " (BipBoop)", "(BipBoop) Laquelle de ces 4 images est " + this.search[0][0] + " (BipBoop)"];
                 this.question = this.sentence[randomNumberSentence];
             });
         });
+    }
+
+    private isADiffirentCountry(countryname: string): boolean {
+        if (!this.unicPlace.includes(countryname)) {
+            this.unicPlace.push(countryname);
+            return false;
+        } else {
+            return true;
+        }
+    }
+    private unicAnswer(element: ApiInterfaceRecords) {
+        console.log(element);
+        let data: placeData = {
+            id: element.fields['id_number'],
+            country: element.fields['states'],
+            site: element.fields['site'],
+            coords: element.geometry['coordinates']
+        }
+        this.search.push(data);
+    let countryname = [];
+    this.search.forEach(element => {
+        countryname.push(element.country);
+    });
+    for (let i: number = 0; i < 4; i++) {                    
+        if (this.isADiffirentCountry(this.search[i].country)) {
+            
+        } else {
+            this.answer.push(this.search[i]);
+        }
+    }
     }
 
     private getRandomRegion() {

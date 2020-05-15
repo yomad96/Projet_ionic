@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
+import {GameService} from "./game.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TimerService {
 
-  constructor() { }
+  count: any;
+
+
+  constructor(private gameService: GameService) { }
 
   setTime(time: number) {
     time = time%60;
     let countDownDate = new Date();
     if (countDownDate.getMinutes()+time > 60){
       countDownDate.setMinutes(countDownDate.getMinutes()+time);
-    }
-    else {
+    } else {
       countDownDate.setMinutes(countDownDate.getMinutes()-60+time);
       countDownDate.setHours(countDownDate.getHours()+1);
     }
@@ -31,13 +34,12 @@ export class TimerService {
     let countDownDate = new Date();
     if (countDownDate.getMinutes()+time > 60){
       countDownDate.setMinutes(countDownDate.getMinutes()+time);
-    }
-    else {
+    } else {
       countDownDate.setMinutes(countDownDate.getMinutes()-60+time);
       countDownDate.setHours(countDownDate.getHours()+1);
     }
     
-    let x = setInterval(function () {
+    this.count = setInterval( () => {
 
       let now = new Date().getTime();
       let distance = countDownDate.getTime() - now + 10;
@@ -48,10 +50,16 @@ export class TimerService {
       document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
       
       if (distance < 0) {
-        clearInterval(x);
+        clearInterval(this.count);
         document.getElementById("timer").innerHTML = "EXPIRED";
         console.log("expired");
+        this.gameService.setLifes(this.gameService.getLifes() - 1);
+
       }
     }, 1000);
+  }
+
+  stopCountdown(){
+    clearInterval(this.count);
   }
 }
