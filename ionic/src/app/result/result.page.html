@@ -1,21 +1,33 @@
 <ion-content [fullscreen]="true">
-    <div class="d-flex align-item">
-        <div class="txt-center">
-            <img src="../../assets/images/map.svg"  width="350">
-        </div>
-        <ion-row>
-          <ion-col *ngFor="let idx of [3,2,1]">
-            <div *ngIf="idx <= gameService.getLifes()" class="txt-center">
-                <img src="../../assets/images/coeur.svg" class="heart">
+    <div class="d-flex align-item conf-cont">
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+
+            <div class="txt-center">
+                <img src="../../assets/images/map.svg"  width="350">
             </div>
-            <div *ngIf="idx > gameService.getLifes()" class="txt-center">
-              <img src="../../assets/images/coeurblack.svg" class="heart">
+
+            <div class="txt-center">
+               Votre score est de : {{gameService.getPoint()}}
             </div>
-          </ion-col>
-        </ion-row>
-        <div class="txt-center">
-           Votre score est de : {{gameService.getPoint()}}
+            <ion-button (click)="restart()">Restart</ion-button>
         </div>
-        <ion-button (click)="restart()">Restart</ion-button>
-      </div>
 </ion-content>
