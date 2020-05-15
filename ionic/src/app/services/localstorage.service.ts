@@ -17,7 +17,11 @@ export class LocalstorageService {
   }
 
   getscores() {
-    return localStorage.getItem('scores').split('|*|');
+    if (localStorage.getItem('scores') != null) {
+      return localStorage.getItem('scores').split('|*|');
+    } else {
+      return [];
+    }
   }
   
 }

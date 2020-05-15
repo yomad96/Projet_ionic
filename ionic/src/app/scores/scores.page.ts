@@ -13,11 +13,11 @@ export class ScoresPage implements OnInit {
 
   constructor(private localstorageService: LocalstorageService) {
     //localstorageService.setscore(12000);
-    //this.scores = localstorageService.getscores();
+      this.scores = localstorageService.getscores();
   }
 
   ngOnInit() {
-    //startclock();
+    
   }
   
   
