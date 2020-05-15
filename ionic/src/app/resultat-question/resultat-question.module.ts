@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ResultatQuestionPageRoutingModule } from './resultat-question-routing.module';
 
 import { ResultatQuestionPage } from './resultat-question.page';
+import {ModalPage} from '../modal/modal.page';
 
 @NgModule({
   imports: [
@@ -15,6 +16,8 @@ import { ResultatQuestionPage } from './resultat-question.page';
     IonicModule,
     ResultatQuestionPageRoutingModule
   ],
-  declarations: [ResultatQuestionPage]
+  declarations: [ResultatQuestionPage, ModalPage],
+  entryComponents:[ModalPage]
+
 })
 export class ResultatQuestionPageModule {}

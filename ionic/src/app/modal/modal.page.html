@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button slot="end"(click)="closeModal()"  >
+      <ion-icon slot="icon-only" name="close"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+<div *ngIf="image === undefined && jsonRecord === undefined">
+  <ion-progress-bar type="indeterminate"></ion-progress-bar>
+</div>
+
+
+<ion-content>
+  <div *ngIf="image != undefined && jsonRecord != undefined">
+    <div class="txt-center">
+      <img src="https://whc.unesco.org/{{image}}" alt="Grapefruit slice atop a pile of other slices">
+    </div>
+    <div class="txt-center pad">
+      {{jsonRecord[0].fields.short_description}}
+    </div>
+  </div>
+</ion-content>

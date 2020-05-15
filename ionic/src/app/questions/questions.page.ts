@@ -43,7 +43,7 @@ export class QuestionsPage implements OnInit {
     case 1:
     case 2:
   }
-  this.timerService.countdown(5);
+  this.timerService.countdown(0.1);
   }
 
   anwser() {
