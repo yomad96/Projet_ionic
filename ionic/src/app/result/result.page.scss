@@ -1,0 +1,22 @@
+ion-content{
+  --ion-background-color: #67c2ce;
+}
+
+.d-flex{
+  display: flex;
+  flex-direction: column;
+}
+.align-item{
+  justify-content: center;
+  align-content: center;
+  height: 100%;
+}
+
+.heart {
+  width: 3em;
+  height: auto;
+}
+
+.txt-center{
+  text-align: center;
+}
