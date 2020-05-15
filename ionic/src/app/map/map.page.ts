@@ -42,6 +42,7 @@ export class MapPage implements OnInit {
   ngOnInit() {
     this.questionType = Math.floor(Math.random()*2)+1;
     this.timerService.countdown(5);
+    // @ts-ignore
     this.api.setSpecifique();
     this.api.getApi().subscribe(data => {
       this.jsonRecord = data.records;

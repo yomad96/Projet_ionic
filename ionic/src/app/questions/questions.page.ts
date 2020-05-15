@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TimerService } from '../services/timer.service';
 import { GameService } from '../services/game.service';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 export interface question {
   answer1: string;
@@ -18,6 +19,10 @@ export class QuestionsPage implements OnInit {
   questionType: number;//Si c'est une question qui demande une réponse sous forme de texte ou d'image
   answerType: number;//Cash/carre/duo
   question: string;//text de la question
+  name: string;
+  tentative: number = 0;
+  cashForm : FormGroup;
+
   answer: question = {
     answer1: "Rep1",
     answer2: "Rep2",
@@ -29,6 +34,10 @@ export class QuestionsPage implements OnInit {
     this.question = "Comment allez vous ?";
     this.questionType = Math.floor(Math.random()*2)+1;
     this.answerType = 0;
+
+    this.cashForm = new FormGroup({
+      answer: new FormControl('', [Validators.required])
+    });
   }
 
   ngOnInit() {
@@ -46,7 +55,61 @@ export class QuestionsPage implements OnInit {
   this.timerService.countdown(5);
   }
 
-  anwser() {
+  getAnwser() {
+      return "test 123";
+  }
 
+  validate()
+  {
+    if(this.cashForm.valid)
+    {
+      let answer = this.getAnwser();
+      let answerOfPlayer = this.cashForm.value.answer;
+      console.log(this.answerVerification(answer,answerOfPlayer));
+    }
+  }
+
+  answerVerification(answer: string, answerOfPlayer: string)
+  {
+    let arrayAnswer = answer.split('');
+    let arrayAnswerOfPlayer = answerOfPlayer.split('');
+    // @ts-ignore
+    let difference = this.array_diff(arrayAnswer, arrayAnswerOfPlayer);
+
+    console.log(this.tentative);
+
+    if(difference === 0)
+    {
+      return "Bien joué vous avez trouvé la bonne réponse"
+    }
+
+    if(this.tentative <= 1)
+    {
+      if(difference <= 2)
+      {
+        this.tentative = this.tentative+1;
+        console.log(this.tentative);
+        return "Vous avez presque la bonne réponse";
+      }
+
+      return "Ce n'est pas la bonne réponse";
+    }
+
+    return "Dommage, vous avez écoulé votre nombre de tentative";
+  }
+
+  array_diff(array1 : [], array2 : [])
+  {
+    let diffArray = 0;
+    for(let i = 0; i <= array2.length;i++)
+    {
+      if(array1[i] !== array2[i])
+      {
+        diffArray = diffArray+1;
+      }
+    }
+    return diffArray;
   }
 }
+
+
