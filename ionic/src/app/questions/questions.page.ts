@@ -74,17 +74,24 @@ export class QuestionsPage implements OnInit {
         const el = document.createElement( 'html' );
       el.innerHTML = data;
       const imgs = el.getElementsByClassName('icaption-img');
-      console.log(imgs[0].getAttribute('data-src'));
       this.pictures.push("https://whc.unesco.org" + imgs[0].getAttribute('data-src'));
     });
   });
   this.timerService.countdown(0.1);
+  this.isLoading = false;
   });
   }
 
+  sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+  }
+
   ngOnInit() {
-    this.timerService.setTime(1);
-    this.isLoading = false;
+    this.timerService.setTime(1);    
   }
 
   onChooseTypeAnswer(type: number) {
@@ -102,7 +109,7 @@ export class QuestionsPage implements OnInit {
   }
 
   imageAnswer(idx: number) {
-    if (this.arrayAnswer[idx].id = this.currentplaceinfo.rightanswer.id) {
+    if (this.arrayAnswer[idx].id == this.currentplaceinfo.rightanswer.id) {
       console.log("juste")
     }
   }

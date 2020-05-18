@@ -39,6 +39,7 @@ ion-content{
 
 .question{
   font-family: "Marker Felt";
+  font-size: 12px;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
@@ -47,6 +48,7 @@ ion-content{
 }
 
 img.img-li {
+  position: relative;
   margin-top: 2em;;
   display: flex;
   max-width: 15em;
@@ -87,8 +89,10 @@ img.img-li {
   align-items: center;
 }
 
-.spinner-question{
+.spinner-question {
+  position: relative;
+  margin-top: 20%;
   width: 100%;
-  height: 100%;
+  height: 8em;
 }
 
