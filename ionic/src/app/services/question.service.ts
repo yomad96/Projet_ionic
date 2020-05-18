@@ -13,7 +13,6 @@ export interface placeData {
 }
 
 export interface currentQuestion {
-    question: string;
     rightanswer: placeData;
     answers: placeData[];
 }
@@ -106,7 +105,6 @@ export class QuestionService {
             if (this.answers.length == 4) {
             let answer = this.answers[this.getRandomNumber(0, 3)];
             currentQuestion = {
-                question: ["(BipBoop) Dans quel pays se trouve cette image (BipBoop)", " (BipBoop) Ou se trouve " + answer.site + " (BipBoop)", "(BipBoop) Laquelle de ces 4 images est " + answer.site + " (BipBoop)"][this.getRandomNumber(0, 2)],
                 rightanswer: answer,
                 answers: this.answers,
             }
@@ -126,7 +124,7 @@ export class QuestionService {
         this.randomRegion = this.Region[randomNumber];
     }
 
-    private getRandomNumber(min: number, max: number) {
+    public getRandomNumber(min: number, max: number) {
         min = Math.ceil(min);
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min + 1) + min);
