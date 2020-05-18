@@ -1,4 +1,64 @@
 <ion-content>
+  <ion-grid>
+    <ion-row class="lifes">
+      <div *ngFor="let idx of [3,2,1]">
+        <ion-col *ngIf="idx <= gameService.getLifes()">
+          <img src="../../assets/images/heart.png" class="heart">
+        </ion-col>
+        <ion-col *ngIf="idx > gameService.getLifes()">
+          <img src="../../assets/images/black-heart.png" class="heart">
+        </ion-col>
+      </div>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <ion-row>
+        <img class="img-li" src="../../assets/images/Li2.svg">
+        <p id="timer" class="clock"></p>
+    </ion-row>
+    <ion-row>
+      <p class="question">
+        {{question}}
+      </p>
+    </ion-row>
+    <ion-row *ngIf="answerType == 0 && questionType == 1">
+      <ion-col>
+        <ion-button shape="round" class="typeAnswer" (click)="onChooseTypeAnswer()">Cash</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button shape="round" class="typeAnswer" (click)="onChooseTypeAnswer(4)">Carré</ion-button>        
+      </ion-col>
+      <ion-col>
+        <ion-button shape="round" class="typeAnswer" (click)="onChooseTypeAnswer(2)">Duo</ion-button>        
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="questionType == 2 && this.currentplaceinfo != undefined">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <a (click)="imageAnswer(0)">
+              <img src="{{this.pictures[0]}}">
+            </a>
+          </ion-col>
+          <ion-col>
+            <a (click)="imageAnswer(1)">
+              <img src="{{this.pictures[1]}}">
+            </a>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <a (click)="imageAnswer(2)">
+              <img src="{{this.pictures[2]}}">
+            </a>
+          </ion-col>
+          <ion-col>
+            <a (click)="imageAnswer(3)">
+              <img src="{{this.pictures[3]}}">
+            </a>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
   <ion-spinner class="spinner-question" *ngIf="isLoading" name="crescent"></ion-spinner>
   <div *ngIf="!isLoading">
     <ion-grid>
