@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ModalController} from "@ionic/angular";
+import {ModalController} from '@ionic/angular';
 
 @Component({
   selector: 'app-image-modal',
@@ -9,7 +9,7 @@ import {ModalController} from "@ionic/angular";
 export class ImageModalPage implements OnInit {
 
   @Input() url: string;
-  imagurl : string
+  imagurl: string
   constructor(private modalController: ModalController) { }
 
   ngOnInit() {

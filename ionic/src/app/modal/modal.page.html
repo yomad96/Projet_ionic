@@ -5,12 +5,13 @@
     </ion-button>
   </ion-toolbar>
 </ion-header>
-<div *ngIf="image === undefined && jsonRecord === undefined">
-  <ion-progress-bar type="indeterminate"></ion-progress-bar>
-</div>
-
 
 <ion-content>
+  <div *ngIf="image === undefined && jsonRecord === undefined">
+    <div class="d-flex align-item h-100">
+      <ion-progress-bar type="indeterminate"></ion-progress-bar>
+    </div>
+  </div>
   <div *ngIf="image != undefined && jsonRecord != undefined">
     <div class="txt-center">
       <img src="../../assets/images/prof.svg"  class="mt " width="350">
