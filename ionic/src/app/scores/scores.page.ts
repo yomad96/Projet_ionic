@@ -12,14 +12,8 @@ export class ScoresPage implements OnInit {
   public scores: string[];
 
   constructor(private localstorageService: LocalstorageService) {
-    //localstorageService.setscore(12000);
-      this.scores = localstorageService.getscores();
   }
 
   ngOnInit() {
-    
   }
-  
-  
-
 }

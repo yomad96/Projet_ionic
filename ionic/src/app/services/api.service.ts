@@ -60,7 +60,7 @@ export class ApiService {
     }
 
     getImage(id : number): Observable<any> {
-        return this.http.get('https://whc.unesco.org/en/list/' + id + '/gallery/&maxrows=20', { responseType: 'text' });
+        return this.http.get(' https://cors-anywhere.herokuapp.com/whc.unesco.org/en/list/' + id + '/gallery/&maxrows=20', { responseType: 'text' });
     }
 
     setStart(start : number)

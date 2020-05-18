@@ -6,6 +6,9 @@ import {ApiService} from '../services/api.service';
 import {ApiInterfaceRecords} from '../Interfaces/apiInterfaceRecords';
 import {TimerService} from '../services/timer.service';
 import {QuestionService} from "../services/question.service";
+import {ModalPage} from "../modal/modal.page";
+import {ImageModalPage} from "../image-modal/image-modal.page";
+import {ModalController} from "@ionic/angular";
 
 @Component({
   selector: 'app-map',
@@ -41,7 +44,7 @@ export class MapPage implements OnInit {
 
 
   // tslint:disable-next-line:max-line-length
-  constructor(private gameService: GameService, private router: Router, private api: ApiService, private timerService: TimerService, private questionService: QuestionService) { }
+  constructor(private gameService: GameService, private router: Router, private api: ApiService, private timerService: TimerService, private questionService: QuestionService, private modal: ModalController) { }
 
   ngOnInit() {
 
@@ -167,7 +170,6 @@ export class MapPage implements OnInit {
     }
     this.pourcentage = (this.point * 100 / 5000) / 100;
     this.validate = true;
-    console.log(this.goodbad = true);
 
   }
 
@@ -179,6 +181,16 @@ export class MapPage implements OnInit {
       }
     };
     this.router.navigate(['/resultat-question'], navigationExtras);
+  }
+
+  async openModal() {
+    const mymodal = await this.modal.create({
+      component : ImageModalPage,
+      componentProps: {
+        'url': this.questionImg
+      }
+    });
+    return await mymodal.present();
   }
 
 

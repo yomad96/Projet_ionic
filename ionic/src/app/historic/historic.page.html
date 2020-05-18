@@ -1,0 +1,13 @@
+<ion-content>
+  <div *ngFor="let histo of historique">
+    <ion-card>
+      <ion-item>
+        <ion-icon name="pin" slot="start"></ion-icon>
+        <ion-label>{{histo.score}}</ion-label>
+      </ion-item>
+      <ion-card-content>
+        {{histo.timestamp}}
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
