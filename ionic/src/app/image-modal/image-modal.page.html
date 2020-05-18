@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button slot="end"(click)="closeModal()"  >
+      <ion-icon slot="icon-only" name="close"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+<div *ngIf="url === undefined">
+  <ion-progress-bar type="indeterminate"></ion-progress-bar>
+</div>
+
+
+<ion-content>
+  <div *ngIf="url != undefined">
+    <div class="txt-center">
+      <img src="{{this.imagurl}}"  class="mt " width="350">
+    </div>
+  </div>
+</ion-content>
