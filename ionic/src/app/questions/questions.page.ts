@@ -34,6 +34,7 @@ export class QuestionsPage implements OnInit {
   fakeId = 'aaf23f0bbb475a944045913a7b202d50596af11e';
   arrayAnswer : [] = [];
   rightAnswer: string;
+  canShowAnswer: boolean =true;
 
   answer: question = {
     answer1: "Rep1",
@@ -43,15 +44,18 @@ export class QuestionsPage implements OnInit {
   };
 
   constructor(private timerService: TimerService, private gameService: GameService, private router: Router, private questionservice: QuestionService) {
-    this.question = "Comment allez vous ?";
     this.questionType = Math.floor(Math.random()*2)+1;
     this.answerType = 0;
     this.cashForm = new FormGroup({
       answer: new FormControl('', [Validators.required])
     });
     this.questionservice.questionEventEmitter.subscribe(data => {
+      console.log(this.questionservice.getQuestion());
       // @ts-ignore
       this.arrayAnswer = this.questionservice.getQuestion().answers;
+      let answer = this.questionservice.getQuestion().answers[this.questionservice.getRandomNumber(0, 3)];
+      let arrayQuestion = ["(BipBoop) Dans quel pays se trouve cette image (BipBoop)", " (BipBoop) Ou se trouve "+ answer.site + " (BipBoop)"];
+      this.question = arrayQuestion[this.questionservice.getRandomNumber(0,arrayQuestion.length-1)];
       console.log(this.arrayAnswer);
       this.rightAnswer = this.questionservice.getQuestion().rightanswer['site'];
       console.log(this.rightAnswer);
@@ -77,7 +81,7 @@ export class QuestionsPage implements OnInit {
   this.timerService.countdown(0.1);
   }
 
-  anwser() {
+  getAnwser() {
       return this.rightAnswer;
   }
 
@@ -85,7 +89,7 @@ export class QuestionsPage implements OnInit {
   {
     if(this.cashForm.valid)
     {
-      let answer = this.anwser();
+      let answer = this.getAnwser();
       let answerOfPlayer = this.cashForm.value.answer;
       if(!this.canShowGoToAnswer)
       {
@@ -106,6 +110,7 @@ export class QuestionsPage implements OnInit {
       this.isGoodAnswer = true;
       this.canShowGoToAnswer = true;
       this.message = this.goodAnswer;
+      this.canShowAnswer = false;
       return this.message;
     }
 
@@ -120,12 +125,14 @@ export class QuestionsPage implements OnInit {
       this.timerService.stopCountdown();
       this.gameService.setLifes(this.gameService.getLifes()-1);
       this.canShowGoToAnswer = true;
+      this.canShowAnswer = false;
       this.message = this.badAnswer;
       return this.message;
     }
     this.timerService.stopCountdown();
     this.gameService.setLifes(this.gameService.getLifes()-1);
     this.canShowGoToAnswer = true;
+    this.canShowAnswer = false;
     this.message = this.tooManyAttempts;
     return this.message;
   }
@@ -184,30 +191,46 @@ export class QuestionsPage implements OnInit {
   getAnswerDuo()
   {
     let randomNumber = this.questionservice.getRandomNumber(0,1);
-    switch (randomNumber) {
-      case 0:
-        this.answer.answer1 = this.rightAnswer;
-        for (let i = 0; i < this.arrayAnswer.length; i++)
-        {
-          if(this.arrayAnswer[i]['site'] !== this.rightAnswer)
-          {
-            this.answer.answer2 = this.arrayAnswer[i]['site'];
-            break;
-          }
+    if(randomNumber === 0) {
+      this.answer.answer1 = this.rightAnswer;
+      for (let i = 0; i < this.arrayAnswer.length; i++) {
+        if (this.arrayAnswer[i]['site'] !== this.rightAnswer) {
+          this.answer.answer2 = this.arrayAnswer[i]['site'];
+          return 0;
         }
-        break;
-      case 1:
-        this.answer.answer2 = this.rightAnswer;
-        for (let i = 0; i< this.arrayAnswer.length; i++)
-        {
-          if(this.arrayAnswer[i]['site'] !== this.rightAnswer)
-          {
-            this.answer.answer1 = this.arrayAnswer[i]['site'];
-            break;
-          }
-        }
-        break;
+      }
     }
+    else {
+      this.answer.answer2 = this.rightAnswer;
+      for (let i = 0; i< this.arrayAnswer.length; i++)
+      {
+        if(this.arrayAnswer[i]['site'] !== this.rightAnswer)
+        {
+          this.answer.answer1 = this.arrayAnswer[i]['site'];
+          return 0;
+        }
+      }
+    }
+  }
+
+  checkSelectedAnswer(answer: string)
+  {
+    console.log(answer);
+    console.log(this.getAnwser());
+    if(this.getAnwser() === answer)
+    {
+      this.timerService.stopCountdown();
+      this.isGoodAnswer = true;
+      this.canShowGoToAnswer = true;
+      this.message = this.goodAnswer;
+    }
+    else {
+      this.timerService.stopCountdown();
+      this.gameService.setLifes(this.gameService.getLifes()-1);
+      this.canShowGoToAnswer = true;
+      this.message = this.badAnswer;
+    }
+    this.canShowAnswer = false;
   }
 }
 
