@@ -32,6 +32,8 @@ export class QuestionsPage implements OnInit {
   canShowGoToAnswer : boolean = false;
   isGoodAnswer : boolean = false;
   fakeId = 'aaf23f0bbb475a944045913a7b202d50596af11e';
+  arrayAnswer : [] = [];
+  rightAnswer: string;
 
   answer: question = {
     answer1: "Rep1",
@@ -48,7 +50,11 @@ export class QuestionsPage implements OnInit {
       answer: new FormControl('', [Validators.required])
     });
     this.questionservice.questionEventEmitter.subscribe(data => {
-      console.log("dataquestion", this.questionservice.getQuestion());
+      // @ts-ignore
+      this.arrayAnswer = this.questionservice.getQuestion().answers;
+      console.log(this.arrayAnswer);
+      this.rightAnswer = this.questionservice.getQuestion().rightanswer['site'];
+      console.log(this.rightAnswer);
     })
   }
 
@@ -60,15 +66,19 @@ export class QuestionsPage implements OnInit {
     this.answerType = type;
     this.questionType = 1;
   switch(type) {
-    case 0:
     case 1:
     case 2:
+      this.getAnswerCarre();
+      break;
+    case 3:
+      this.getAnswerDuo();
+      break;
   }
   this.timerService.countdown(0.1);
   }
 
   anwser() {
-      return "test123";
+      return this.rightAnswer;
   }
 
   validate()
@@ -146,9 +156,6 @@ export class QuestionsPage implements OnInit {
         }
       }
     }
-
-    console.log(letter);
-    console.log(diffArray);
     return diffArray;
   }
 
@@ -161,6 +168,46 @@ export class QuestionsPage implements OnInit {
       }
     };
     this.router.navigate(['/resultat-question'],navigationExtras)
+  }
+
+  getAnswerCarre() {
+    //@ts-ignore
+    this.answer.answer1 = this.arrayAnswer[0]['site'];
+    // @ts-ignore
+    this.answer.answer2 = this.arrayAnswer[1]['site'];
+    // @ts-ignore
+    this.answer.answer3 = this.arrayAnswer[2]['site'];
+    // @ts-ignore
+    this.answer.answer4 = this.arrayAnswer[3]['site'];
+  }
+
+  getAnswerDuo()
+  {
+    let randomNumber = this.questionservice.getRandomNumber(0,1);
+    switch (randomNumber) {
+      case 0:
+        this.answer.answer1 = this.rightAnswer;
+        for (let i = 0; i < this.arrayAnswer.length; i++)
+        {
+          if(this.arrayAnswer[i]['site'] !== this.rightAnswer)
+          {
+            this.answer.answer2 = this.arrayAnswer[i]['site'];
+            break;
+          }
+        }
+        break;
+      case 1:
+        this.answer.answer2 = this.rightAnswer;
+        for (let i = 0; i< this.arrayAnswer.length; i++)
+        {
+          if(this.arrayAnswer[i]['site'] !== this.rightAnswer)
+          {
+            this.answer.answer1 = this.arrayAnswer[i]['site'];
+            break;
+          }
+        }
+        break;
+    }
   }
 }
 
