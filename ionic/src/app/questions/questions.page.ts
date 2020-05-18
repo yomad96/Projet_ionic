@@ -34,6 +34,7 @@ export class QuestionsPage implements OnInit {
   fakeId = 'aaf23f0bbb475a944045913a7b202d50596af11e';
   arrayAnswer : [] = [];
   rightAnswer: string;
+  canShowAnswer: boolean =true;
 
   answer: question = {
     answer1: "Rep1",
@@ -77,7 +78,7 @@ export class QuestionsPage implements OnInit {
   this.timerService.countdown(0.1);
   }
 
-  anwser() {
+  getAnwser() {
       return this.rightAnswer;
   }
 
@@ -85,7 +86,7 @@ export class QuestionsPage implements OnInit {
   {
     if(this.cashForm.valid)
     {
-      let answer = this.anwser();
+      let answer = this.getAnwser();
       let answerOfPlayer = this.cashForm.value.answer;
       if(!this.canShowGoToAnswer)
       {
@@ -106,6 +107,7 @@ export class QuestionsPage implements OnInit {
       this.isGoodAnswer = true;
       this.canShowGoToAnswer = true;
       this.message = this.goodAnswer;
+      this.canShowAnswer = false;
       return this.message;
     }
 
@@ -120,12 +122,14 @@ export class QuestionsPage implements OnInit {
       this.timerService.stopCountdown();
       this.gameService.setLifes(this.gameService.getLifes()-1);
       this.canShowGoToAnswer = true;
+      this.canShowAnswer = false;
       this.message = this.badAnswer;
       return this.message;
     }
     this.timerService.stopCountdown();
     this.gameService.setLifes(this.gameService.getLifes()-1);
     this.canShowGoToAnswer = true;
+    this.canShowAnswer = false;
     this.message = this.tooManyAttempts;
     return this.message;
   }
@@ -208,6 +212,26 @@ export class QuestionsPage implements OnInit {
         }
         break;
     }
+  }
+
+  checkSelectedAnswer(answer: string)
+  {
+    console.log(answer);
+    console.log(this.getAnwser());
+    if(this.getAnwser() === answer)
+    {
+      this.timerService.stopCountdown();
+      this.isGoodAnswer = true;
+      this.canShowGoToAnswer = true;
+      this.message = this.goodAnswer;
+    }
+    else {
+      this.timerService.stopCountdown();
+      this.gameService.setLifes(this.gameService.getLifes()-1);
+      this.canShowGoToAnswer = true;
+      this.message = this.badAnswer;
+    }
+    this.canShowAnswer = false;
   }
 }
 
