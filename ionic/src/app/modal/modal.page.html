@@ -12,12 +12,17 @@
 
 <ion-content>
   <div *ngIf="image != undefined && jsonRecord != undefined">
-    <img src="../../assets/images/prof.svg"  class="mt " width="350">
+    <div class="txt-center">
+      <img src="../../assets/images/prof.svg"  class="mt " width="350">
+    </div>
     <div class="txt-center pad">
      Voici une explication plus approfondie sur la réponse
     </div>
     <div class="txt-center mt">
       <img src="https://whc.unesco.org/{{image}}" alt="Grapefruit slice atop a pile of other slices">
+    </div>
+    <div class="txt-center">
+      {{jsonRecord[0].fields.states}}
     </div>
     <div class="txt-justify pad">
       {{jsonRecord[0].fields.short_description}}

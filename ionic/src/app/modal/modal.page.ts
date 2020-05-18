@@ -19,9 +19,8 @@ export class ModalPage implements OnInit {
   constructor(private modalController: ModalController, private api: ApiService) { }
 
   ngOnInit() {
-    // this.api.setSpecifique(this.reponse);
-    this.api.setSpecifique("aaf23f0bbb475a944045913a7b202d50596af11e");
-    this.api.getApi().subscribe(data => {
+    this.api.setSpecifique(this.reponse.toString());
+    this.api.getspecfiqueApi().subscribe(data => {
       this.jsonRecord = data.records;
       this.httpGetAsync(this.jsonRecord[0].fields.id_number);
     });

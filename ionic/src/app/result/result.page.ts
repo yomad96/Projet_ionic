@@ -9,12 +9,14 @@ import {NavigationExtras, Router} from '@angular/router';
 })
 export class ResultPage implements OnInit {
 
-  constructor(private gameService : GameService, private router : Router) { }
+  constructor(private gameService: GameService, private router : Router) { }
 
   ngOnInit() {
+
   }
 
   restart() {
+    this.gameService.setHistorique(this.gameService.getPoint())
     this.router.navigate(['/home']);
   }
 

@@ -3,24 +3,32 @@
   <div class="w-question">
     <div class="bg-question">
       <div>
-        <p id="timer" class="clock"></p>
-        <div *ngIf="questionType == 1">
-          <p class="txt-black">
-            Où ce trouve :
-            {{question}}
-          </p>
-        </div>
-        <div *ngIf="questionType == 2">
-          <ion-row>
-            <ion-col size="8">
-              <img class="img-fluid" src="https://whc.unesco.org{{questionImg}}">
-            </ion-col>
-            <ion-col size="4">
+        <div *ngIf="!validate">
+          <div *ngIf="question != undefined && questionImg != undefined">
+            <div *ngIf="questionType == 1">
+              <p id="timer" class="clock"></p>
               <p class="txt-black">
-                Où ce trouve cette image ?
+                Où se trouve :
+                {{question}}
               </p>
-            </ion-col>
-          </ion-row>
+            </div>
+            <div *ngIf="questionType == 2">
+              <ion-row>
+                <ion-col size="4">
+                  <img class="img-fluid" src="https://whc.unesco.org{{questionImg}}" height="100px" (click)="openModal()">
+                </ion-col>
+                <ion-col size="8">
+                  <p id="timer" class="clock"></p>
+                  <p class="txt-black">
+                    Où se trouve cette image ?
+                  </p>
+                </ion-col>
+              </ion-row>
+            </div>
+          </div>
+          <div *ngIf="question === undefined && questionImg === undefined">
+            <ion-progress-bar type="indeterminate"></ion-progress-bar>
+          </div>
         </div>
         <div *ngIf="reponse" class="txt-center">
           <div *ngIf="!validate" class="txt-center">
