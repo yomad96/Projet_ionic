@@ -44,7 +44,6 @@ export class QuestionsPage implements OnInit {
   };
 
   constructor(private timerService: TimerService, private gameService: GameService, private router: Router, private questionservice: QuestionService) {
-    this.question = "Comment allez vous ?";
     this.questionType = Math.floor(Math.random()*2)+1;
     this.answerType = 0;
     this.cashForm = new FormGroup({
@@ -54,6 +53,9 @@ export class QuestionsPage implements OnInit {
       console.log(this.questionservice.getQuestion());
       // @ts-ignore
       this.arrayAnswer = this.questionservice.getQuestion().answers;
+      let answer = this.questionservice.getQuestion().answers[this.questionservice.getRandomNumber(0, 3)];
+      let arrayQuestion = ["(BipBoop) Dans quel pays se trouve cette image (BipBoop)", " (BipBoop) Ou se trouve "+ answer.site + " (BipBoop)"];
+      this.question = arrayQuestion[this.questionservice.getRandomNumber(0,arrayQuestion.length-1)];
       console.log(this.arrayAnswer);
       this.rightAnswer = this.questionservice.getQuestion().rightanswer['site'];
       console.log(this.rightAnswer);
