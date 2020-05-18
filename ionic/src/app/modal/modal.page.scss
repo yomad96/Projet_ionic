@@ -16,8 +16,23 @@ ion-button{
 ion-content{
   --ion-background-color: #67c2ce;
   color: black;
+  height: 100%;
 }
 
 .mt{
   margin-top: 20px;
+}
+
+.d-flex{
+  display: flex;
+  flex-direction: column;
+}
+
+.align-item{
+  justify-content: center;
+  align-content: center;
+  height: 100%;
+}
+.h-100{
+  height: 100%;
 }

@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { ImageModalPageRoutingModule } from './image-modal-routing.module';
-
 import { ImageModalPage } from './image-modal.page';
 
 @NgModule({
@@ -15,6 +14,6 @@ import { ImageModalPage } from './image-modal.page';
     IonicModule,
     ImageModalPageRoutingModule
   ],
-  declarations: [ImageModalPage]
+  declarations: []
 })
 export class ImageModalPageModule {}

@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { MapPageRoutingModule } from './map-routing.module';
 
 import { MapPage } from './map.page';
-import {ImageModalPage} from "../image-modal/image-modal.page";
+import {ImageModalPage} from '../image-modal/image-modal.page';
 
 @NgModule({
     imports: [
@@ -15,9 +15,6 @@ import {ImageModalPage} from "../image-modal/image-modal.page";
         FormsModule,
         IonicModule,
         MapPageRoutingModule
-    ],
-    exports: [
-        MapPage
     ],
     declarations: [MapPage, ImageModalPage],
     entryComponents: [ImageModalPage]

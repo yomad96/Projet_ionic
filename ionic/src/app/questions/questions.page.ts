@@ -38,6 +38,7 @@ export class QuestionsPage implements OnInit {
   rightAnswer: string;
   canShowAnswer: boolean =true;
   pictures: string[] = [];
+  isLoading: boolean = true;
   answer: question = {
     answer1: "",
     answer2: "",
@@ -83,6 +84,7 @@ export class QuestionsPage implements OnInit {
 
   ngOnInit() {
     this.timerService.setTime(1);
+    this.isLoading = false;
   }
 
   onChooseTypeAnswer(type: number) {
@@ -100,8 +102,8 @@ export class QuestionsPage implements OnInit {
   }
 
   imageAnswer(idx: number) {
-    if (this.arrayAnswer[idx].id == this.currentplaceinfo.rightanswer.id) {
-      console.log("juste");
+    if (this.arrayAnswer[idx].id = this.currentplaceinfo.rightanswer.id) {
+      console.log("juste")
     }
   }
 
