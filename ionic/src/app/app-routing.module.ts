@@ -26,7 +26,8 @@ const routes: Routes = [
   {
     path: 'questions',
     loadChildren: () => import('./questions/questions.module').then( m => m.QuestionsPageModule)
-  },  {
+  },
+  {
     path: 'result',
     loadChildren: () => import('./result/result.module').then( m => m.ResultPageModule)
   },
@@ -37,10 +38,6 @@ const routes: Routes = [
   {
     path: 'historic',
     loadChildren: () => import('./historic/historic.module').then( m => m.HistoricPageModule)
-  },
-  {
-    path: 'image-modal',
-    loadChildren: () => import('./image-modal/image-modal.module').then( m => m.ImageModalPageModule)
   }
 
 ];

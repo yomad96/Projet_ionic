@@ -25,6 +25,6 @@ export class HomePage implements OnInit{
   }
 
   scores() {
-    this.router.navigate(['/scores']);
+    this.router.navigate(['/historic']);
   }
 }

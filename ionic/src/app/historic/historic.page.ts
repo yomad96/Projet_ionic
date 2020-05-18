@@ -9,12 +9,15 @@ import {Score} from "../Interfaces/score";
 })
 export class HistoricPage implements OnInit {
 
-  historique: Score[]
+  historique: Score[];
+  reversedList : Score[];
   constructor(private gameService: GameService) { }
 
   ngOnInit() {
     this.gameService.getHistorique().then( value => {
       this.historique = value;
+      this.reversedList = this.historique.slice().reverse();
+
     });
   }
 

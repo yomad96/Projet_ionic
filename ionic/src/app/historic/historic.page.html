@@ -1,9 +1,9 @@
 <ion-content>
-  <div *ngFor="let histo of historique">
+  <div *ngFor="let histo of reversedList">
     <ion-card>
       <ion-item>
         <ion-icon name="pin" slot="start"></ion-icon>
-        <ion-label>{{histo.score}}</ion-label>
+        <ion-label>Votre score était de {{histo.score}}</ion-label>
       </ion-item>
       <ion-card-content>
         {{histo.timestamp}}

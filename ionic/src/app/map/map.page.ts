@@ -55,7 +55,6 @@ export class MapPage implements OnInit {
     this.leafletMap();
     this.timerService.stopCountdown();
     this.questionType = Math.floor(Math.random()*2)+1;
-    this.timerService.countdown(5);
 
     this.reponse = false;
     this.validate = false;
@@ -86,7 +85,6 @@ export class MapPage implements OnInit {
         this.jsonRecord = data.records;
         this.httpGetAsync(this.jsonRecord[0].fields.id_number);
       });
-
     });
   }
   httpGetAsync(id: number) {
@@ -95,6 +93,7 @@ export class MapPage implements OnInit {
       el.innerHTML = data;
       const imgs = el.getElementsByClassName('icaption-img');
       this.questionImg = imgs[0].getAttribute('data-src');
+      this.timerService.countdown(5);
     });
   }
 
@@ -174,6 +173,7 @@ export class MapPage implements OnInit {
   }
 
   suivant() {
+    this.timerService.stopCountdown();
     const navigationExtras: NavigationExtras = {
       state: {
         id: this.questionrecordid,
