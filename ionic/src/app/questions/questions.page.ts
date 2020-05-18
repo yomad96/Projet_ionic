@@ -4,6 +4,7 @@ import { GameService } from '../services/game.service';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {NavigationExtras, Router} from "@angular/router";
 import { QuestionService, currentQuestion } from '../services/question.service';
+import {observableToBeFn} from "rxjs/internal/testing/TestScheduler";
 
 export interface question {
   answer1: string;
@@ -35,6 +36,7 @@ export class QuestionsPage implements OnInit {
   arrayAnswer : [] = [];
   rightAnswer: string;
   canShowAnswer: boolean =true;
+  isLoading : boolean = true;
 
   answer: question = {
     answer1: "Rep1",
@@ -59,14 +61,15 @@ export class QuestionsPage implements OnInit {
       console.log(this.arrayAnswer);
       this.rightAnswer = this.questionservice.getQuestion().rightanswer['site'];
       console.log(this.rightAnswer);
+      this.isLoading = false;
     })
   }
 
   ngOnInit() {
-    this.timerService.setTime(5);
   }
 
   onChooseTypeAnswer(type: number) {
+    this.timerService.setTime(5);
     this.answerType = type;
     this.questionType = 1;
   switch(type) {
