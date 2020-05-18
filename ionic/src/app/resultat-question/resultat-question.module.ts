@@ -17,7 +17,7 @@ import {ModalPage} from '../modal/modal.page';
     ResultatQuestionPageRoutingModule
   ],
   declarations: [ResultatQuestionPage, ModalPage],
-  entryComponents:[ModalPage]
+  entryComponents: [ModalPage]
 
 })
 export class ResultatQuestionPageModule {}

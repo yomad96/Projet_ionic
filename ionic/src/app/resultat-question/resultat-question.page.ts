@@ -40,13 +40,10 @@ export class ResultatQuestionPage implements OnInit {
 
   ngOnInit() {
   }
-  ionViewDidEnter(){
+  ionViewDidEnter() {
     if (this.gameService.getLifes() <= 0) {
       this.router.navigate(['/result']);
     }
-    console.log(this.gameService.getPoint());
-    console.log(this.gameService.getLifes());
-
   }
   suivant() {
     this.gameService.randomQuestion();
