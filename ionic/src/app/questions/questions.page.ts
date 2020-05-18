@@ -51,6 +51,7 @@ export class QuestionsPage implements OnInit {
       answer: new FormControl('', [Validators.required])
     });
     this.questionservice.questionEventEmitter.subscribe(data => {
+      console.log(this.questionservice.getQuestion());
       // @ts-ignore
       this.arrayAnswer = this.questionservice.getQuestion().answers;
       console.log(this.arrayAnswer);
@@ -188,29 +189,25 @@ export class QuestionsPage implements OnInit {
   getAnswerDuo()
   {
     let randomNumber = this.questionservice.getRandomNumber(0,1);
-    switch (randomNumber) {
-      case 0:
-        this.answer.answer1 = this.rightAnswer;
-        for (let i = 0; i < this.arrayAnswer.length; i++)
-        {
-          if(this.arrayAnswer[i]['site'] !== this.rightAnswer)
-          {
-            this.answer.answer2 = this.arrayAnswer[i]['site'];
-            break;
-          }
+    if(randomNumber === 0) {
+      this.answer.answer1 = this.rightAnswer;
+      for (let i = 0; i < this.arrayAnswer.length; i++) {
+        if (this.arrayAnswer[i]['site'] !== this.rightAnswer) {
+          this.answer.answer2 = this.arrayAnswer[i]['site'];
+          return 0;
         }
-        break;
-      case 1:
-        this.answer.answer2 = this.rightAnswer;
-        for (let i = 0; i< this.arrayAnswer.length; i++)
+      }
+    }
+    else {
+      this.answer.answer2 = this.rightAnswer;
+      for (let i = 0; i< this.arrayAnswer.length; i++)
+      {
+        if(this.arrayAnswer[i]['site'] !== this.rightAnswer)
         {
-          if(this.arrayAnswer[i]['site'] !== this.rightAnswer)
-          {
-            this.answer.answer1 = this.arrayAnswer[i]['site'];
-            break;
-          }
+          this.answer.answer1 = this.arrayAnswer[i]['site'];
+          return 0;
         }
-        break;
+      }
     }
   }
 
