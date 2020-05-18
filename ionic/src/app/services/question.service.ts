@@ -68,6 +68,7 @@ export class QuestionService {
 
     private getplaces() {
         this.api.getApi().subscribe(data => {
+            console.log(data);
             this.recordsInterface = data['records'];
             this.recordsInterface.forEach(element => {
                 let data: placeData = {
@@ -89,7 +90,7 @@ export class QuestionService {
             });
             for (let i = 0; i < this.recordsInterface.length && this.answers.length < 4; i++) {
                 let data: placeData = {
-                    id: this.recordsInterface[i].recordid,
+                    id: this.recordsInterface[i].fields['id_number'],
                     country: this.recordsInterface[i].fields['states'],
                     site: this.recordsInterface[i].fields['site'],
                     coords: this.recordsInterface[i].geometry['coordinates']
