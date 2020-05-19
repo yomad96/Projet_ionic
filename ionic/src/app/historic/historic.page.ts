@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {GameService} from "../services/game.service";
 import {Score} from "../Interfaces/score";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-historic',
@@ -9,7 +10,7 @@ import {Score} from "../Interfaces/score";
 })
 export class HistoricPage implements OnInit {
   reversedList : Score[] = [];
-  constructor(private gameService: GameService) { }
+  constructor(private gameService: GameService, private router: Router) { }
 
   ngOnInit() {
     this.gameService.getHistorique().then( value => {
@@ -19,4 +20,7 @@ export class HistoricPage implements OnInit {
     });
   }
 
+  backToHome() {
+    this.router.navigate(['/home']);
+  }
 }
