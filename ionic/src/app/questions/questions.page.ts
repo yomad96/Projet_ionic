@@ -75,6 +75,7 @@ export class QuestionsPage implements OnInit {
       el.innerHTML = data;
       const imgs = el.getElementsByClassName('icaption-img');
       this.pictures.push("https://whc.unesco.org" + imgs[0].getAttribute('data-src'));
+      console.log(element.id);
     });
   });
   this.timerService.countdown(0.1);
@@ -118,10 +119,8 @@ export class QuestionsPage implements OnInit {
 
   isrightPicture(idx: number)
   {
-    console.log(this.pictures);
-    console.log(this.currentplaceinfo.answers);
-    console.log(this.currentplaceinfo.rightanswer.id);
-    console.log(this.currentplaceinfo.answers[idx]);
+    console.log(this.currentplaceinfo.answers[idx].id)
+    console.log(this.currentplaceinfo.answers)
     if(this.currentplaceinfo.answers[idx].id == this.currentplaceinfo.rightanswer.id)
     {
       this.timerService.stopCountdown();
