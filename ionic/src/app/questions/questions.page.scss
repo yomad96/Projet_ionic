@@ -30,11 +30,13 @@ ion-content{
   }
 
   ion-button {
-    font-size: 10px !important;
+    font-size: 14px !important;
   }
 
   .typeAnswer {
     font-family: "Marker Felt";
+    height: 70px;
+    width: 100%;
   }
 
 .question{
@@ -94,5 +96,9 @@ img.img-li {
   margin-top: 20%;
   width: 100%;
   height: 8em;
+}
+
+.btn-answer{
+  height: 50px;
 }
 
