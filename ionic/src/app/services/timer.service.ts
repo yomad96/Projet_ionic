@@ -59,12 +59,17 @@ export class TimerService {
     }, 1000);
   }
 
-  stopCountdown(){
+  stopCountdown() {
     clearInterval(this.count);
   }
 
   getTimerIsFinish()
   {
     return this.boolTimer;
+  }
+
+  setTimerIsFinish(bool: boolean)
+  {
+    return this.boolTimer = bool;
   }
 }

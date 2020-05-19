@@ -54,7 +54,9 @@ export class MapPage implements OnInit {
   ionViewDidEnter() {
 
     this.leafletMap();
+    this.timerService.setTimerIsFinish(false);
     this.timerService.stopCountdown();
+
     this.questionType = Math.floor(Math.random()*2)+1;
 
     this.reponse = false;
@@ -68,27 +70,21 @@ export class MapPage implements OnInit {
     this.distance = null;
     this.point = null;
     this.pourcentage = null;
-
-
-    // this.httpGetAsync("id_number");
-
-
-    // this.questionImg = null;
-    this.question = null;
     this.questionService.questionEventEmitter.subscribe(() => {
       this.question = this.questionService.getQuestion();
-      this.site = this.questionService.getQuestion().rightanswer.site;
-
+      this.site = this.question.rightanswer.site;
       this.questionLat = this.question.rightanswer.coords[1];
       this.questionLng = this.question.rightanswer.coords[0];
 
-      console.log("Quest LAT "+ this.questionLat)
-      console.log("Quest LNG "+ this.questionLng)
+      console.log("Quest LAT "+ this.questionLat);
+      console.log("Quest LNG "+ this.questionLng);
 
       this.questionrecordid = this.question.rightanswer.recordId;
       // tslint:disable-next-line:radix
       this.httpGetAsync(parseInt(this.question.rightanswer.id));
+
     });
+
   }
   httpGetAsync(id: number) {
     this.api.getImage(id).subscribe( data => {
@@ -96,9 +92,11 @@ export class MapPage implements OnInit {
       el.innerHTML = data;
       const imgs = el.getElementsByClassName('icaption-img');
       this.questionImg = imgs[0].getAttribute('data-src');
-      this.timerService.countdown(5);
+      this.timerService.countdown(2);
+
     });
   }
+
 
   leafletMap() {
     this.map = new L.Map('mapId').setView([0, 0], 3);
@@ -169,7 +167,7 @@ export class MapPage implements OnInit {
 
     this.point = Math.round(5000 - ( this.distance / 40000) * 5000);
     this.gameService.addPoint(this.point);
-    if (this.point <= 1000) {
+    if (this.point <= 4000) {
       this.gameService.setLifes(this.gameService.getLifes() - 1);
     } else {
       this.goodbad = true;
