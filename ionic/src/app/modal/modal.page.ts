@@ -23,6 +23,9 @@ export class ModalPage implements OnInit {
     this.api.getspecfiqueApi().subscribe(data => {
       this.jsonRecord = data.records;
       this.httpGetAsync(this.jsonRecord[0].fields.id_number);
+      console.log(this.jsonRecord[0].fields.coordinates[0]);
+      console.log(this.jsonRecord[0].fields.coordinates[1]);
+
     });
   }
 

@@ -3,25 +3,27 @@
   <div class="w-question">
     <div class="bg-question">
       <div *ngIf="question != undefined && questionImg != undefined">
-        <div *ngIf="questionType == 1">
-          <p id="timer" class="clock"></p>
-          <p class="txt-black">
-            Où se trouve :
-            {{question}}
-          </p>
-        </div>
-        <div *ngIf="questionType == 2">
-          <ion-row>
-            <ion-col size="4">
-              <img class="img-fluid" src="https://whc.unesco.org{{questionImg}}" height="100px" (click)="openModal()">
-            </ion-col>
-            <ion-col size="8">
-              <p id="timer" class="clock"></p>
-              <p class="txt-black">
-                Où se trouve cette image ?
-              </p>
-            </ion-col>
-          </ion-row>
+        <div *ngIf="!validate" class="txt-center">
+          <div *ngIf="questionType == 1">
+            <p id="timer" class="clock"></p>
+            <p class="txt-black">
+              Où se trouve :
+              {{site}}
+            </p>
+          </div>
+          <div *ngIf="questionType == 2">
+            <ion-row>
+              <ion-col size="4">
+                <img class="img-fluid" src="https://whc.unesco.org{{questionImg}}" height="100px" (click)="openModal()">
+              </ion-col>
+              <ion-col size="8">
+                <p id="timer" class="clock"></p>
+                <p class="txt-black">
+                  Où se trouve cette image ?
+                </p>
+              </ion-col>
+            </ion-row>
+          </div>
         </div>
         <div *ngIf="reponse" class="txt-center">
           <div *ngIf="!validate" class="txt-center">
@@ -39,7 +41,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="question == undefined && questionImg == undefined">
+      <div *ngIf="question == undefined || questionImg == undefined">
         <ion-progress-bar type="indeterminate"></ion-progress-bar>
       </div>
       <img class="img-li" src="../../assets/images/Li2.svg">

@@ -5,7 +5,7 @@ import {NavigationExtras, Router} from '@angular/router';
 import {ApiService} from '../services/api.service';
 import {ApiInterfaceRecords} from '../Interfaces/apiInterfaceRecords';
 import {TimerService} from '../services/timer.service';
-import {QuestionService} from "../services/question.service";
+import {currentQuestion, QuestionService} from "../services/question.service";
 import {ModalPage} from "../modal/modal.page";
 import {ImageModalPage} from "../image-modal/image-modal.page";
 import {ModalController} from "@ionic/angular";
@@ -29,9 +29,10 @@ export class MapPage implements OnInit {
   reponseLng: number;
   goodbad = false;
 
-  question: string;
-  questionLat: number;
-  questionLng: number;
+  question: currentQuestion;
+  site: string;
+  questionLat: string;
+  questionLng: string;
   questionrecordid: string;
   questionImg: string;
 
@@ -60,6 +61,8 @@ export class MapPage implements OnInit {
     this.validate = false;
     this.reponseLat = null;
     this.reponseLng = null;
+    this.site = null;
+    this.question = null;
     this.goodbad = false;
 
     this.distance = null;
@@ -73,14 +76,20 @@ export class MapPage implements OnInit {
     // this.questionImg = null;
     this.question = null;
     this.questionService.questionEventEmitter.subscribe(() => {
-      this.question = this.questionService.getQuestion().rightanswer.site;
-      this.questionLat = parseFloat(this.questionService.getQuestion().rightanswer.coords[1]);
-      this.questionLng = parseFloat(this.questionService.getQuestion().rightanswer.coords[0]);
-      this.questionrecordid = this.questionService.getQuestion().rightanswer.id;
+      this.question = this.questionService.getQuestion();
+      this.site = this.questionService.getQuestion().rightanswer.site;
+
+      this.questionLat = this.question.rightanswer.coords[1];
+      this.questionLng = this.question.rightanswer.coords[0];
+
+      console.log("Quest LAT "+ this.questionLat)
+      console.log("Quest LNG "+ this.questionLng)
+
+      this.questionrecordid = this.question.rightanswer.id;
+
       const x = this.questionrecordid;
 
       this.api.setSpecifique(x.toString());
-      console.log(this.api.getUrlApi())
       this.api.getspecfiqueApi().subscribe(data => {
         this.jsonRecord = data.records;
         this.httpGetAsync(this.jsonRecord[0].fields.id_number);
@@ -117,6 +126,8 @@ export class MapPage implements OnInit {
       this.reponseLat = e.latlng.lat;
       // @ts-ignore
       this.reponseLng = e.latlng.lng;
+      console.log("LAT "+this.reponseLat);
+      console.log("LNG "+this.reponseLng);
 
     });
 
@@ -135,6 +146,8 @@ export class MapPage implements OnInit {
 
   repondre() {
 
+    this.timerService.stopCountdown();
+
     this.map.tap.disable();
     const poly = [
       [this.questionLat, this.questionLng],
@@ -148,9 +161,9 @@ export class MapPage implements OnInit {
 
     const R = 6371e3; // metres
     const lat1 = (this.reponseLat) * Math.PI / 180; // φ, λ in radians
-    const lat2 = (this.questionLat) * Math.PI / 180;
+    const lat2 = (parseFloat(this.questionLat)) * Math.PI / 180;
     const difflat = ((lat2) - (lat1)) * Math.PI / 180;
-    const difflng = ((this.questionLng) - (this.reponseLng)) * Math.PI / 180;
+    const difflng = (parseFloat(this.questionLng) - (this.reponseLng)) * Math.PI / 180;
 
 
     const a = Math.sin(difflat / 2) * Math.sin(difflat / 2) +

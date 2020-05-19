@@ -3,31 +3,31 @@
         <ion-row class="lifes">
             <div *ngFor="let idx of [3,2,1]">
                 <ion-col *ngIf="idx <= gameService.getLifes()">
-                    <img src="../../assets/images/heart.png" class="heart">
+                    <img src="../../assets/images/coeur.svg" class="heart">
                 </ion-col>
                 <ion-col *ngIf="idx > gameService.getLifes()">
-                    <img src="../../assets/images/black-heart.png" class="heart">
+                    <img src="../../assets/images/coeurblack.svg" class="heart">
                 </ion-col>
             </div>
         </ion-row>
         <div class="d-flex align-item">
             <div *ngIf="!goodbad" class="mt">
-                <img class="mt" src="../../assets/images/pascontent2.svg" width="350">
-                <p>
-                    Biip boop, Tu feras mieux la prochaine fois.
+                <img class="mt" src="../../assets/images/pascontent2.svg" width="250">
+                <p class="pad">
+                    <i>(Biip boop)</i> Arg, c'était pas loin, mais je suis certain que tu ferais mieux la prochaine fois
                 </p>
             </div>
             <div *ngIf="goodbad" class="mt">
-                <img class="mt" src="../../assets/images/content2.svg" width="350">
-                <p>
-                    Biip boop, BG mec t'es le boss
+                <img class="mt" src="../../assets/images/content2.svg" width="250">
+                <p class="pad">
+                    <i>(Biip boop)</i>, j'ai toujours cru en toi j'était certain que tu allais bien répondre.
                 </p>
             </div>
             <div class="txt-center">
-                <a  class="btn-red" (click)="openModal()">En savoir plus</a>
+                <ion-button  class="btn-red" (click)="openModal()">En savoir plus</ion-button>
             </div>
             <div class="txt-center mt">
-                <a  class="btn" (click)="suivant()">Suivant</a>
+                <ion-button (click)="suivant()">Suivant</ion-button>
             </div>
         </div>
     </div>
