@@ -55,13 +55,22 @@ export class QuestionsPage implements OnInit {
               private gameService: GameService, 
               private router: Router, 
               private questionservice: QuestionService,
-              private apiService: ApiService) {
-    this.questionType = 1;//Math.floor(Math.random()*2)+1;
+              private apiService: ApiService) {}
+
+  ngOnInit() {
+    this.timerService.setTime(5);
+  }
+
+  ionViewDidEnter()
+  {
+    console.log("DidEnter");
+    this.questionType = Math.floor(Math.random()*2)+1;
     this.answerType = 0;
     this.cashForm = new FormGroup({
       answer: new FormControl('', [Validators.required])
     });
     this.questionservice.questionEventEmitter.subscribe(data => {
+      console.log("EventEmitter");
       // @ts-ignore
       this.currentplaceinfo = this.questionservice.getQuestion();
       this.arrayAnswer = this.currentplaceinfo.answers;
@@ -72,20 +81,16 @@ export class QuestionsPage implements OnInit {
       }
       this.rightAnswer = this.currentplaceinfo.rightanswer.country;
       for (let i: number = 0; i < this.currentplaceinfo.answers.length; i++) {
-    this.apiService.getImage(parseInt(this.currentplaceinfo.answers[i].id)).subscribe( data => {
-      const el = document.createElement( 'html' );
-      el.innerHTML = data;
-      const imgs = el.getElementsByClassName('icaption-img');
-      this.pictures[i] = ("https://whc.unesco.org" + imgs[0].getAttribute('data-src'));
-      });
-  }
-  this.timerService.countdown(0.1);
-  this.isLoading = false;
-  });
-  }
-
-  ngOnInit() {
-    this.timerService.setTime(5);
+        this.apiService.getImage(parseInt(this.currentplaceinfo.answers[i].id)).subscribe( data => {
+          const el = document.createElement( 'html' );
+          el.innerHTML = data;
+          const imgs = el.getElementsByClassName('icaption-img');
+          this.pictures[i] = ("https://whc.unesco.org" + imgs[0].getAttribute('data-src'));
+        });
+      }
+      this.timerService.countdown(0.1);
+      this.isLoading = false;
+    });
   }
 
   onChooseTypeAnswer(type: number) {
@@ -268,6 +273,13 @@ export class QuestionsPage implements OnInit {
     console.log(this.gameService.getPoint());
     this.canShowAnswer = false;
     this.pathToResultPage();
+  }
+
+  ionViewDidLeave()
+  {
+    console.log("DidLeave");
+    // @ts-ignore
+    this.question = "";
   }
 }
 
