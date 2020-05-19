@@ -45,7 +45,6 @@ export class QuestionService {
     
     
     constructor(private api: ApiService) {
-        this.getRandomQuestion();
     }
 
 
@@ -72,7 +71,7 @@ export class QuestionService {
     private getplaces() {
 
         this.api.getApi().subscribe(data => {
-            console.log(data);
+            console.log("data", data);
             this.recordsInterface = data['records'];
             this.recordsInterface.forEach(element => {
                 let data: placeData = {
@@ -102,6 +101,7 @@ export class QuestionService {
                 }
                 this.unicAnswer(data);
             }
+            console.log('EMIT');
             this.questionEventEmitter.emit();
         });
     }
