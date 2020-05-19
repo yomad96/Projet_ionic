@@ -85,15 +85,9 @@ export class MapPage implements OnInit {
       console.log("Quest LAT "+ this.questionLat)
       console.log("Quest LNG "+ this.questionLng)
 
-      this.questionrecordid = this.question.rightanswer.id;
-
-      const x = this.questionrecordid;
-
-      this.api.setSpecifique(x.toString());
-      this.api.getspecfiqueApi().subscribe(data => {
-        this.jsonRecord = data.records;
-        this.httpGetAsync(this.jsonRecord[0].fields.id_number);
-      });
+      this.questionrecordid = this.question.rightanswer.recordId;
+      // tslint:disable-next-line:radix
+      this.httpGetAsync(parseInt(this.question.rightanswer.id));
     });
   }
   httpGetAsync(id: number) {
