@@ -77,6 +77,8 @@
           <ion-col>
             <ion-button shape="round" class="typeAnswer" (click)="checkSelectedAnswer(answer.answer1)"> {{ answer.answer1 }} </ion-button>
           </ion-col>
+        </ion-row>
+        <ion-row *ngIf="answerType == 4 && questionType == 1 && this.canShowAnswer !== false && !this.timerService.getTimerIsFinish()">
           <ion-col>
             <ion-button shape="round" class="typeAnswer" (click)="checkSelectedAnswer(answer.answer2)"> {{ answer.answer2 }} </ion-button>
           </ion-col>
@@ -85,6 +87,8 @@
           <ion-col>
             <ion-button shape="round" class="typeAnswer" (click)="checkSelectedAnswer(answer.answer3)"> {{ answer.answer3 }} </ion-button>
           </ion-col>
+        </ion-row>
+        <ion-row *ngIf="answerType == 4 && questionType == 1 && this.canShowAnswer !== false && !this.timerService.getTimerIsFinish()">
           <ion-col>
             <ion-button shape="round" class="typeAnswer" (click)="checkSelectedAnswer(answer.answer4)"> {{ answer.answer4 }} </ion-button>
           </ion-col>
@@ -93,6 +97,8 @@
           <ion-col>
             <ion-button shape="round" class="typeAnswer" (click)="checkSelectedAnswer(answer.answer1)"> {{ answer.answer1 }} </ion-button>
           </ion-col>
+        </ion-row>
+        <ion-row *ngIf="answerType == 2 && questionType == 1 && this.canShowAnswer !== false && !this.timerService.getTimerIsFinish()">
           <ion-col>
             <ion-button shape="round" class="typeAnswer" (click)="checkSelectedAnswer(answer.answer2)"> {{ answer.answer2 }} </ion-button>
           </ion-col>
