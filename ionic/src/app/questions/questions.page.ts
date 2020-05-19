@@ -58,28 +58,17 @@ export class QuestionsPage implements OnInit {
               private apiService: ApiService) {}
 
   ngOnInit() {
-    this.timerService.setTime(5);
-  }
-
-  ionViewDidEnter()
-  {
-    console.log("DidEnter");
-    this.questionType = Math.floor(Math.random()*2)+1;
-    this.answerType = 0;
-    this.cashForm = new FormGroup({
-      answer: new FormControl('', [Validators.required])
-    });
     this.questionservice.questionEventEmitter.subscribe(data => {
-      console.log("EventEmitter");
       // @ts-ignore
       this.currentplaceinfo = this.questionservice.getQuestion();
+      console.log("currentplaceinfo", this.currentplaceinfo);
       this.arrayAnswer = this.currentplaceinfo.answers;
+      this.rightAnswer = this.currentplaceinfo.rightanswer.country;
       if (this.questionType == 1) {
         this.question = "(BipBoop) Where can you find "+ this.currentplaceinfo.rightanswer.site + " (BipBoop)";
       } else {
         this.question = "Which of theses 4 images corresponds to the site : " + this.currentplaceinfo.rightanswer.site;
-      }
-      this.rightAnswer = this.currentplaceinfo.rightanswer.country;
+      
       for (let i: number = 0; i < this.currentplaceinfo.answers.length; i++) {
         this.apiService.getImage(parseInt(this.currentplaceinfo.answers[i].id)).subscribe( data => {
           const el = document.createElement( 'html' );
@@ -88,9 +77,22 @@ export class QuestionsPage implements OnInit {
           this.pictures[i] = ("https://whc.unesco.org" + imgs[0].getAttribute('data-src'));
         });
       }
-      this.timerService.countdown(0.1);
+      }
+      console.log("cd");
+      this.timerService.countdown(1);
       this.isLoading = false;
     });
+  }
+
+  ionViewDidEnter()
+  {
+    this.timerService.setTime(1);
+    this.questionType = Math.floor(Math.random()*2)+1;
+    this.answerType = 0;
+    this.cashForm = new FormGroup({
+      answer: new FormControl('', [Validators.required])
+    });
+    this.questionservice.getRandomQuestion();
   }
 
   onChooseTypeAnswer(type: number) {
@@ -280,6 +282,13 @@ export class QuestionsPage implements OnInit {
     console.log("DidLeave");
     // @ts-ignore
     this.question = "";
+    this.canShowGoToAnswer = false;
+    this.isGoodAnswer = false;
+    this.isGoodAnswer = false;
+    this.arrayAnswer = [];
+    this.canShowAnswer = true;
+    this.pictures= [];
+    this.isLoading = true;
   }
 }
 
