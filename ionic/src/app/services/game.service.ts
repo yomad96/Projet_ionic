@@ -16,12 +16,12 @@ export class GameService {
     this.lifes = 3;
   }
 
-  randomQuestion() { this.router.navigate(['/questions']);/*
+  randomQuestion() { this.router.navigate(['/questions']);
     if (Math.floor(Math.random()*3)+1 === 1) {
      
     } else {
       this.router.navigate(['/map']);
-    }*/
+    }
   }
 
   resetPoint(point: number) {
