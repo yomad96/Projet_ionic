@@ -70,7 +70,6 @@ export class MapPage implements OnInit {
     this.distance = null;
     this.point = null;
     this.pourcentage = null;
-    this.questionService.getRandomQuestion();
     this.questionService.questionEventEmitter.subscribe(() => {
       this.question = this.questionService.getQuestion();
       this.site = this.question.rightanswer.site;
@@ -83,9 +82,6 @@ export class MapPage implements OnInit {
       this.questionrecordid = this.question.rightanswer.recordId;
       // tslint:disable-next-line:radix
       this.httpGetAsync(parseInt(this.question.rightanswer.id));
-      this.questionService.questionEventEmitter.complete();
-      this.questionService.questionEventEmitter.unsubscribe();
-
 
     });
 
@@ -96,10 +92,11 @@ export class MapPage implements OnInit {
       el.innerHTML = data;
       const imgs = el.getElementsByClassName('icaption-img');
       this.questionImg = imgs[0].getAttribute('data-src');
-      this.timerService.countdown(1);
+      this.timerService.countdown(2);
 
     });
   }
+
 
   leafletMap() {
     this.map = new L.Map('mapId').setView([0, 0], 3);
@@ -170,7 +167,7 @@ export class MapPage implements OnInit {
 
     this.point = Math.round(5000 - ( this.distance / 40000) * 5000);
     this.gameService.addPoint(this.point);
-    if (this.point <= 2500) {
+    if (this.point <= 4000) {
       this.gameService.setLifes(this.gameService.getLifes() - 1);
     } else {
       this.goodbad = true;

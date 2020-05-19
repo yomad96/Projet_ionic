@@ -17,7 +17,6 @@ export class HistoricPage implements OnInit {
     this.gameService.getHistorique().then( value => {
       this.historique = value;
       this.reversedList = this.historique.slice().reverse();
-
     });
   }
 
