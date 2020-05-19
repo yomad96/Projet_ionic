@@ -3,7 +3,8 @@ import { TimerService } from '../services/timer.service';
 import { GameService } from '../services/game.service';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {NavigationExtras, Router} from "@angular/router";
-import { QuestionService, currentQuestion } from '../services/question.service';
+import { QuestionService, currentQuestion, placeData } from '../services/question.service';
+import { ApiService } from '../services/api.service';
 
 export interface question {
   answer1: string;
@@ -22,6 +23,7 @@ export class QuestionsPage implements OnInit {
   answerType: number;//Cash/carre/duo
   question: string;//text de la question
   name: string;
+  currentplaceinfo: currentQuestion;
   tentative: number = 0;
   cashForm : FormGroup;
   goodAnswer = "Bien joué vous avez trouvé la bonne réponse";
@@ -32,53 +34,84 @@ export class QuestionsPage implements OnInit {
   canShowGoToAnswer : boolean = false;
   isGoodAnswer : boolean = false;
   fakeId = 'aaf23f0bbb475a944045913a7b202d50596af11e';
-  arrayAnswer : [] = [];
+  arrayAnswer : placeData[] = [];
   rightAnswer: string;
   canShowAnswer: boolean =true;
-
+  pictures: string[] = [];
+  isLoading: boolean = true;
   answer: question = {
-    answer1: "Rep1",
-    answer2: "Rep2",
-    answer3: "Rep3",
-    answer4: "Rep4",
+    answer1: "",
+    answer2: "",
+    answer3: "",
+    answer4: "",
   };
 
-  constructor(private timerService: TimerService, private gameService: GameService, private router: Router, private questionservice: QuestionService) {
+
+  constructor(
+              private timerService: TimerService,
+              private gameService: GameService, 
+              private router: Router, 
+              private questionservice: QuestionService,
+              private apiService: ApiService) {
     this.questionType = Math.floor(Math.random()*2)+1;
     this.answerType = 0;
     this.cashForm = new FormGroup({
       answer: new FormControl('', [Validators.required])
     });
     this.questionservice.questionEventEmitter.subscribe(data => {
-      console.log(this.questionservice.getQuestion());
       // @ts-ignore
-      this.arrayAnswer = this.questionservice.getQuestion().answers;
-      let answer = this.questionservice.getQuestion().answers[this.questionservice.getRandomNumber(0, 3)];
-      let arrayQuestion = ["(BipBoop) Dans quel pays se trouve cette image (BipBoop)", " (BipBoop) Ou se trouve "+ answer.site + " (BipBoop)"];
-      this.question = arrayQuestion[this.questionservice.getRandomNumber(0,arrayQuestion.length-1)];
-      console.log(this.arrayAnswer);
-      this.rightAnswer = this.questionservice.getQuestion().rightanswer['site'];
-      console.log(this.rightAnswer);
-    })
+      this.currentplaceinfo = this.questionservice.getQuestion();
+      this.arrayAnswer = this.currentplaceinfo.answers;
+      if (this.questionType == 1) {
+        this.question = "(BipBoop) Ou se trouve "+ this.currentplaceinfo.rightanswer.site + " (BipBoop)";
+      } else {
+        this.question = "Laquelle de ces 4 images représente le site : " + this.currentplaceinfo.rightanswer.site;
+      }
+      this.rightAnswer = this.currentplaceinfo.rightanswer.country;
+      this.arrayAnswer.forEach(element => {
+        
+    this.apiService.getImage(parseInt(element.id)).subscribe( data => {
+        const el = document.createElement( 'html' );
+      el.innerHTML = data;
+      const imgs = el.getElementsByClassName('icaption-img');
+      this.pictures.push("https://whc.unesco.org" + imgs[0].getAttribute('data-src'));
+    });
+  });
+  this.timerService.countdown(0.1);
+  this.isLoading = false;
+  });
+  }
+
+  sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
   }
 
   ngOnInit() {
-    this.timerService.setTime(5);
+    this.timerService.setTime(1);    
   }
 
   onChooseTypeAnswer(type: number) {
     this.answerType = type;
     this.questionType = 1;
   switch(type) {
-    case 1:
-    case 2:
+    case 4:
       this.getAnswerCarre();
       break;
-    case 3:
+    case 2:
       this.getAnswerDuo();
       break;
   }
   this.timerService.countdown(0.1);
+  }
+
+  imageAnswer(idx: number) {
+    if (this.arrayAnswer[idx].id == this.currentplaceinfo.rightanswer.id) {
+      console.log("juste")
+    }
   }
 
   getAnwser() {
