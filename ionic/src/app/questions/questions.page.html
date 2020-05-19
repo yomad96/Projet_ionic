@@ -23,9 +23,9 @@
         {{question}}
       </p>
     </ion-row>
-    <ion-row *ngIf="answerType == 0 && questionType == 1">
+    <ion-row *ngIf="answerType == 0 && questionType == 1 && !this.timerService.getTimerIsFinish()">
       <ion-col>
-        <ion-button shape="round" class="typeAnswer" (click)="onChooseTypeAnswer()">Cash</ion-button>
+        <ion-button shape="round" class="typeAnswer" (click)="onChooseTypeAnswer(1)">Cash</ion-button>
       </ion-col>
       <ion-col>
         <ion-button shape="round" class="typeAnswer" (click)="onChooseTypeAnswer(4)">Square</ion-button>        
@@ -34,7 +34,7 @@
         <ion-button shape="round" class="typeAnswer" (click)="onChooseTypeAnswer(2)">Duo</ion-button>        
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="questionType == 2 && this.currentplaceinfo != undefined">
+    <ion-row *ngIf="questionType == 2 && this.currentplaceinfo != undefined && !this.timerService.getTimerIsFinish()">
       <ion-grid>
         <ion-row>
           <ion-col>
@@ -62,7 +62,7 @@
         </ion-row>
       </ion-grid>
       </ion-row>
-        <ion-row *ngIf="answerType == 1 && questionType == 1 && this.canShowAnswer !== false " class="row-form-cash">
+        <ion-row *ngIf="answerType == 1 && questionType == 1 && this.canShowAnswer !== false && !this.timerService.getTimerIsFinish()" class="row-form-cash">
           <form [formGroup]="cashForm" (ngSubmit)="validate()" class="form-cash">
               <ion-input class="input-answer" formControlName="answer" type="text" placeholder="Entrez une réponse..."></ion-input>
               <button class="btn-validate" type="submit">Validate</button>
@@ -70,9 +70,10 @@
         </ion-row>
         <ion-row class="row-sentence-answer">
           <ion-text>{{this.message}}</ion-text>
+          <ion-text *ngIf="this.timerService.getTimerIsFinish()">Sorry, it took you too long to answer</ion-text>
           <ion-button color="success" *ngIf="canShowGoToAnswer || this.timerService.getTimerIsFinish()" (click)="pathToResultPage()">See the right answer</ion-button>
         </ion-row>
-        <ion-row *ngIf="answerType == 2 && questionType == 1 && this.canShowAnswer !== false">
+        <ion-row *ngIf="answerType == 4 && questionType == 1 && this.canShowAnswer !== false && !this.timerService.getTimerIsFinish()">
           <ion-col>
             <ion-button shape="round" class="typeAnswer" (click)="checkSelectedAnswer(answer.answer1)"> {{ answer.answer1 }} </ion-button>
           </ion-col>
@@ -80,7 +81,7 @@
             <ion-button shape="round" class="typeAnswer" (click)="checkSelectedAnswer(answer.answer2)"> {{ answer.answer2 }} </ion-button>
           </ion-col>
         </ion-row>
-        <ion-row *ngIf="answerType == 2 && questionType == 1 && this.canShowAnswer !== false">
+        <ion-row *ngIf="answerType == 4 && questionType == 1 && this.canShowAnswer !== false && !this.timerService.getTimerIsFinish()">
           <ion-col>
             <ion-button shape="round" class="typeAnswer" (click)="checkSelectedAnswer(answer.answer3)"> {{ answer.answer3 }} </ion-button>
           </ion-col>
@@ -88,7 +89,7 @@
             <ion-button shape="round" class="typeAnswer" (click)="checkSelectedAnswer(answer.answer4)"> {{ answer.answer4 }} </ion-button>
           </ion-col>
         </ion-row>
-        <ion-row *ngIf="answerType == 3 && questionType == 1 && this.canShowAnswer !== false">
+        <ion-row *ngIf="answerType == 2 && questionType == 1 && this.canShowAnswer !== false && !this.timerService.getTimerIsFinish()">
           <ion-col>
             <ion-button shape="round" class="typeAnswer" (click)="checkSelectedAnswer(answer.answer1)"> {{ answer.answer1 }} </ion-button>
           </ion-col>
