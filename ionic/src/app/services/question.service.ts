@@ -7,6 +7,7 @@ import {element} from "protractor";
 
 export interface placeData {
     id?: string;
+    recordId?: string;
     country: string;
     site?: string;
     coords?: string;
@@ -91,6 +92,7 @@ export class QuestionService {
             for (let i = 0; i < this.recordsInterface.length && this.answers.length < 4; i++) {
                 let data: placeData = {
                     id: this.recordsInterface[i].fields['id_number'],
+                    recordId: this.recordsInterface[i].recordid,
                     country: this.recordsInterface[i].fields['states'],
                     site: this.recordsInterface[i].fields['site'],
                     coords: this.recordsInterface[i].geometry['coordinates']
