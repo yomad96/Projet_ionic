@@ -26,10 +26,10 @@ export class QuestionsPage implements OnInit {
   currentplaceinfo: currentQuestion;
   tentative: number = 0;
   cashForm : FormGroup;
-  goodAnswer = "Bien joué vous avez trouvé la bonne réponse";
-  badAnswer = "Ce n'est pas la bonne réponse";
-  almostGoodAnswer = "Vous avez presque la bonne réponse";
-  tooManyAttempts = "Dommage, vous avez écoulé votre nombre de tentative";
+  goodAnswer = "Well done, you found the right answer !";
+  badAnswer = "Wrong answer !";
+  almostGoodAnswer = "You have almost the right answer";
+  tooManyAttempts = "Too bad, you have passed your attempts number !";
   message: string;
   canShowGoToAnswer : boolean = false;
   isGoodAnswer : boolean = false;
@@ -63,21 +63,19 @@ export class QuestionsPage implements OnInit {
       this.currentplaceinfo = this.questionservice.getQuestion();
       this.arrayAnswer = this.currentplaceinfo.answers;
       if (this.questionType == 1) {
-        this.question = "(BipBoop) Ou se trouve "+ this.currentplaceinfo.rightanswer.site + " (BipBoop)";
+        this.question = "(BipBoop) Where can you find "+ this.currentplaceinfo.rightanswer.site + " (BipBoop)";
       } else {
-        this.question = "Laquelle de ces 4 images représente le site : " + this.currentplaceinfo.rightanswer.site;
+        this.question = "Which of theses 4 images corresponds to the site : " + this.currentplaceinfo.rightanswer.site;
       }
       this.rightAnswer = this.currentplaceinfo.rightanswer.country;
-      this.currentplaceinfo.answers.forEach(element => {
-
-    this.apiService.getImage(parseInt(element.id)).subscribe( data => {
-        const el = document.createElement( 'html' );
+      for (let i: number = 0; i < this.currentplaceinfo.answers.length; i++) {
+    this.apiService.getImage(parseInt(this.currentplaceinfo.answers[i].id)).subscribe( data => {
+      const el = document.createElement( 'html' );
       el.innerHTML = data;
       const imgs = el.getElementsByClassName('icaption-img');
-      this.pictures.push("https://whc.unesco.org" + imgs[0].getAttribute('data-src'));
-      console.log(element.id);
-    });
-  });
+      this.pictures[i] = ("https://whc.unesco.org" + imgs[0].getAttribute('data-src'));
+      });
+  }
   this.timerService.countdown(0.1);
   this.isLoading = false;
   });
@@ -119,8 +117,6 @@ export class QuestionsPage implements OnInit {
 
   isrightPicture(idx: number)
   {
-    console.log(this.currentplaceinfo.answers[idx].id)
-    console.log(this.currentplaceinfo.answers)
     if(this.currentplaceinfo.answers[idx].id == this.currentplaceinfo.rightanswer.id)
     {
       this.timerService.stopCountdown();

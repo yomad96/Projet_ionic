@@ -28,7 +28,7 @@
         <ion-button shape="round" class="typeAnswer" (click)="onChooseTypeAnswer()">Cash</ion-button>
       </ion-col>
       <ion-col>
-        <ion-button shape="round" class="typeAnswer" (click)="onChooseTypeAnswer(4)">Carré</ion-button>        
+        <ion-button shape="round" class="typeAnswer" (click)="onChooseTypeAnswer(4)">Square</ion-button>        
       </ion-col>
       <ion-col>
         <ion-button shape="round" class="typeAnswer" (click)="onChooseTypeAnswer(2)">Duo</ion-button>        
@@ -43,20 +43,20 @@
             </a>
           </ion-col>
           <ion-col>
-            <a (click)="isrightPicture(3)">
-              <img src="{{this.pictures[3]}}">
+            <a (click)="isrightPicture(1)">
+              <img src="{{this.pictures[1]}}">
             </a>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <a (click)="isrightPicture(1)">
-              <img src="{{this.pictures[1]}}">
+            <a (click)="isrightPicture(2)">
+              <img src="{{this.pictures[2]}}">
             </a>
           </ion-col>
           <ion-col>
-            <a (click)="isrightPicture(2)">
-              <img src="{{this.pictures[2]}}">
+            <a (click)="isrightPicture(3)">
+              <img src="{{this.pictures[3]}}">
             </a>
           </ion-col>
         </ion-row>
@@ -65,12 +65,12 @@
         <ion-row *ngIf="answerType == 1 && questionType == 1 && this.canShowAnswer !== false " class="row-form-cash">
           <form [formGroup]="cashForm" (ngSubmit)="validate()" class="form-cash">
               <ion-input class="input-answer" formControlName="answer" type="text" placeholder="Entrez une réponse..."></ion-input>
-              <button class="btn-validate" type="submit">Valider</button>
+              <button class="btn-validate" type="submit">Validate</button>
           </form>
         </ion-row>
         <ion-row class="row-sentence-answer">
           <ion-text>{{this.message}}</ion-text>
-          <ion-button color="success" *ngIf="canShowGoToAnswer || this.timerService.getTimerIsFinish()" (click)="pathToResultPage()">Voir la réponse</ion-button>
+          <ion-button color="success" *ngIf="canShowGoToAnswer || this.timerService.getTimerIsFinish()" (click)="pathToResultPage()">See the right answer</ion-button>
         </ion-row>
         <ion-row *ngIf="answerType == 2 && questionType == 1 && this.canShowAnswer !== false">
           <ion-col>
