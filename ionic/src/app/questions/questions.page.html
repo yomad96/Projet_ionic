@@ -38,24 +38,24 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <a (click)="imageAnswer(0)">
+            <a (click)="isrightPicture(0)">
               <img src="{{this.pictures[0]}}">
             </a>
           </ion-col>
           <ion-col>
-            <a (click)="imageAnswer(1)">
+            <a (click)="isrightPicture(1)">
               <img src="{{this.pictures[1]}}">
             </a>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <a (click)="imageAnswer(2)">
+            <a (click)="isrightPicture(2)">
               <img src="{{this.pictures[2]}}">
             </a>
           </ion-col>
           <ion-col>
-            <a (click)="imageAnswer(3)">
+            <a (click)="isrightPicture(3)">
               <img src="{{this.pictures[3]}}">
             </a>
           </ion-col>
@@ -98,11 +98,4 @@
         </ion-row>
       </div>
     </ion-grid>
-  
-  <div *ngIf="isText">
-
-  </div>
-  <div *ngIf="!isText">
-  
-  </div>
 </ion-content>
