@@ -25,11 +25,10 @@ export class ModalPage implements OnInit {
       this.httpGetAsync(this.jsonRecord[0].fields.id_number);
       console.log(this.jsonRecord[0].fields.coordinates[0]);
       console.log(this.jsonRecord[0].fields.coordinates[1]);
-
     });
   }
 
-  httpGetAsync(id : number) {
+  httpGetAsync(id: number) {
     this.api.getImage(id).subscribe( data => {
       const el = document.createElement( 'html' );
       el.innerHTML = data;

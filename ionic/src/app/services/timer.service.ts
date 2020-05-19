@@ -67,4 +67,9 @@ export class TimerService {
   {
     return this.boolTimer;
   }
+
+  setTimerIsFinish(bool: boolean)
+  {
+    return this.boolTimer = bool;
+  }
 }

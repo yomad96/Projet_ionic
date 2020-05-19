@@ -5,6 +5,7 @@ import {ApiInterfaceFields} from "../Interfaces/api-interface-fields";
 import {Observable, Subject} from "rxjs";
 import {element} from "protractor";
 
+
 export interface placeData {
     id?: string;
     recordId?: string;
@@ -47,6 +48,7 @@ export class QuestionService {
         this.getRandomQuestion();
     }
 
+
      getRandomQuestion(){
         this.getTotalHits().subscribe(data => {
             let nHits: string;
@@ -68,6 +70,7 @@ export class QuestionService {
     }
 
     private getplaces() {
+
         this.api.getApi().subscribe(data => {
             console.log(data);
             this.recordsInterface = data['records'];
@@ -99,12 +102,12 @@ export class QuestionService {
                 }
                 this.unicAnswer(data);
             }
-        this.questionEventEmitter.emit();
+            this.questionEventEmitter.emit();
         });
     }
 
     public getQuestion() {
-        let currentQuestion: currentQuestion;   
+        let currentQuestion: currentQuestion;
             if (this.answers.length == 4) {
             let answer = this.answers[this.getRandomNumber(0, 3)];
             currentQuestion = {
