@@ -13,10 +13,26 @@
   .section{
     padding: 30px;
   }
+  .pad {
+    padding: 20px;
+  }
 
-.pad{
-  padding: 20px;
-}
+  .suiv{
+    right: 20px;
+    position: absolute;
+    bottom: 5px;
+  }
+
+  .btn-red {
+    background-color: #FA8072;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
 
   .txt-center{
     text-align: center;

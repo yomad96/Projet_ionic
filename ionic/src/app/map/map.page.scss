@@ -63,3 +63,16 @@ img.img-li {
 .img-fluid{
   max-width: 100%;
 }
+
+.lifes {
+  z-index: 2;
+  position: absolute;
+  width: 100%;
+  top: 2%;
+  left: 60%;
+}
+
+.heart {
+  width: 1.8em;
+  height: auto;
+}
