@@ -59,7 +59,7 @@ export class TimerService {
     }, 1000);
   }
 
-  stopCountdown(){
+  stopCountdown() {
     clearInterval(this.count);
   }
 
