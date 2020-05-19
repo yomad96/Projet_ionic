@@ -53,7 +53,7 @@ export class QuestionsPage implements OnInit {
               private router: Router, 
               private questionservice: QuestionService,
               private apiService: ApiService) {
-    this.questionType = Math.floor(Math.random()*2)+1;
+    this.questionType = 2//;Math.floor(Math.random()*2)+1;
     this.answerType = 0;
     this.cashForm = new FormGroup({
       answer: new FormControl('', [Validators.required])
@@ -68,8 +68,8 @@ export class QuestionsPage implements OnInit {
         this.question = "Laquelle de ces 4 images représente le site : " + this.currentplaceinfo.rightanswer.site;
       }
       this.rightAnswer = this.currentplaceinfo.rightanswer.country;
-      this.arrayAnswer.forEach(element => {
-        
+      this.currentplaceinfo.answers.forEach(element => {
+
     this.apiService.getImage(parseInt(element.id)).subscribe( data => {
         const el = document.createElement( 'html' );
       el.innerHTML = data;
@@ -80,14 +80,6 @@ export class QuestionsPage implements OnInit {
   this.timerService.countdown(0.1);
   this.isLoading = false;
   });
-  }
-
-  sleep(milliseconds) {
-    const date = Date.now();
-    let currentDate = null;
-    do {
-      currentDate = Date.now();
-    } while (currentDate - date < milliseconds);
   }
 
   ngOnInit() {
@@ -105,13 +97,6 @@ export class QuestionsPage implements OnInit {
       this.getAnswerDuo();
       break;
   }
-  this.timerService.countdown(0.1);
-  }
-
-  imageAnswer(idx: number) {
-    if (this.arrayAnswer[idx].id == this.currentplaceinfo.rightanswer.id) {
-      console.log("juste")
-    }
   }
 
   getAnwser() {
@@ -128,6 +113,31 @@ export class QuestionsPage implements OnInit {
       {
         this.answerVerification(answer,answerOfPlayer);
       }
+    }
+  }
+
+  isrightPicture(idx: number)
+  {
+    console.log(this.pictures);
+    console.log(this.currentplaceinfo.answers);
+    console.log(this.currentplaceinfo.rightanswer.id);
+    console.log(this.currentplaceinfo.answers[idx]);
+    if(this.currentplaceinfo.answers[idx].id == this.currentplaceinfo.rightanswer.id)
+    {
+      this.timerService.stopCountdown();
+      this.isGoodAnswer = true;
+      this.canShowGoToAnswer = true;
+      this.message = this.goodAnswer;
+      this.canShowAnswer = false;
+      return this.message;
+    }
+    else {
+      this.timerService.stopCountdown();
+      this.gameService.setLifes(this.gameService.getLifes()-1);
+      this.canShowGoToAnswer = true;
+      this.canShowAnswer = false;
+      this.message = this.badAnswer;
+      return this.message;
     }
   }
 
