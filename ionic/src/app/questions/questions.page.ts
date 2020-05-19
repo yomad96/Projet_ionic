@@ -26,14 +26,13 @@ export class QuestionsPage implements OnInit {
   currentplaceinfo: currentQuestion;
   tentative: number = 0;
   cashForm : FormGroup;
-  goodAnswer = "Well done, you found the right answer !";
-  badAnswer = "Wrong answer !";
+  // goodAnswer = "Well done, you found the right answer !";
+  // badAnswer = "Wrong answer !";
   almostGoodAnswer = "You have almost the right answer";
   tooManyAttempts = "Too bad, you have passed your attempts number !";
   message: string;
   canShowGoToAnswer : boolean = false;
   isGoodAnswer : boolean = false;
-  fakeId = 'aaf23f0bbb475a944045913a7b202d50596af11e';
   arrayAnswer : placeData[] = [];
   rightAnswer: string;
   canShowAnswer: boolean =true;
@@ -46,19 +45,32 @@ export class QuestionsPage implements OnInit {
     answer4: "",
   };
 
+  //Cache = 5000 points
+  //Carré = 3000 points
+  //Duo = 1000points
+
 
   constructor(
               private timerService: TimerService,
               private gameService: GameService, 
               private router: Router, 
               private questionservice: QuestionService,
-              private apiService: ApiService) {
+              private apiService: ApiService) {}
+
+  ngOnInit() {
+    this.timerService.setTime(5);
+  }
+
+  ionViewDidEnter()
+  {
+    console.log("DidEnter");
     this.questionType = Math.floor(Math.random()*2)+1;
     this.answerType = 0;
     this.cashForm = new FormGroup({
       answer: new FormControl('', [Validators.required])
     });
     this.questionservice.questionEventEmitter.subscribe(data => {
+      console.log("EventEmitter");
       // @ts-ignore
       this.currentplaceinfo = this.questionservice.getQuestion();
       this.arrayAnswer = this.currentplaceinfo.answers;
@@ -69,25 +81,22 @@ export class QuestionsPage implements OnInit {
       }
       this.rightAnswer = this.currentplaceinfo.rightanswer.country;
       for (let i: number = 0; i < this.currentplaceinfo.answers.length; i++) {
-    this.apiService.getImage(parseInt(this.currentplaceinfo.answers[i].id)).subscribe( data => {
-      const el = document.createElement( 'html' );
-      el.innerHTML = data;
-      const imgs = el.getElementsByClassName('icaption-img');
-      this.pictures[i] = ("https://whc.unesco.org" + imgs[0].getAttribute('data-src'));
-      });
-  }
-  this.timerService.countdown(0.1);
-  this.isLoading = false;
-  });
-  }
-
-  ngOnInit() {
-    this.timerService.setTime(1);    
+        this.apiService.getImage(parseInt(this.currentplaceinfo.answers[i].id)).subscribe( data => {
+          const el = document.createElement( 'html' );
+          el.innerHTML = data;
+          const imgs = el.getElementsByClassName('icaption-img');
+          this.pictures[i] = ("https://whc.unesco.org" + imgs[0].getAttribute('data-src'));
+        });
+      }
+      this.timerService.countdown(0.1);
+      this.isLoading = false;
+    });
   }
 
   onChooseTypeAnswer(type: number) {
     this.answerType = type;
     this.questionType = 1;
+    console.log(this.getAnwser());
   switch(type) {
     case 4:
       this.getAnswerCarre();
@@ -106,8 +115,9 @@ export class QuestionsPage implements OnInit {
   {
     if(this.cashForm.valid)
     {
-      let answer = this.getAnwser();
+      let answer = this.getAnwser().toLowerCase();
       let answerOfPlayer = this.cashForm.value.answer;
+      answerOfPlayer.toLowerCase();
       if(!this.canShowGoToAnswer)
       {
         this.answerVerification(answer,answerOfPlayer);
@@ -121,18 +131,14 @@ export class QuestionsPage implements OnInit {
     {
       this.timerService.stopCountdown();
       this.isGoodAnswer = true;
-      this.canShowGoToAnswer = true;
-      this.message = this.goodAnswer;
       this.canShowAnswer = false;
-      return this.message;
+      this.pathToResultPage();
     }
     else {
       this.timerService.stopCountdown();
       this.gameService.setLifes(this.gameService.getLifes()-1);
-      this.canShowGoToAnswer = true;
       this.canShowAnswer = false;
-      this.message = this.badAnswer;
-      return this.message;
+      this.pathToResultPage();
     }
   }
 
@@ -146,10 +152,10 @@ export class QuestionsPage implements OnInit {
     {
       this.timerService.stopCountdown();
       this.isGoodAnswer = true;
-      this.canShowGoToAnswer = true;
-      this.message = this.goodAnswer;
       this.canShowAnswer = false;
-      return this.message;
+      this.gameService.addPoint(5000);
+      console.log(this.gameService.getPoint());
+      this.pathToResultPage();
     }
 
     if(this.tentative <= 1)
@@ -162,17 +168,12 @@ export class QuestionsPage implements OnInit {
       }
       this.timerService.stopCountdown();
       this.gameService.setLifes(this.gameService.getLifes()-1);
-      this.canShowGoToAnswer = true;
-      this.canShowAnswer = false;
-      this.message = this.badAnswer;
-      return this.message;
     }
     this.timerService.stopCountdown();
     this.gameService.setLifes(this.gameService.getLifes()-1);
-    this.canShowGoToAnswer = true;
     this.canShowAnswer = false;
     this.message = this.tooManyAttempts;
-    return this.message;
+    this.pathToResultPage();
   }
 
   array_diff(array1 : [], array2 : [])
@@ -181,7 +182,6 @@ export class QuestionsPage implements OnInit {
     let letter :[''] = [''];
     if(array1.length >= array2.length)
     {
-      console.log("array1 >= array2 ");
       for(let i = 0; i <= array1.length;i++)
       {
         if(array1[i] !== array2[i])
@@ -191,7 +191,6 @@ export class QuestionsPage implements OnInit {
         }
       }
     }else{
-      console.log("array2 >= array1");
       for(let i = 0; i <= array2.length;i++)
       {
         if(array2[i] !== array1[i])
@@ -208,8 +207,8 @@ export class QuestionsPage implements OnInit {
   {
     const navigationExtras: NavigationExtras = {
       state: {
-        id: this.fakeId,
-        boolAnswer: this.isGoodAnswer
+        id: this.currentplaceinfo.rightanswer.recordId,
+        resp: this.isGoodAnswer
       }
     };
     this.router.navigate(['/resultat-question'],navigationExtras)
@@ -217,13 +216,13 @@ export class QuestionsPage implements OnInit {
 
   getAnswerCarre() {
     //@ts-ignore
-    this.answer.answer1 = this.arrayAnswer[0]['site'];
+    this.answer.answer1 = this.arrayAnswer[0]['country'];
     // @ts-ignore
-    this.answer.answer2 = this.arrayAnswer[1]['site'];
+    this.answer.answer2 = this.arrayAnswer[1]['country'];
     // @ts-ignore
-    this.answer.answer3 = this.arrayAnswer[2]['site'];
+    this.answer.answer3 = this.arrayAnswer[2]['country'];
     // @ts-ignore
-    this.answer.answer4 = this.arrayAnswer[3]['site'];
+    this.answer.answer4 = this.arrayAnswer[3]['country'];
   }
 
   getAnswerDuo()
@@ -232,8 +231,8 @@ export class QuestionsPage implements OnInit {
     if(randomNumber === 0) {
       this.answer.answer1 = this.rightAnswer;
       for (let i = 0; i < this.arrayAnswer.length; i++) {
-        if (this.arrayAnswer[i]['site'] !== this.rightAnswer) {
-          this.answer.answer2 = this.arrayAnswer[i]['site'];
+        if (this.arrayAnswer[i]['country'] !== this.rightAnswer) {
+          this.answer.answer2 = this.arrayAnswer[i]['country'];
           return 0;
         }
       }
@@ -242,9 +241,9 @@ export class QuestionsPage implements OnInit {
       this.answer.answer2 = this.rightAnswer;
       for (let i = 0; i< this.arrayAnswer.length; i++)
       {
-        if(this.arrayAnswer[i]['site'] !== this.rightAnswer)
+        if(this.arrayAnswer[i]['country'] !== this.rightAnswer)
         {
-          this.answer.answer1 = this.arrayAnswer[i]['site'];
+          this.answer.answer1 = this.arrayAnswer[i]['country'];
           return 0;
         }
       }
@@ -253,22 +252,34 @@ export class QuestionsPage implements OnInit {
 
   checkSelectedAnswer(answer: string)
   {
-    console.log(answer);
-    console.log(this.getAnwser());
     if(this.getAnwser() === answer)
     {
+      if(this.answerType === 2)
+      {
+        this.gameService.addPoint(1000);
+      }
+      if(this.answerType === 4)
+      {
+        this.gameService.addPoint(3000);
+      }
       this.timerService.stopCountdown();
       this.isGoodAnswer = true;
       this.canShowGoToAnswer = true;
-      this.message = this.goodAnswer;
     }
     else {
       this.timerService.stopCountdown();
       this.gameService.setLifes(this.gameService.getLifes()-1);
-      this.canShowGoToAnswer = true;
-      this.message = this.badAnswer;
     }
+    console.log(this.gameService.getPoint());
     this.canShowAnswer = false;
+    this.pathToResultPage();
+  }
+
+  ionViewDidLeave()
+  {
+    console.log("DidLeave");
+    // @ts-ignore
+    this.question = "";
   }
 }
 
