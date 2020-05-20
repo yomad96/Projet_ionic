@@ -50,18 +50,23 @@ export class MapPage implements OnInit {
   ngOnInit() {
     this.questionService.mapEventEmitter.subscribe(() => {
       this.question = this.questionService.getQuestion();
+      if (this.question.answers || this.question.rightanswer) {
+        this.router.navigate(['/map']);
+      }
       this.site = this.question.rightanswer.site;
       this.questionLat = this.question.rightanswer.coords[1];
       this.questionLng = this.question.rightanswer.coords[0];
 
+
       this.questionrecordid = this.question.rightanswer.recordId;
       // tslint:disable-next-line:radix
-    if (this.questionType == 1) {
-      this.questionImg = undefined;
-      this.timerService.countdown(2);
-    } else {
-      this.httpGetAsync(parseInt(this.question.rightanswer.id));
-    }
+      if (this.questionType === 1) {
+        this.questionImg = undefined;
+        this.timerService.countdown(2);
+      } else {
+        this.httpGetAsync(parseInt(this.question.rightanswer.id));
+      }
+      this.questionService.reset();
     });
   }
 

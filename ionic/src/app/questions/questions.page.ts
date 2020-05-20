@@ -61,6 +61,9 @@ export class QuestionsPage implements OnInit {
     this.questionservice.questionEventEmitter.subscribe(data => {
       // @ts-ignore
       this.currentplaceinfo = this.questionservice.getQuestion();
+      if (this.currentplaceinfo.answers || this.currentplaceinfo.rightanswer) {
+        this.router.navigate(['/questions']);
+      }
       this.arrayAnswer = this.currentplaceinfo.answers;
       this.rightAnswer = this.currentplaceinfo.rightanswer.country;
       if (this.questionType == 1) {
