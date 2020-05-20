@@ -108,7 +108,7 @@ export class QuestionService {
 
     public getQuestion() {
         let currentQuestion: currentQuestion;
-        if (this.answers.length == 4) {
+        if (this.answers.length === 4) {
             const answer = this.answers[this.getRandomNumber(0, 3)];
             currentQuestion = {
                 rightanswer: answer,
@@ -118,13 +118,13 @@ export class QuestionService {
         return currentQuestion;
     }
 
-    public reset(){
+    public reset() {
         this.answers = [];
     }
 
     // verifie si le pays n'est pas déjà sélectionner
     private unicAnswer(element: placeData) {
-        if (this.isADifferentCountry(element.country) && element.country != undefined) {
+        if (this.isADifferentCountry(element.country) && element.country !== undefined) {
             this.answers.push(element);
         }
     }
