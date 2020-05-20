@@ -79,14 +79,14 @@ export class QuestionsPage implements OnInit {
       }
       this.timerService.countdown(1);
       this.isLoading = false;
+      this.questionservice.reset();
     });
   }
 
   ionViewDidEnter()
   {
     this.timerService.setTime(1);
-    this.questionType = 1
-        // Math.floor(Math.random()*2)+1;
+    this.questionType = 2;
     this.answerType = 0;
     this.cashForm = new FormGroup({
       answer: new FormControl('', [Validators.required])

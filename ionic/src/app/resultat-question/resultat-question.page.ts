@@ -46,6 +46,10 @@ export class ResultatQuestionPage implements OnInit {
     }
   }
   suivant() {
-    this.gameService.randomQuestion();
+    if (this.gameService.getLifes() <= 0) {
+      this.router.navigate(['/result']);
+    } else {
+      this.gameService.randomQuestion();
+    }
   }
 }
