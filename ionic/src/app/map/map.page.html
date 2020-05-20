@@ -35,7 +35,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="reponse && !(timerService.getTimerIsFinish())" class="txt-center">
+      <div *ngIf="reponse && !(timerService.getTimerIsFinish()) && !(question == undefined || questionImg == undefined &&!(timerService.getTimerIsFinish()))" class="txt-center">
           <div *ngIf="!validate" class="txt-center">
             <button (click)="repondre()" class="question btn-green">Confirm response</button>
           </div>
