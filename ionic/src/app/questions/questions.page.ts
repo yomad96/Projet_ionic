@@ -164,7 +164,6 @@ export class QuestionsPage implements OnInit {
         this.message = this.almostGoodAnswer;
         return this.message;
       }
-      return 0;
     }
     this.timerService.stopCountdown();
     this.gameService.setLifes(this.gameService.getLifes()-1);
