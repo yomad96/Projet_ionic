@@ -3,10 +3,10 @@
     <ion-row class="lifes">
       <div *ngFor="let idx of [3,2,1]">
         <ion-col *ngIf="idx <= gameService.getLifes()">
-          <img src="../../assets/images/heart.png" class="heart">
+          <img src="../../assets/images/coeur.svg" class="heart">
         </ion-col>
         <ion-col *ngIf="idx > gameService.getLifes()">
-          <img src="../../assets/images/black-heart.png" class="heart">
+          <img src="../../assets/images/coeurblack.svg" class="heart">
         </ion-col>
       </div>
     </ion-row>
