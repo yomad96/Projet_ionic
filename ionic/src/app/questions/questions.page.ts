@@ -61,6 +61,9 @@ export class QuestionsPage implements OnInit {
     this.questionservice.questionEventEmitter.subscribe(data => {
       // @ts-ignore
       this.currentplaceinfo = this.questionservice.getQuestion();
+      if (this.currentplaceinfo.answers || this.currentplaceinfo.rightanswer) {
+        this.router.navigate(['/questions']);
+      }
       this.arrayAnswer = this.currentplaceinfo.answers;
       this.rightAnswer = this.currentplaceinfo.rightanswer.country;
       if (this.questionType == 1) {
@@ -164,7 +167,6 @@ export class QuestionsPage implements OnInit {
         this.message = this.almostGoodAnswer;
         return this.message;
       }
-      return 0;
     }
     this.timerService.stopCountdown();
     this.gameService.setLifes(this.gameService.getLifes()-1);
