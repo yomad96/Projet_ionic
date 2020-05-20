@@ -142,7 +142,6 @@ export class MapPage implements OnInit {
 
     this.timerService.stopCountdown();
 
-    this.map.tap.disable();
     const poly = [
       [this.questionLat, this.questionLng],
       [this.reponseLat, this.reponseLng]
