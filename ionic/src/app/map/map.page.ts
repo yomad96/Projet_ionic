@@ -91,7 +91,6 @@ export class MapPage implements OnInit {
       el.innerHTML = data;
       const imgs = el.getElementsByClassName('icaption-img');
       this.questionImg = imgs[0].getAttribute('data-src');
-      this.timerService.setTime(2);
       this.timerService.countdown(2);
     });
   }

@@ -18,9 +18,9 @@ export class GameService {
 
   randomQuestion() { this.router.navigate(['/questions']);
     if (Math.floor(Math.random()*3)+1 === 1) {
-     
+      this.router.navigate(['/questions']);
     } else {
-      this.router.navigate(['/map']);
+      this.router.navigate(['/questions']);
     }
   }
 
