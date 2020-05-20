@@ -79,24 +79,23 @@ export class QuestionsPage implements OnInit {
       }
       this.timerService.countdown(1);
       this.isLoading = false;
-      this.questionservice.reset();
     });
   }
 
   ionViewDidEnter()
   {
     this.timerService.setTime(1);
-    this.questionType = 2;
+    this.questionType = Math.floor(Math.random()*2)+1;
     this.answerType = 0;
     this.cashForm = new FormGroup({
       answer: new FormControl('', [Validators.required])
     });
+    this.questionservice.reset();
     this.questionservice.getRandomQuestion();
   }
 
   onChooseTypeAnswer(type: number) {
     this.answerType = type;
-    this.questionType = 1;
   switch(type) {
     case 4:
       this.getAnswerCarre();
@@ -127,15 +126,15 @@ export class QuestionsPage implements OnInit {
 
   isrightPicture(idx: number)
   {
+    this.timerService.stopCountdown();
     if(this.currentplaceinfo.answers[idx].id == this.currentplaceinfo.rightanswer.id)
     {
-      this.timerService.stopCountdown();
+      this.gameService.addPoint(3000);
       this.isGoodAnswer = true;
       this.canShowAnswer = false;
       this.pathToResultPage();
     }
     else {
-      this.timerService.stopCountdown();
       this.gameService.setLifes(this.gameService.getLifes()-1);
       this.canShowAnswer = false;
       this.pathToResultPage();
@@ -165,8 +164,7 @@ export class QuestionsPage implements OnInit {
         this.message = this.almostGoodAnswer;
         return this.message;
       }
-      this.timerService.stopCountdown();
-      this.gameService.setLifes(this.gameService.getLifes()-1);
+      return 0;
     }
     this.timerService.stopCountdown();
     this.gameService.setLifes(this.gameService.getLifes()-1);
