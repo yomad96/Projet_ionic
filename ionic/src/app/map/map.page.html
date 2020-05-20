@@ -12,7 +12,7 @@
   <div id="mapId" style="width: 100%; height: 100%"></div>
   <div class="w-question">
     <div class="bg-question">
-      <div *ngIf="question != undefined && questionImg != undefined  && !(timerService.getTimerIsFinish())">
+      <div *ngIf="question != undefined && !(timerService.getTimerIsFinish())">
         <div *ngIf="!validate" class="txt-center">
           <div *ngIf="questionType == 1">
             <p id="timer" class="clock"></p>
@@ -20,7 +20,7 @@
               Where is this located : {{site}} ?
             </p>
           </div>
-          <div *ngIf="questionType == 2">
+          <div *ngIf="questionType == 2 && questionImg != undefined">
             <ion-row>
               <ion-col size="4">
                 <img class="img-fluid" src="https://whc.unesco.org{{questionImg}}" height="100px" (click)="openModal()">
@@ -35,7 +35,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="reponse && !(timerService.getTimerIsFinish()) && !(question == undefined || questionImg == undefined &&!(timerService.getTimerIsFinish()))" class="txt-center">
+      <div *ngIf="reponse && !(timerService.getTimerIsFinish()) && !(question == undefined || (questionImg == undefined && questionType == 2) &&!(timerService.getTimerIsFinish()))" class="txt-center">
           <div *ngIf="!validate" class="txt-center">
             <button (click)="repondre()" class="question btn-green">Confirm response</button>
           </div>
@@ -55,7 +55,7 @@
           </div>
           <button (click)="suivant()" class="btn-red mt question">See response</button>
         </div>
-      <div *ngIf="question == undefined || questionImg == undefined &&!(timerService.getTimerIsFinish())">
+      <div *ngIf="question == undefined || (questionImg == undefined && questionType == 2) &&!(timerService.getTimerIsFinish())">
         <ion-progress-bar type="indeterminate"></ion-progress-bar>
       </div>
       <img class="img-li" src="../../assets/images/Li2.svg">

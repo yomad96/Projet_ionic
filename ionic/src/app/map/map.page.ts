@@ -48,19 +48,20 @@ export class MapPage implements OnInit {
   constructor(private gameService: GameService, private router: Router, private api: ApiService, private timerService: TimerService, private questionService: QuestionService, private modal: ModalController) { }
 
   ngOnInit() {
-    this.questionService.questionEventEmitter.subscribe(() => {
+    this.questionService.mapEventEmitter.subscribe(() => {
       this.question = this.questionService.getQuestion();
       this.site = this.question.rightanswer.site;
       this.questionLat = this.question.rightanswer.coords[1];
       this.questionLng = this.question.rightanswer.coords[0];
 
-      console.log("Quest LAT "+ this.questionLat);
-      console.log("Quest LNG "+ this.questionLng);
-
       this.questionrecordid = this.question.rightanswer.recordId;
       // tslint:disable-next-line:radix
+    if (this.questionType == 1) {
+      this.questionImg = undefined;
+      this.timerService.countdown(2);
+    } else {
       this.httpGetAsync(parseInt(this.question.rightanswer.id));
-
+    }
     });
   }
 
@@ -90,8 +91,11 @@ export class MapPage implements OnInit {
       const el = document.createElement( 'html' );
       el.innerHTML = data;
       const imgs = el.getElementsByClassName('icaption-img');
-      this.questionImg = imgs[0].getAttribute('data-src');
-      this.timerService.countdown(2);
+      try {
+        this.questionImg = imgs[0].getAttribute('data-src');
+        this.timerService.countdown(2);
+      } catch(e) {
+      }
     });
   }
 
@@ -116,8 +120,6 @@ export class MapPage implements OnInit {
       this.reponseLat = e.latlng.lat;
       // @ts-ignore
       this.reponseLng = e.latlng.lng;
-      console.log("LAT "+this.reponseLat);
-      console.log("LNG "+this.reponseLng);
 
     });
 
@@ -131,6 +133,8 @@ export class MapPage implements OnInit {
   }
 
   ionViewWillLeave() {
+    this.question = undefined;
+    this.questionImg = undefined;
     this.map.remove();
   }
 

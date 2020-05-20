@@ -10,17 +10,20 @@ import {Observable} from "rxjs";
 export class GameService {
   private lifes: number;
   private point: number;
+  //Question = 1 / Map = 2
+  public gamestate: number;
 
   constructor(private router: Router, private storage: Storage) {
     this.point = 0;
     this.lifes = 3;
   }
 
-  randomQuestion() { this.router.navigate(['/questions']);
-    if (Math.floor(Math.random()*3)+1 === 1) {
+  randomQuestion() {
+    this.gamestate = Math.floor(Math.random()*2)+1;
+    if (this.gamestate === 1) {
       this.router.navigate(['/questions']);
     } else {
-      this.router.navigate(['/questions']);
+      this.router.navigate(['/map']);
     }
   }
 
@@ -47,11 +50,8 @@ export class GameService {
     const prevhisto = await this.getHistorique();
     let histo: Score[];
     if (prevhisto !== null){
-      console.log("prevhisto !== undefined");
-      console.log(prevhisto)
        histo = await this.getHistorique();
     } else {
-      console.log("else")
       histo = [];
     }
     const currentDate = new Date();
