@@ -61,7 +61,6 @@ export class QuestionsPage implements OnInit {
     this.questionservice.questionEventEmitter.subscribe(data => {
       // @ts-ignore
       this.currentplaceinfo = this.questionservice.getQuestion();
-      console.log("currentplaceinfo", this.currentplaceinfo);
       this.arrayAnswer = this.currentplaceinfo.answers;
       this.rightAnswer = this.currentplaceinfo.rightanswer.country;
       if (this.questionType == 1) {
@@ -78,7 +77,6 @@ export class QuestionsPage implements OnInit {
         });
       }
       }
-      console.log("cd");
       this.timerService.countdown(1);
       this.isLoading = false;
     });
@@ -98,7 +96,6 @@ export class QuestionsPage implements OnInit {
   onChooseTypeAnswer(type: number) {
     this.answerType = type;
     this.questionType = 1;
-    console.log(this.getAnwser());
   switch(type) {
     case 4:
       this.getAnswerCarre();
@@ -156,7 +153,6 @@ export class QuestionsPage implements OnInit {
       this.isGoodAnswer = true;
       this.canShowAnswer = false;
       this.gameService.addPoint(5000);
-      console.log(this.gameService.getPoint());
       this.pathToResultPage();
     }
 
@@ -272,14 +268,12 @@ export class QuestionsPage implements OnInit {
       this.timerService.stopCountdown();
       this.gameService.setLifes(this.gameService.getLifes()-1);
     }
-    console.log(this.gameService.getPoint());
     this.canShowAnswer = false;
     this.pathToResultPage();
   }
 
   ionViewDidLeave()
   {
-    console.log("DidLeave");
     // @ts-ignore
     this.question = "";
     this.canShowGoToAnswer = false;
