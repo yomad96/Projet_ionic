@@ -14,8 +14,6 @@ export class ImageModalPage implements OnInit {
 
   ngOnInit() {
     this.imagurl = "https://whc.unesco.org" + this.url;
-    console.log(this.imagurl);
-    console.log(this.url);
   }
 
 

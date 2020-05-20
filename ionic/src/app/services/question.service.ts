@@ -4,6 +4,7 @@ import {ApiInterfaceRecords} from '../Interfaces/apiInterfaceRecords';
 import {ApiInterfaceFields} from '../Interfaces/api-interface-fields';
 import {Observable, Subject} from 'rxjs';
 import {element} from 'protractor';
+import { GameService } from './game.service';
 
 
 export interface placeData {
@@ -42,12 +43,11 @@ export class QuestionService {
     public question = '';
     private recordsInterface: ApiInterfaceRecords[] = [];
     public questionEventEmitter: EventEmitter<any> = new EventEmitter();
+    public mapEventEmitter: EventEmitter<any> = new EventEmitter();
 
 
-    constructor(private api: ApiService) {
+    constructor(private api: ApiService, private gameService: GameService) {
     }
-
-
      getRandomQuestion() {
         this.getTotalHits().subscribe(data => {
             let nHits: string;
@@ -69,12 +69,11 @@ export class QuestionService {
     }
 
     private getplaces() {
-
         this.api.getApi().subscribe(data => {
             this.recordsInterface = data.records;
             this.recordsInterface.forEach(element => {
                 const data: placeData = {
-                    country: element.fields.states
+                    country: element.fields['states']
                 };
                 if (data.country != undefined) {
                     this.search.push(data);
@@ -91,15 +90,19 @@ export class QuestionService {
             });
             for (let i = 0; i < this.recordsInterface.length && this.answers.length < 4; i++) {
                 const data: placeData = {
-                    id: this.recordsInterface[i].fields.id_number,
+                    id: this.recordsInterface[i].fields['id_number'],
                     recordId: this.recordsInterface[i].recordid,
-                    country: this.recordsInterface[i].fields.states,
-                    site: this.recordsInterface[i].fields.site,
-                    coords: this.recordsInterface[i].geometry.coordinates
+                    country: this.recordsInterface[i].fields['states'],
+                    site: this.recordsInterface[i].fields['site'],
+                    coords: this.recordsInterface[i].geometry['coordinates']
                 };
                 this.unicAnswer(data);
             }
-            this.questionEventEmitter.emit();
+            if (this.gameService.gamestate == 1) {
+                this.questionEventEmitter.emit();
+            } else {
+                this.mapEventEmitter.emit();
+            }
         });
     }
 
@@ -147,6 +150,10 @@ export class QuestionService {
 
     getStartNumber() {
         const totalHits = this.nHits - 30;
-        this.startNumber = this.getRandomNumber(0, totalHits);
+        if ( totalHits > 0) {
+            this.startNumber = this.getRandomNumber(0, totalHits);
+        } else {
+            this.startNumber = 0;
+        }
     }
 }

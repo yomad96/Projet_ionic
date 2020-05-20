@@ -41,8 +41,6 @@ export class TimerService {
     }
     
     this.count = setInterval( () => {
-      console.log("inter");
-
       let now = new Date().getTime();
       let distance = countDownDate.getTime() - now + 10;
       
@@ -52,9 +50,8 @@ export class TimerService {
       document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
       
       if (distance < 0) {
-        clearInterval(this.count);
-        document.getElementById("timer").innerHTML = "EXPIRED";
-        console.log("expired");
+        this.stopCountdown();
+        document.getElementById("timer").innerHTML = "Time exceeded !";
         this.gameService.setLifes(this.gameService.getLifes() - 1);
         this.boolTimer = true;
       }
