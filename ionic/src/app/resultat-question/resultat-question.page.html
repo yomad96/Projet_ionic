@@ -16,16 +16,20 @@
                 <p class="pad">
                     <i>(Biip boop)</i>, that was close, but I'm sure you'll do better next time.
                 </p>
+                <div class="txt-center">
+                    <button  class="btn-red" (click)="openModal()">En savoir plus</button>
+                </div>
             </div>
             <div *ngIf="goodbad" class="mt">
                 <img class="mt" src="../../assets/images/content2.svg" width="200">
                 <p class="pad">
                     <i>(Biip boop)</i>, I've always believed in you. I was sure you'd respond well.
                 </p>
+                <div class="txt-center">
+                    <button  class="btn-green" (click)="openModal()">En savoir plus</button>
+                </div>
             </div>
-            <div class="txt-center">
-                <button  class="btn-red" (click)="openModal()">En savoir plus</button>
-            </div>
+
             <img src="../../assets/images/fleche.svg"  class="suiv" (click)="suivant()" width="50">
         </div>
     </div>
