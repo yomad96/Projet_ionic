@@ -21,6 +21,7 @@ export class HomePage implements OnInit{
   }
 
   quizz() {
+    this.gameService.setLifes(3);
     this.gameService.randomQuestion();
   }
 

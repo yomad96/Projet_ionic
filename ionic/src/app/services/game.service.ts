@@ -46,9 +46,12 @@ export class GameService {
   async setHistorique(point: number) {
     const prevhisto = await this.getHistorique();
     let histo: Score[];
-    if (prevhisto !== undefined){
+    if (prevhisto !== null){
+      console.log("prevhisto !== undefined");
+      console.log(prevhisto)
        histo = await this.getHistorique();
     } else {
+      console.log("else")
       histo = [];
     }
     const currentDate = new Date();

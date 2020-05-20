@@ -82,7 +82,6 @@ export class MapPage implements OnInit {
       this.questionrecordid = this.question.rightanswer.recordId;
       // tslint:disable-next-line:radix
       this.httpGetAsync(parseInt(this.question.rightanswer.id));
-
     });
 
   }
@@ -127,6 +126,7 @@ export class MapPage implements OnInit {
     const bounds = L.latLngBounds(southWest, northEast);
 
     this.map.setMaxBounds(bounds);
+    this.map.setMinZoom(2);
     this.map.on('drag', () => {
       this.map.panInsideBounds(bounds, { animate: false });
     });
