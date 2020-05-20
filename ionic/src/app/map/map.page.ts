@@ -138,6 +138,7 @@ export class MapPage implements OnInit {
   }
 
   ionViewWillLeave() {
+    this.timerService.stopCountdown();
     this.question = undefined;
     this.questionImg = undefined;
     this.map.remove();
