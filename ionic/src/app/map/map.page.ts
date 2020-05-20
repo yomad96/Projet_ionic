@@ -48,13 +48,25 @@ export class MapPage implements OnInit {
   constructor(private gameService: GameService, private router: Router, private api: ApiService, private timerService: TimerService, private questionService: QuestionService, private modal: ModalController) { }
 
   ngOnInit() {
+    this.questionService.questionEventEmitter.subscribe(() => {
+      this.question = this.questionService.getQuestion();
+      this.site = this.question.rightanswer.site;
+      this.questionLat = this.question.rightanswer.coords[1];
+      this.questionLng = this.question.rightanswer.coords[0];
 
+      console.log("Quest LAT "+ this.questionLat);
+      console.log("Quest LNG "+ this.questionLng);
+
+      this.questionrecordid = this.question.rightanswer.recordId;
+      // tslint:disable-next-line:radix
+      this.httpGetAsync(parseInt(this.question.rightanswer.id));
+
+    });
   }
 
   ionViewDidEnter() {
 
     this.leafletMap();
-    this.timerService.setTimerIsFinish(false);
     this.timerService.stopCountdown();
 
     this.questionType = Math.floor(Math.random()*2)+1;
@@ -70,29 +82,17 @@ export class MapPage implements OnInit {
     this.distance = null;
     this.point = null;
     this.pourcentage = null;
-    this.questionService.questionEventEmitter.subscribe(() => {
-      this.question = this.questionService.getQuestion();
-      this.site = this.question.rightanswer.site;
-      this.questionLat = this.question.rightanswer.coords[1];
-      this.questionLng = this.question.rightanswer.coords[0];
-
-      console.log("Quest LAT "+ this.questionLat);
-      console.log("Quest LNG "+ this.questionLng);
-
-      this.questionrecordid = this.question.rightanswer.recordId;
-      // tslint:disable-next-line:radix
-      this.httpGetAsync(parseInt(this.question.rightanswer.id));
-    });
-
+    this.questionService.getRandomQuestion();
   }
+
   httpGetAsync(id: number) {
     this.api.getImage(id).subscribe( data => {
       const el = document.createElement( 'html' );
       el.innerHTML = data;
       const imgs = el.getElementsByClassName('icaption-img');
       this.questionImg = imgs[0].getAttribute('data-src');
+      this.timerService.setTime(2);
       this.timerService.countdown(2);
-
     });
   }
 
@@ -126,7 +126,6 @@ export class MapPage implements OnInit {
     const bounds = L.latLngBounds(southWest, northEast);
 
     this.map.setMaxBounds(bounds);
-    this.map.setMinZoom(2);
     this.map.on('drag', () => {
       this.map.panInsideBounds(bounds, { animate: false });
     });
@@ -197,6 +196,4 @@ export class MapPage implements OnInit {
     });
     return await mymodal.present();
   }
-
-
 }

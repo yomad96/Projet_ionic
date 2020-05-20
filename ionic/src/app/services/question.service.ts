@@ -45,7 +45,6 @@ export class QuestionService {
     
     
     constructor(private api: ApiService) {
-        this.getRandomQuestion();
     }
 
 
@@ -60,7 +59,7 @@ export class QuestionService {
         });
     }
 
-    private isADiffirentCountry(countryname: string): boolean {
+    private isADifferentCountry(countryname: string): boolean {
         if (!this.unicPlace.includes(countryname)) {
             this.unicPlace.push(countryname);
             return true;
@@ -72,7 +71,7 @@ export class QuestionService {
     private getplaces() {
 
         this.api.getApi().subscribe(data => {
-            console.log(data);
+            console.log("data", data);
             this.recordsInterface = data['records'];
             this.recordsInterface.forEach(element => {
                 let data: placeData = {
@@ -102,6 +101,7 @@ export class QuestionService {
                 }
                 this.unicAnswer(data);
             }
+            console.log('EMIT');
             this.questionEventEmitter.emit();
         });
     }
@@ -120,7 +120,7 @@ export class QuestionService {
 
     //verifie si le pays n'est pas déjà sélectionner
     private unicAnswer(element: placeData) {
-        if (this.isADiffirentCountry(element.country) && element.country != undefined) {
+        if (this.isADifferentCountry(element.country) && element.country != undefined) {
             this.answers.push(element);
         }
     }
@@ -128,6 +128,7 @@ export class QuestionService {
     private getRandomRegion() {
         let randomNumber = this.getRandomNumber(0, this.Region.length-1);
         this.randomRegion = this.Region[randomNumber];
+        console.log("region", this.Region[randomNumber]);
     }
 
     public getRandomNumber(min: number, max: number) {
@@ -138,6 +139,7 @@ export class QuestionService {
 
     // @ts-ignore
     getTotalHits(): Observable<any> {
+        console.log("getRandomRegion")
         this.getRandomRegion();
         this.api.setRows(this.rows);
         this.api.setRefine("region",this.randomRegion);

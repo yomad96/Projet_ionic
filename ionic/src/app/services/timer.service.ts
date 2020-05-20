@@ -30,6 +30,7 @@ export class TimerService {
   }
 
   countdown(time: number) {
+    this.boolTimer = false;
     time = time%60;
     let countDownDate = new Date();
     if (countDownDate.getMinutes()+time > 60){
@@ -40,6 +41,7 @@ export class TimerService {
     }
     
     this.count = setInterval( () => {
+      console.log("inter");
 
       let now = new Date().getTime();
       let distance = countDownDate.getTime() - now + 10;
