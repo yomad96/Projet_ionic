@@ -92,8 +92,8 @@ export class QuestionsPage implements OnInit,OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  ionViewDidEnter()
-  {
+  ionViewDidEnter() {
+    this.timerService.setTimerIsFinish(false);
     this.timerService.setTime(1);
     this.questionType = Math.floor(Math.random()*2)+1;
     this.answerType = 0;

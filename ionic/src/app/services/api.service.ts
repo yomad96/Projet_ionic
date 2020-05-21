@@ -36,7 +36,7 @@ export class ApiService {
 
     getApi(): Observable<any> {
         //return this.http.get(this.baseUrl + this.dataSet + this.rows +"&apikey=de2038a4a0bf2045be261bd1e126211159c87bfdf4091daa4ceb8960");
-        return this.http.get(this.baseUrl + this.dataSet + this.recordid + this.lang + this.rows + this.start+this.refine+"&apikey=de2038a4a0bf2045be261bd1e126211159c87bfdf4091daa4ceb8960");
+        return this.http.get(this.baseUrl + this.dataSet + this.lang + this.rows + this.start+this.refine+"&apikey=de2038a4a0bf2045be261bd1e126211159c87bfdf4091daa4ceb8960");
     }
 
     setLang(lang: string) {
