@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import * as L from 'leaflet';
 import {GameService} from '../services/game.service';
 import {NavigationExtras, Router} from '@angular/router';
@@ -9,13 +9,15 @@ import {currentQuestion, QuestionService} from "../services/question.service";
 import {ModalPage} from "../modal/modal.page";
 import {ImageModalPage} from "../image-modal/image-modal.page";
 import {ModalController} from "@ionic/angular";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.page.html',
   styleUrls: ['./map.page.scss'],
 })
-export class MapPage implements OnInit {
+export class MapPage implements OnInit,OnDestroy {
+
 
   map: L.Map;
   // @ts-ignore
@@ -45,10 +47,11 @@ export class MapPage implements OnInit {
 
 
   // tslint:disable-next-line:max-line-length
+  private subscription: Subscription;
   constructor(private gameService: GameService, private router: Router, private api: ApiService, private timerService: TimerService, private questionService: QuestionService, private modal: ModalController) { }
 
   ngOnInit() {
-    this.questionService.mapEventEmitter.subscribe(() => {
+    this.subscription = this.questionService.mapEventEmitter.subscribe(() => {
       this.question = this.questionService.getQuestion();
       if (this.question.answers || this.question.rightanswer) {
         this.router.navigate(['/map']);
@@ -68,11 +71,16 @@ export class MapPage implements OnInit {
       }
       this.questionService.reset();
     });
+
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   ionViewDidEnter() {
 
     this.leafletMap();
+
     this.timerService.stopCountdown();
 
     this.questionType = Math.floor(Math.random()*2)+1;
