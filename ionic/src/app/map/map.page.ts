@@ -81,7 +81,6 @@ export class MapPage implements OnInit,OnDestroy {
 
     this.leafletMap();
 
-    this.timerService.stopCountdown();
 
     this.questionType = Math.floor(Math.random()*2)+1;
 
@@ -146,6 +145,7 @@ export class MapPage implements OnInit,OnDestroy {
   }
 
   ionViewWillLeave() {
+    console.log("willLeave");
     this.timerService.stopCountdown();
     this.question = undefined;
     this.questionImg = undefined;

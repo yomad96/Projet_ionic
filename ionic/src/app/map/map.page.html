@@ -15,7 +15,7 @@
       <div *ngIf="question != undefined && !(timerService.getTimerIsFinish())">
         <div *ngIf="!validate" class="txt-center">
           <div *ngIf="questionType == 1">
-            <p id="timer" class="clock"></p>
+            <p class="clock">{{timerService.getTime()}}</p>
             <p class="txt-black">
               Where is this located : {{site}} ?
             </p>
@@ -26,7 +26,7 @@
                 <img class="img-fluid" src="https://whc.unesco.org{{questionImg}}" height="100px" (click)="openModal()">
               </ion-col>
               <ion-col size="8">
-                <p id="timer" class="clock"></p>
+                <p class="clock">{{timerService.getTime()}}</p>
                 <p class="txt-black">
                   Where is this image located ?
                 </p>
