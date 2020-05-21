@@ -98,7 +98,7 @@ export class QuestionService {
                 };
                 this.unicAnswer(data);
             }
-            if (this.gameService.gamestate == 1) {
+            if (this.gameService.gamestate === 1) {
                 this.questionEventEmitter.emit();
             } else {
                 this.mapEventEmitter.emit();
@@ -107,8 +107,10 @@ export class QuestionService {
     }
 
     public getQuestion() {
+        console.log("getQuestion");
         let currentQuestion: currentQuestion;
         if (this.answers.length === 4) {
+            console.log("In");
             const answer = this.answers[this.getRandomNumber(0, 3)];
             currentQuestion = {
                 rightanswer: answer,
@@ -126,6 +128,7 @@ export class QuestionService {
     private unicAnswer(element: placeData) {
         if (this.isADifferentCountry(element.country) && element.country !== undefined) {
             this.answers.push(element);
+            console.log("push");
         }
     }
 
