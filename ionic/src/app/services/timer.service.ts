@@ -8,6 +8,7 @@ export class TimerService {
 
   count: any;
   private boolTimer: boolean = false;
+  private temps: string;
 
   constructor(private gameService: GameService) { }
 
@@ -26,7 +27,7 @@ export class TimerService {
     
     let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
+    this.temps = minutes + "m " + seconds + "s ";
   }
 
   countdown(time: number) {
@@ -46,12 +47,12 @@ export class TimerService {
       
       let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      
-      document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
+
+      this.temps = minutes + "m " + seconds + "s ";
       
       if (distance < 0) {
         this.stopCountdown();
-        document.getElementById("timer").innerHTML = "Time exceeded !";
+        this.temps = "Time exceeded !";
         this.gameService.setLifes(this.gameService.getLifes() - 1);
         this.boolTimer = true;
       }
@@ -60,6 +61,9 @@ export class TimerService {
 
   stopCountdown() {
     clearInterval(this.count);
+  }
+  getTime(){
+    return this.temps;
   }
 
   getTimerIsFinish()
