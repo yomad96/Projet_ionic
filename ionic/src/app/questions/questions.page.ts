@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { TimerService } from '../services/timer.service';
 import { GameService } from '../services/game.service';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {NavigationExtras, Router} from "@angular/router";
 import { QuestionService, currentQuestion, placeData } from '../services/question.service';
 import { ApiService } from '../services/api.service';
+import {Subscription} from "rxjs";
 
 export interface question {
   answer1: string;
@@ -18,7 +19,8 @@ export interface question {
   templateUrl: './questions.page.html',
   styleUrls: ['./questions.page.scss'],
 })
-export class QuestionsPage implements OnInit {
+export class QuestionsPage implements OnInit,OnDestroy {
+
   questionType: number;//Si c'est une question qui demande une réponse sous forme de texte ou d'image
   answerType: number;//Cash/carre/duo
   question: string;//text de la question
@@ -48,6 +50,7 @@ export class QuestionsPage implements OnInit {
   //Cache = 5000 points
   //Carré = 3000 points
   //Duo = 1000points
+  private subscription: Subscription;
 
 
   constructor(
@@ -58,31 +61,35 @@ export class QuestionsPage implements OnInit {
               private apiService: ApiService) {}
 
   ngOnInit() {
-    this.questionservice.questionEventEmitter.subscribe(data => {
+
+    this.subscription = this.questionservice.questionEventEmitter.subscribe(data => {
       // @ts-ignore
       this.currentplaceinfo = this.questionservice.getQuestion();
-      if (this.currentplaceinfo.answers || this.currentplaceinfo.rightanswer) {
-        this.router.navigate(['/questions']);
-      }
       this.arrayAnswer = this.currentplaceinfo.answers;
       this.rightAnswer = this.currentplaceinfo.rightanswer.country;
       if (this.questionType == 1) {
         this.question = "(BipBoop) Where can you find "+ this.currentplaceinfo.rightanswer.site + " (BipBoop)";
       } else {
         this.question = "Which of theses 4 images corresponds to the site : " + this.currentplaceinfo.rightanswer.site;
-      
-      for (let i: number = 0; i < this.currentplaceinfo.answers.length; i++) {
-        this.apiService.getImage(parseInt(this.currentplaceinfo.answers[i].id)).subscribe( data => {
-          const el = document.createElement( 'html' );
-          el.innerHTML = data;
-          const imgs = el.getElementsByClassName('icaption-img');
-          this.pictures[i] = ("https://whc.unesco.org" + imgs[0].getAttribute('data-src'));
-        });
-      }
+
+        for (let i: number = 0; i < this.currentplaceinfo.answers.length; i++) {
+          this.apiService.getImage(parseInt(this.currentplaceinfo.answers[i].id)).subscribe( data => {
+            const el = document.createElement( 'html' );
+            el.innerHTML = data;
+            const imgs = el.getElementsByClassName('icaption-img');
+            this.pictures[i] = ("https://whc.unesco.org" + imgs[0].getAttribute('data-src'));
+          });
+        }
       }
       this.timerService.countdown(1);
       this.isLoading = false;
+      this.questionservice.reset();
     });
+
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   ionViewDidEnter()
