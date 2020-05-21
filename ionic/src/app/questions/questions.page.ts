@@ -141,14 +141,12 @@ export class QuestionsPage implements OnInit,OnDestroy {
     {
       this.gameService.addPoint(3000);
       this.isGoodAnswer = true;
-      this.canShowAnswer = false;
-      this.pathToResultPage();
     }
     else {
       this.gameService.setLifes(this.gameService.getLifes()-1);
-      this.canShowAnswer = false;
-      this.pathToResultPage();
     }
+    this.canShowAnswer = false;
+    this.pathToResultPage();
   }
 
   answerVerification(answer: string, answerOfPlayer: string)
@@ -211,6 +209,7 @@ export class QuestionsPage implements OnInit,OnDestroy {
 
   pathToResultPage()
   {
+    this.timerService.stopCountdown();
     const navigationExtras: NavigationExtras = {
       state: {
         id: this.currentplaceinfo.rightanswer.recordId,
