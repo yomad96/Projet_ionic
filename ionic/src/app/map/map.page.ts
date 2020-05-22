@@ -80,9 +80,7 @@ export class MapPage implements OnInit,OnDestroy {
   ionViewDidEnter() {
 
     this.leafletMap();
-
-    this.timerService.stopCountdown();
-
+    this.timerService.setTimerIsFinish(false);
     this.questionType = Math.floor(Math.random()*2)+1;
 
     this.reponse = false;
@@ -140,6 +138,7 @@ export class MapPage implements OnInit,OnDestroy {
     const bounds = L.latLngBounds(southWest, northEast);
 
     this.map.setMaxBounds(bounds);
+    this.map.setMinZoom(2);
     this.map.on('drag', () => {
       this.map.panInsideBounds(bounds, { animate: false });
     });
