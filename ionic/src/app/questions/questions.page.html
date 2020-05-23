@@ -64,7 +64,7 @@
       </ion-row>
         <ion-row *ngIf="answerType == 1 && questionType == 1 && this.canShowAnswer !== false && !this.timerService.getTimerIsFinish()" class="row-form-cash">
           <form [formGroup]="cashForm" (ngSubmit)="validate()" class="form-cash">
-              <ion-input class="input-answer" formControlName="answer" type="text" placeholder="Entrez une réponse..."></ion-input>
+              <ion-input class="input-answer" formControlName="answer" type="text" placeholder="Enter an answer..."></ion-input>
               <button class="btn-validate" type="submit">Validate</button>
           </form>
         </ion-row>
