@@ -184,7 +184,7 @@ export class MapPage implements OnInit,OnDestroy {
     }
 
  this.gameService.addPoint(this.point);
-    if (this.point <= 4000) {
+    if (this.point <= 2500) {
       this.gameService.setLifes(this.gameService.getLifes() - 1);
     } else {
       this.goodbad = true;
