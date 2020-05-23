@@ -80,8 +80,7 @@ export class MapPage implements OnInit,OnDestroy {
   ionViewDidEnter() {
 
     this.leafletMap();
-
-
+    this.timerService.setTimerIsFinish(false);
     this.questionType = Math.floor(Math.random()*2)+1;
 
     this.reponse = false;
@@ -139,13 +138,13 @@ export class MapPage implements OnInit,OnDestroy {
     const bounds = L.latLngBounds(southWest, northEast);
 
     this.map.setMaxBounds(bounds);
+    this.map.setMinZoom(2);
     this.map.on('drag', () => {
       this.map.panInsideBounds(bounds, { animate: false });
     });
   }
 
   ionViewWillLeave() {
-    console.log("willLeave");
     this.timerService.stopCountdown();
     this.question = undefined;
     this.questionImg = undefined;
@@ -179,9 +178,12 @@ export class MapPage implements OnInit,OnDestroy {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
     this.distance = (R * c) / 1000;
+    this.point = Math.round(-5000*this.distance/6000 + 5000);
+    if (this.point < 0) {
+      this.point = 0;
+    }
 
-    this.point = Math.round(5000 - ( this.distance / 40000) * 5000);
-    this.gameService.addPoint(this.point);
+ this.gameService.addPoint(this.point);
     if (this.point <= 4000) {
       this.gameService.setLifes(this.gameService.getLifes() - 1);
     } else {
