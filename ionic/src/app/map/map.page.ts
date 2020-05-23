@@ -178,9 +178,12 @@ export class MapPage implements OnInit,OnDestroy {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
     this.distance = (R * c) / 1000;
+    this.point = Math.round(-5000*this.distance/6000 + 5000);
+    if (this.point < 0) {
+      this.point = 0;
+    }
 
-    this.point = Math.round(5000 - ( this.distance / 40000) * 5000);
-    this.gameService.addPoint(this.point);
+ this.gameService.addPoint(this.point);
     if (this.point <= 4000) {
       this.gameService.setLifes(this.gameService.getLifes() - 1);
     } else {
