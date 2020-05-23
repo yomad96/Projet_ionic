@@ -19,7 +19,7 @@ export class GameService {
   }
 
   randomQuestion() {
-    this.gamestate =  2;//Math.floor(Math.random()*2)+1;
+    this.gamestate = Math.floor(Math.random()*2)+1;
     if (this.gamestate === 1) {
       this.router.navigate(['/questions']);
     } else {
