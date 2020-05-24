@@ -281,6 +281,7 @@ export class QuestionsPage implements OnInit,OnDestroy {
 
   ionViewDidLeave()
   {
+    this.message="";
     // @ts-ignore
     this.question = "";
     this.canShowGoToAnswer = false;
