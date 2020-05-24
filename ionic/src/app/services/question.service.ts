@@ -122,13 +122,13 @@ export class QuestionService {
 
     public reset() {
         this.answers = [];
+        this.recordsInterface = [];
     }
 
     // verifie si le pays n'est pas déjà sélectionner
     private unicAnswer(element: placeData) {
         if (this.isADifferentCountry(element.country) && element.country !== undefined) {
             this.answers.push(element);
-            console.log("push");
         }
     }
 
